@@ -1,0 +1,18 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1><%= @group.name%>   メンバー一覧</h1>
+	<table class="table">
+		<tr>
+			<th>メンバー</th>
+			<th></th>
+		</tr>
+		<tr>
+			<% @groups.each do |member|%>
+				<td><%= member.customer.nick_name%></td>
+			<% if member.customer_id == current_customer.id%>
+				<td><%= link_to "このグループを抜ける", public_groups_customer_path(member.id), method: :delete, class: "btn btn-danger"%></td>
+			<% end %>
+		</tr>
+			<% end %>
+	</table>
+</div>

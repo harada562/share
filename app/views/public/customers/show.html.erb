@@ -1,0 +1,110 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>マイページ</h1>
+	<div>
+		<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", size:'100x100' %>
+	</div>
+	<div>
+		<h3>ニックネーム</h3>
+		<%= @customer.nick_name%>
+	</div>
+	<div>
+		<h3>自己紹介</h3>
+		<%= @customer.intoroduction%>
+	</div>
+	<div>
+		<h3>スポット投稿件数</h3>
+		<%= @places.count%>件
+	</div>
+	<div>
+		<table class="table">
+		<tr>
+			<th><h3>所属グループ</h3></th>
+		</tr>
+			<tr>
+				<% @groups.each do |group|%>
+				<td>
+					<% if @customer.id == current_customer.id %>
+						<%= link_to group.group.name, maps_public_groups_customer_path(group.group.id)%>
+					<% else %>
+						<%= group.group.name %>
+					<% end %>
+				</td>
+				<% end %>
+			</tr>
+		</table>
+	</div>
+	<div>
+	</div>
+	<div>
+		<% if @customer.id == current_customer.id %>
+			<%= link_to "編集画面", edit_public_customer_path(@customer.id),class: "btn btn-success" %>
+		<% end %>
+	</div>
+	<% unless @places.empty?%>
+	<script async defer
+                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+  </script>
+	 <div id="map"></div>
+  	<style type="text/css">
+    	#map { height: 300px;
+           width: 100%;}
+  	</style>
+  <script>
+      function initMap() {
+
+        //初期表示位置
+        var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 9,
+            center: latlng
+        });
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
+        //複数マーカー ここから
+        <% @places.each do |place| %>
+        <% unless place.latitude.nil?%>
+        (function(){
+          var contentString = "住所：<%= place.address %>";
+          var infowindow = new google.maps.InfoWindow({
+              content: contentString
+          });
+
+          var marker = new google.maps.Marker({
+              position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
+              map: map,
+              title: contentString
+          });
+
+          marker.addListener('click', function() {
+            infowindow.open(map, marker, contentString);
+          });
+         })();
+        <% end %>
+       <% end %>
+        //複数マーカー ここまで
+    }
+  </script>
+
+		<div>
+			<table class="table">
+				<tr>
+					<th>場所名</th>
+					<th>住所</th>
+					<th>場所詳細</th>
+				</tr>
+				<% @places.each do |place| %>
+				<tr>
+					<td><%= place.place_name%></td>
+					<td><%= place.address%></td>
+					<% if @customer.id == current_customer.id %>
+						<td><%= link_to "場所の詳細", edit_public_place_path(place.id)%></td>
+					<% end %>
+				</tr>
+			<% end %>
+			</table>
+		</div>
+	<% end %>
+</div>

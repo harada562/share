@@ -1,0 +1,27 @@
+<%= render 'layouts/customer_header'%>
+<div class="col-lg-9">
+
+	<h1>ユーザー編集画面</h1>
+	<%= form_with model: @customer, url: public_customer_path do |f|%>
+	<div>
+		<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "" %>
+		<%= f.label :プロフィール画像 %><br />
+		<%= f.attachment_field :image %>
+	</div>
+	<div>
+		<%= f.label :ニックネーム %><br />
+		<%= f.text_field :nick_name%>
+	</div>
+	<div>
+		<%= f.label :メールアドレス %><br />
+		<%= f.text_field :email%>
+	</div>
+	<div>
+		<%= f.label :自己紹介文 %><br />
+		<%= f.text_area :intoroduction%>
+	</div>
+		<%= f.submit "変更",class: "btn btn-success" %>
+	<% end %>
+
+	<%= link_to "退会", confirm_public_customer_path(@customer.id), class: "btn btn-danger"%>
+</div>

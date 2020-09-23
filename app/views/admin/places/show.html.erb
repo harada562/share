@@ -1,0 +1,31 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+<h1>スポット詳細</h1>
+	<h3>カスタマー名</h3>
+	<%= @place.customer.nick_name%>
+	<h3>グループ名</h3>
+		<% if @place.group_id.nil?%>
+			グループなし
+		<% else %>
+			<%= @place.group.name%>
+		<% end %>
+	<h3>場所名</h3>
+	<%= @place.place_name%>
+	<h3>住所</h3>
+	<%= @place.address%>
+	<h3>画像id</h3>
+	<%= @place.image_id%>
+	<h3>電話番号</h3>
+	<%= @place.number%>
+	<h3>場所URL</h3>
+	<%= @place.place_url%>
+	<h3>平均予算</h3>
+	<%= @place.budget%>
+	<h3>経度</h3>
+	<%= @place.latitude%>
+	<h3>緯度</h3>
+	<%= @place.longitude%>
+	<div>
+		<%= link_to "スポットの削除", admin_place_path(@place.id), method: :delete%>
+	</div>
+</div>

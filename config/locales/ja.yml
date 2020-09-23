@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      genre: ジャンル
+      place: 場所
+      group: グループ
+    attributes:
+      genre:
+        name: ジャンル名
+      place:
+        place_name: 場所名
+        address: 住所
+      group:
+        name: グループ名
+      customer:
+        nick_name: ニックネーム
+        password: パスワード
+        password_confirmation: パスワード確認
+        email: メールアドレス
+  views:
+    pagination:
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."

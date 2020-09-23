@@ -1,0 +1,27 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>グループ作成</h1>
+	<%= form_with model: @group, url: public_groups_path, local: true do |f|%>
+	<%= render 'layouts/error_messages', model: @group %>
+	<div>
+		<%= f.label :グループ名 %><br />
+		<%= f.text_field :name%>
+	</div>
+	<div>
+		<h2>公開ステータス</h2>
+		<div>
+			<%= f.label :公開 %><br />
+			<%= f.radio_button :is_closed, [false] , local: true%>
+		</div>
+		<div>
+			<%= f.label :非公開 %><br />
+			<%= f.radio_button :is_closed, [true]%>
+		</div>
+	</div>
+	<div>
+			<%= f.label :合言葉 %><br />
+			<%= f.text_field :key_word%>
+	</div>
+		<%= f.submit "グループ作成",class: "btn btn-success" %>
+	<% end %>
+</div>

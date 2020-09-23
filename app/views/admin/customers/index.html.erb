@@ -1,0 +1,25 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+	<h1>ユーザー一覧画面</h1>
+	<table class="table">
+		<tr>
+			<th>プロフィール画像</th>
+			<th>ニックネーム</th>
+			<th>ステータス</th>
+			<th></th>
+		</tr>
+		<tr>
+			<% @customers.each do |customer| %>
+			<td><%= attachment_image_tag customer, :image, :fill, 50, 50, format: 'jpg', fallback: "" %></td>
+			<td><%= customer.nick_name %></td>
+			<td><% if customer.is_deleted == true %>
+				退会済み
+				<% else %>
+				有効
+				<% end %>
+			</td>
+			<td><%= link_to "詳細画面", admin_customer_path(customer.id)%></td>
+		</tr>
+		<% end %>
+	</table>
+</div>

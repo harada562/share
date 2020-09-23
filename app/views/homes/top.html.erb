@@ -1,0 +1,41 @@
+<div class="col-lg-12">
+	<div class="home_top">
+		<div class="home_top__logo">
+			<%= image_tag 'logo.png' %>
+		</div>
+		<div class="home_top__h1">
+			<h1>ようこそシェアマップへ</h1>
+		</div>
+		<div class="home_top__link">
+		<% unless customer_signed_in? %>
+			<div class="home_top__link_item">
+				<%= link_to 'ゲストログイン（閲覧用）', customers_guest_sign_in_path, method: :post, class: "btn btn-success"%>
+			</div>
+			<div class="home_top__link_item">
+				<%= link_to '新規登録', new_customer_registration_path, class: "btn btn-info"%>
+			</div>
+			<div class="home_top__link_item">
+				<%= link_to 'ログイン', new_customer_session_path, class: "btn btn-warning"%>
+			</div>
+			<div class="home_top__link_item">
+				<%= link_to '概要', home_about_path, class: "btn btn-danger"%>
+			</div>
+		<% else %>
+				<div class="home_top__link_item">
+					<%= link_to 'スポット一覧', public_places_path,  class: "btn btn-info"%>
+				</div>
+				<% unless current_customer.email == "guest@guest" %>
+				<div class="home_top__link_item">
+					<%= link_to 'スポット登録', new_public_place_path, class: "btn btn-success"%>
+				</div>
+				<% end %>
+				<div class="home_top__link_item">
+					<%= link_to 'グループ一覧', public_groups_customers_path, class: "btn btn-warning"%>
+				</div>
+				<div class="home_top__link_item">
+					<%= link_to '会員一覧', public_customers_path, class: "btn btn-danger"%>
+				</div>
+		<% end %>
+		</div>
+	</div>
+</div>

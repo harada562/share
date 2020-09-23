@@ -1,0 +1,62 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>加入しているグループ</h1>
+	<strong><%= flash[:group_add]%></strong>
+	<table class="table">
+		<tr>
+			<th>グループ_id</th>
+			<th>グループ名(グループメンバ一覧)</th>
+			<th>メンバー数</th>
+		</tr>
+			<% @groups.each do |groups| %>
+				<tr>
+					<td><%= link_to "マップ一覧", maps_public_groups_customer_path(groups.group.id)%></td>
+					<td><%= link_to groups.group.name, menbers_public_groups_customer_path(groups.group.id)%></td>
+					<td><%= GroupsCustomer.where(group_id: groups.group_id).count%></td>
+				</tr>
+			<% end %>
+	</table>
+	<h1>全てのグループ</h1>
+	<strong><%= flash[:not_key_word]%></strong>
+	<table class="table">
+		<tr>
+			<th>メンバー一覧</th>
+			<th>グループ名</th>
+			<th></th>
+		</tr>
+		<tr>
+		<% @groups_customer.each do |groups_customer| %>
+		<!-- 現在ログイン中のユーザーが所属しているグループは表示しない -->
+		 <% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
+		 	<!-- 非公開のグループのマップ一覧とメンバ一覧はlink表示しない -->
+		 	<% if groups_customer.group.is_closed == false %>
+				<td><%= link_to groups_customer.group.name, menbers_public_groups_customer_path(groups_customer.group.id)%></td>
+				<td><%= link_to "マップ一覧", maps_public_groups_customer_path(groups_customer.group.id)%></td>
+			<% else %>
+				<td>合言葉が必要です</td>
+				<td><%= groups_customer.group.name%></td>
+			<% end %>
+
+				<% unless current_customer.email == "guest@guest" %>
+				<!-- 中間テーブルに保存するためのform_with -->
+				<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
+							<%= f.hidden_field :customer_id, :value => current_customer.id%>
+							<%= f.hidden_field :group_id, :value => groups_customer.group.id %>
+							<%= f.hidden_field :is_admin, :value => false %>
+						<!-- グループが非公開(groupsテーブルのis_clased == true)の場合は合言葉(key_word)は必須 -->
+						<% if groups_customer.group.is_closed == true %>
+							<td>
+								<%= f.text_field :key_word%>
+								<%= f.submit "合言葉チェック",class: "btn btn-success" %>
+							</td>
+						<% else%>
+							<!-- グループが公開(is_closed == false)の場合は合言葉(key_word)は不要 -->
+							<td><%= f.submit "グループ加入",class: "btn btn-success" %></td>
+						<% end %>
+				<% end %>
+				<% end %>
+			<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div>

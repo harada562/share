@@ -1,0 +1,30 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+<h1>カスタマー詳細</h1>
+<h3>ニックネーム</h3>
+<%= @customer.nick_name%>
+<h3>メールアドレス</h3>
+<%= @customer.email%>
+<h3>画像id</h3>
+<%= @customer.image_id%>
+<h3>紹介文</h3>
+<%= @customer.intoroduction%>
+<h3>公開ステータス</h3>
+<% if @customer.is_closed == false%>
+	公開
+<% else %>
+	非公開
+<% end %>
+<h3>会員ステータス</h3>
+<% if @customer.is_deleted == false%>
+	会員
+<div>
+	<%= link_to "退会させる", confirm_admin_customer_path(@customer.id)%>
+</div>
+<% else %>
+	退会会員
+<div>
+	<%= link_to "会員に戻す", withdrawal_admin_customer_path(@customer.id), method: :put%>
+</div>
+<% end %>
+</div>

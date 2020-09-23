@@ -1,0 +1,28 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>ジャンル 追加</h1>
+
+
+	<%= form_with model: @genre, url: public_genres_path, local: true do |f|%>
+		<%= render 'layouts/error_messages', model: @genre %>
+		<div>
+			<%= f.label :ジャンル名 %><br />
+			<%= f.text_field :name%>
+		</div>
+		<%= f.hidden_field :customer_id , :value => current_customer.id %>
+		<%= f.submit "ジャンル作成",class: "btn btn-success" %>
+	<% end %>
+
+	<h1>全てのジャンル</h1>
+	<table class="table">
+		<tr>
+			<% @genres.each do |genre| %>
+			<% if genre.customer_id == current_customer.id %>
+				<td><%= genre.name %></td>
+				<td><%= link_to "編集画面", edit_public_genre_path(genre.id),class: "btn btn-success" %></td>
+				<td><%= link_to "削除", public_genre_path(genre.id), method: :delete , class: "btn btn-danger"%></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</table>
+</div>

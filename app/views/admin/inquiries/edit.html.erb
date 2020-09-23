@@ -1,0 +1,27 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+	<h1>お問い合わせ詳細</h1>
+
+	<div>
+		<h2>タイトル</h2>
+		<p><%= @inquiry.title%></p>
+	</div>
+
+	<div>
+		<h2>内容</h2>
+		<p><%= @inquiry.body%></p>
+	</div>
+
+	<div>
+		<h2>ステータス</h2>
+		<p><%= @inquiry.status%></p>
+	</div>
+
+	<div>
+		<h2></h2>
+		<%= form_with model: @inquiry, url: admin_inquiry_path do |f|%>
+			<%= f.select :status, [['対応待ち'], ['対応中'], ['対応済み']] %>
+			<%= f.submit '更新'%>
+		<% end %>
+	</div>
+</div>

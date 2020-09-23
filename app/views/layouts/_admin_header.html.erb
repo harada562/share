@@ -1,0 +1,16 @@
+<div class="col-lg-3">
+	<header>
+		<div>
+			<%= image_tag 'logo.png' %>
+		</div>
+		<% if admin_signed_in? %>
+			<div class="link"><%= link_to '会員一覧', admin_customers_path%></div>
+			<div class="link"><%= link_to 'スポット一覧', admin_places_path%></div>
+			<div class="link"><%= link_to 'グループ一覧', admin_groups_path%></div>
+			<div class="link"><%= link_to 'お問い合わせ一覧', admin_inquiries_path%></div>
+			<div class="link"><%= link_to 'ログアウト',  destroy_admin_session_path, method: :delete %></div>
+		<% else %>
+			<div class="link"><%= link_to 'ログイン', new_admin_session_path%></div>
+		<% end %>
+	</header>
+</div>

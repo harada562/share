@@ -13,3 +13,40 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// @font-face{
+// 	font-family: "font";
+//    src: font-url('siteseeing.ttf') format('truetype');
+// }
+// h1{
+//   font-family: 'font';
+// }
+
+.header{
+	text-align: center;
+}
+.header__link_signed_in{
+	list-style: none;
+}
+.header__link_signed_in :nth-of-type(2n){
+	margin: 10px;
+}
+.header__link_unsign{
+	list-style: none;
+	text-align: center;
+}
+.header__link_unsign :nth-of-type(2n){
+	margin: 10px;
+}
+
+.guest_header{
+	text-align: center;
+}
+.guest_header__link_signed_in{
+	list-style: none;
+}
+.guest_header__link_signed_in :nth-of-type(2n){
+	margin: 10px;
+}

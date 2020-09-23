@@ -1,0 +1,21 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+<h1>グループの詳細</h1>
+<h2>グループ名</h2>
+<%= @group.name%>
+<h2>公開ステータス</h2>
+<% if @group.is_closed == false%>
+			<td>公開</td>
+			<% else %>
+			<td>非公開</td>
+			<% end %>
+<h2>グループ合言葉</h2>
+<% if @group.key_word.nil?%>
+	合言葉なし
+<% else %>
+	<%= @group.key_word%>
+<% end %>
+<div>
+	<%= link_to "グループを削除する", admin_group_path(@group.id), method: :delete%>
+</div>
+</div>

@@ -1,0 +1,36 @@
+<%= render 'layouts/admin_header' %>
+<div class="col-lg-9">
+<h1>スポット一覧</h1>
+<table class="table">
+	<tr>
+		<th>ジャンル</th>
+		<th>カスタマー名</th>
+		<th>グループ名</th>
+		<th>場所名</th>
+		<th>住所</th>
+		<th>電話番号</th>
+		<th>平均予算</th>
+		<th>詳細リンク</th>
+	</tr>
+	<tr>
+		<% @places.each do |place|%>
+		<% if place.genre_id.nil?%>
+			<td>ジャンルなし</td>
+		<% else %>
+			<td><%= place.genre.name%></td>
+		<% end %>
+		<td><%= place.customer.nick_name%></td>
+			<% if place.group_id.nil?%>
+				<td>グループ未加入</td>
+			<% else%>
+				<td><%= place.group.name%></td>
+			<% end %>
+		<td><%= place.place_name%></td>
+		<td><%= place.address%></td>
+		<td><%= place.number%></td>
+		<td><%= place.budget%></td>
+		<td><%= link_to "詳細リンク", admin_place_path(place.id)%></td>
+	</tr>
+	<% end %>
+</table>
+</div>

@@ -1,0 +1,59 @@
+<% if current_customer.email == "guest@guest" %>
+    <div class="col-lg-3">
+      <header>
+        <%= image_tag 'logo.png' %>
+        <div class="guest_header">
+          <ul class="guest_header__link_signed_in">
+            <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
+            <li class="link"><%= link_to 'トップページ', root_path %></li>
+            <li class="link"><%= link_to 'ジャンル登録', public_genres_path %></li>
+            <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
+            <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
+            <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
+            <li class="link"><%= link_to 'お問い合わせした内容', public_inquiries_path%></li>
+            <li class="link"><%= link_to 'お問い合わせ', new_public_inquiry_path %></li>
+            <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
+          </ul>
+        </div>
+      </header>
+    </div>
+<% else %>
+  <% if customer_signed_in? %>
+    <div class="col-lg-3">
+      <header>
+        <%= image_tag 'logo.png' %>
+        <div class="header">
+          <ul class="header__link_signed_in">
+            <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
+            <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
+            <li class="link"><%= link_to 'ジャンル登録', public_genres_path %></li>
+            <li class="link"><%= link_to 'スポット登録', new_public_place_path %></li>
+            <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
+            <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
+            <li class="link"><%= link_to 'グループ作成', new_public_group_path %></li>
+            <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
+            <li class="link"><%= link_to 'お問い合わせした内容', public_inquiries_path%></li>
+            <li class="link"><%= link_to 'お問い合わせ', new_public_inquiry_path %></li>
+            <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
+          </ul>
+        </div>
+      </header>
+    </div>
+  <% else %>
+    <div class="col-lg-3">
+      <header>
+        <%= image_tag 'logo.png' %>
+        <div class="header">
+          <ul class="header__link_unsign">
+            <li class="link"><%= link_to 'トップページ', root_path %></li>
+            <li class="link"><%= link_to 'About', home_about_path %></li>
+            <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
+            <li class="link"><%= link_to '新規登録', new_customer_registration_path %></li>
+            <li class="link"><%= link_to 'お問い合わせ', new_public_inquiry_path %></li>
+            <li class="link"><%= link_to 'ログイン', new_customer_session_path%></li>
+          </ul>
+        </div>
+      </header>
+    </div>
+  <% end %>
+<% end %>

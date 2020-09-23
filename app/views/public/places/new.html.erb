@@ -1,0 +1,36 @@
+<%= render 'layouts/customer_header'%>
+<div class="col-lg-9">
+	<h1>スポット登録</h1>
+
+	<%= form_with model: @place, url: public_places_path, local: true do |f|%>
+	<%= flash[:not_latitude]%>
+	<%= render 'layouts/error_messages', model: @place %>
+		<% unless @genre.blank? %>
+		<!-- ジャンル登録済み -->
+			<div>
+				<%= f.label :ジャンル %><br />
+				<%= f.collection_select :genre_id, Genre.where(customer_id: current_customer.id), :id, :name %>
+			</div>
+		<% else %>
+		<!-- ジャンル登録なし -->
+			<div>
+				<%= f.label :ジャンル %><br />
+				<%= f.collection_select :genre_id,Genre.where(customer_id: current_customer.id), :id, :name, :include_blank => 'ジャンル登録なし' %>
+			</div>
+		<% end %>
+			<div>
+				<%= f.label :場所名 %>(必須)<br />
+				<%= f.text_field :place_name%>
+			</div>
+			<div>
+				<%= f.label :住所 %>(必須)<br />
+				<%= f.text_field :address%>
+			</div>
+			<div>
+				<%= f.label :グループ選択 %><br />
+				<%= f.select :group_id, GroupsCustomer.where(customer_id: current_customer.id).map { |g| [g.group.name, g.group.id]}, :include_blank => '未選択'%>
+			</div>
+		<%= f.hidden_field :customer_id, :value => current_customer.id %>
+		<%= f.submit "スポット登録",class: "btn btn-success" %>
+	<% end %>
+</div>

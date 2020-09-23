@@ -1,0 +1,81 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-3">
+	<h1>スポット編集</h1>
+	<%= form_with model: @place, url: public_place_path, local: true do |f| %>
+	<%= render 'layouts/error_messages', model: @place %>
+		<% if @place.genre_id.blank? %>
+			<div>
+				<%= f.label :ジャンル %><br />
+				<%= f.collection_select :genre_id,Genre.where(customer_id: current_customer.id), :id, :name, :include_blank => 'ジャンル登録なし' %>
+			</div>
+		<% else %>
+			<div>
+				<%= f.label :ジャンル %><br />
+				<%= f.collection_select :genre_id, Genre.where(customer_id: current_customer.id), :id, :name %>
+			</div>
+		<% end %>
+		<div>
+			<%= f.label :場所名 %>(必須)<br />
+			<%= f.text_field :place_name%>
+		</div>
+		<div>
+			<%= f.label :住所 %>(必須)<br />
+			<%= f.text_field :address%>
+		</div>
+		<div>
+			<%= f.label :場所のURL %>(追加しとくと便利)<br />
+			<%= f.url_field :place_url%>
+		</div>
+		<div>
+			<%= f.label :電話番号 %><br />
+			<%= f.telephone_field :number%>
+		</div>
+		<div>
+			<%= f.label :平均予算 %><br />
+			<%= f.text_field :budget%>円
+		</div>
+		<%= f.submit "スポット変更",class: "btn btn-success" %>
+	<% end %>
+</div>
+<div class="col-lg-6">
+<!-- #以下の記述の中にあるYOUR_API_KEYには取得したご自身のAPIキーを記述してください -->
+<script async defer
+                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+  </script>
+<!-- #表示するmapのcssです。ご自身でカスタマイズしてください。高さが設定されていないと表示されないことがあります。 -->
+<style type="text/css">
+  #map { height: 600px;
+         width: 100%;}
+</style>
+
+<!-- #mapの表示 -->
+<div id="map"></div>
+<script type="text/javascript">
+  function initMap() {
+// #latitude,longitudeから位置を特定
+    var test ={lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 15,
+              center: test
+              });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    var contentString = '住所：<%= @place.address %>';
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+ // #Map上の指定した位置にピンを挿して表示する
+    var marker = new google.maps.Marker({
+                  position:test,
+                  map: map,
+                  title: contentString
+                 });
+
+     marker.addListener('click', function() {
+       infowindow.open(map, marker);
+     });
+  }
+</script>
+</div>
