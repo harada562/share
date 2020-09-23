@@ -46,7 +46,7 @@ class Public::PlacesController < ApplicationController
 	end
 	private
 	def place_params
-		params.require(:place).permit( :genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget)
+		params.require(:place).permit( :genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget, :place_url)
 	end
 	# ゲストログインの制限
 	def guest
