@@ -33,7 +33,7 @@ class Customer < ApplicationRecord
 
 # ゲストログイン用
   def self.guest
-    find_or_create_by!(email: 'guest@gmail', nick_name: "ゲストアカウント") do |customer|
+    find_or_create_by!(email: 'guest@gmail.work', nick_name: "げすと") do |customer|
       customer.password = SecureRandom.urlsafe_base64
     end
   end
