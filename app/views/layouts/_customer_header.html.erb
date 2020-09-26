@@ -85,8 +85,8 @@
           <div>
             <h3>加入しているグループ</h3>
             <ul>
-              <% GroupsCustomer.where(customer_id: current_customer.id).each do |group|%>
-              <li><%= group.name%>(groupに関するリンクを付ける)</li>
+              <% GroupsCustomer.where(customer_id: current_customer.id).each do |group_customer|%>
+              <li><%= group_customer.group.name%>(groupに関するリンクを付ける)</li>
               <% end %>
             </ul>
           </div>

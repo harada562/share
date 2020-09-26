@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
+# カスタマーroutes
 	root 'homes#top'
 	get 'home/top', to:'homes#top'
 	get 'home/about', to:'homes#about'
 	get 'home/top_select', to:'homes#top_select'
 	devise_for :customers
-	devise_for :admins
-
 	namespace :public do
 		resources :customers do
 			member do
@@ -13,7 +12,6 @@ Rails.application.routes.draw do
 				put "withdrawal" => "customers#withdrawal"
 			end
 		end
-		resources :genres
 		resources :inquiries
 		resources :groups
 		resources :groups_customers do
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
 		end
 	end
 
+# 管理者routes
+	devise_for :admins
 	namespace :admin do
 		resources :inquiries, only: [:index, :edit, :update]
 		resources :customers, only: [:index, :show] do
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 				put "withdrawal" => "customers#withdrawal"
 			end
 		end
+		resources :genres, only: [:index, :edit, :create, :destroy, :update]
 		resources :groups, only: [:index, :show, :destroy]
 		resources :places, only: [:index, :show, :destroy]
 	end

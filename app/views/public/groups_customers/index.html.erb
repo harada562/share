@@ -18,6 +18,7 @@
 	</table>
 	<h1>全てのグループ</h1>
 	<strong><%= flash[:not_key_word]%></strong>
+	<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
 	<table class="table">
 		<tr>
 			<th>メンバー一覧</th>
@@ -26,6 +27,11 @@
 		</tr>
 		<tr>
 		<% @groups_customer.each do |groups_customer| %>
+		<tr>
+			<td><%= f.hidden_field :customer_id, :value => current_customer.id%></td>
+			<td><%= f.hidden_field :group_id, :value => groups_customer.group.id %></td>
+			<td><%= f.hidden_field :is_admin, :value => false %></td>
+		</tr>
 		<!-- 現在ログイン中のユーザーが所属しているグループは表示しない -->
 		 <% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
 		 	<!-- 非公開のグループのマップ一覧とメンバ一覧はlink表示しない -->
@@ -39,16 +45,10 @@
 
 				<% unless current_customer.email == "guest@guest" %>
 				<!-- 中間テーブルに保存するためのform_with -->
-				<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
-							<%= f.hidden_field :customer_id, :value => current_customer.id%>
-							<%= f.hidden_field :group_id, :value => groups_customer.group.id %>
-							<%= f.hidden_field :is_admin, :value => false %>
 						<!-- グループが非公開(groupsテーブルのis_clased == true)の場合は合言葉(key_word)は必須 -->
 						<% if groups_customer.group.is_closed == true %>
-							<td>
-								<%= f.text_field :key_word%>
-								<%= f.submit "合言葉チェック",class: "btn btn-success" %>
-							</td>
+								<td><%= f.text_field :key_word%></td>
+								<td><%= f.submit "合言葉チェック",class: "btn btn-success" %></td>
 						<% else%>
 							<!-- グループが公開(is_closed == false)の場合は合言葉(key_word)は不要 -->
 							<td><%= f.submit "グループ加入",class: "btn btn-success" %></td>

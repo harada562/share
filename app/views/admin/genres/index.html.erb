@@ -1,9 +1,9 @@
-<%= render 'layouts/customer_header' %>
+<%= render 'layouts/admin_header' %>
 <div class="col-lg-9">
 	<h1>ジャンル 追加</h1>
 
 
-	<%= form_with model: @genre, url: public_genres_path, local: true do |f|%>
+	<%= form_with model: @genre, url: admin_genres_path, local: true do |f|%>
 		<%= render 'layouts/error_messages', model: @genre %>
 		<div>
 			<%= f.label :ジャンル名 %><br />
@@ -19,8 +19,8 @@
 			<% @genres.each do |genre| %>
 			<% if genre.customer_id == current_customer.id %>
 				<td><%= genre.name %></td>
-				<td><%= link_to "編集画面", edit_public_genre_path(genre.id),class: "btn btn-success" %></td>
-				<td><%= link_to "削除", public_genre_path(genre.id), method: :delete , class: "btn btn-danger"%></td>
+				<td><%= link_to "編集画面", edit_admin_genre_path(genre.id),class: "btn btn-success" %></td>
+				<td><%= link_to "削除", admin_genre_path(genre.id), method: :delete , class: "btn btn-danger"%></td>
 			<% end %>
 		</tr>
 		<% end %>
