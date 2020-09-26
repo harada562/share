@@ -1,26 +1,32 @@
-<div class="col-lg-12">
-<h2>ログイン</h2>
+<div class="col-lg-12 customer_sessions_new">
+<div class="customer_sessions_new__form">
+  <div>
+    <h2>ログイン</h2>
+  </div>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
+    <div class="customer_sessions_new__form_field">
       <%= f.label :ニックネーム %><br />
       <%= f.text_field :nick_name, autofocus: true, autocomplete: "nick_name" %>
     </div>
 
-    <div class="field">
+    <div class="customer_sessions_new__form_field">
       <%= f.label :パスワード %><br />
       <%= f.password_field :password, autocomplete: "current-password" %>
     </div>
 
     <% if devise_mapping.rememberable? %>
-      <div class="field">
+      <div class="customer_sessions_new__form_field">
         <%= f.check_box :remember_me %>
         <%= f.label :ログイン情報を保存 %>
       </div>
     <% end %>
 
-    <div class="actions">
+    <div class="customer_sessions_new__form_action">
       <%= f.submit "ログイン" ,class: "btn btn-success" %>
     </div>
   <% end %>
-  <%= link_to "新規登録が済んでない方", new_customer_registration_path, class: "btn btn-warning"%>
+  <div class="customer_sessions_new__link">
+    <%= link_to "新規登録が済んでない方", new_customer_registration_path, class: "btn btn-warning"%>
+  </div>
+</div>
 </div>

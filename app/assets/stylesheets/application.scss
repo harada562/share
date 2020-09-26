@@ -24,15 +24,26 @@
 //   font-family: 'font';
 // }
 
+// ヘッダー
 .header{
 	text-align: center;
+	display: flex;
 }
+
+// ログインしている場合
 .header__link_signed_in{
 	list-style: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .header__link_signed_in :nth-of-type(2n){
-	margin: 10px;
+	margin-top: 50px;
 }
+.header__link_signed_in :nth-child(odd){
+	margin-bottom: 50px;
+}
+// ログインしていない場合
 .header__link_unsign{
 	list-style: none;
 	text-align: center;
@@ -41,6 +52,7 @@
 	margin: 10px;
 }
 
+// ゲストログインでしている場合
 .guest_header{
 	text-align: center;
 }
@@ -49,4 +61,18 @@
 }
 .guest_header__link_signed_in :nth-of-type(2n){
 	margin: 10px;
+}
+
+.guest_header__link_signed_in :nth-child(odd){
+	margin: 10px;
+}
+
+
+// profile
+.profile{
+	display: flex;
+}
+
+.profile__name{
+	margin-left: 30px;
 }

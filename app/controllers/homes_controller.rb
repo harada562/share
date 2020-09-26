@@ -7,6 +7,8 @@ class HomesController < ApplicationController
 	end
 
 	def top_select
+		@gorups = GroupsCustomer.where(customer_id: current_customer.id)
+		@places = Place.where(customer_id: current_customer.id)
 	end
 	private
 	# ログインしていないユーザーはTOPページに遷移

@@ -1,5 +1,6 @@
+<!-- ゲストアカウントの場合 -->
 <% if current_customer.email == "guest@guest" %>
-    <div class="col-lg-3">
+    <div class="row">
       <header>
         <%= image_tag 'logo.png' %>
         <div class="guest_header">
@@ -17,28 +18,30 @@
       </header>
     </div>
 <% else %>
+  <!-- ログインしている場合 -->
   <% if customer_signed_in? %>
-    <div class="col-lg-3">
+    <div class="row">
       <header>
-        <%= image_tag 'logo.png' %>
         <div class="header">
-          <ul class="header__link_signed_in">
-            <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
-            <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
-            <li class="link"><%= link_to 'ジャンル登録', public_genres_path %></li>
-            <li class="link"><%= link_to 'スポット登録', new_public_place_path %></li>
-            <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
-            <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
-            <li class="link"><%= link_to 'グループ作成', new_public_group_path %></li>
-            <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
-            <li class="link"><%= link_to 'お問い合わせした内容', public_inquiries_path%></li>
-            <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
-          </ul>
+        <%= image_tag 'logo.png' %>
+              <ul class="header__link_signed_in">
+                <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
+                <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
+                <li class="link"><%= link_to 'ジャンル登録', public_genres_path %></li>
+                <li class="link"><%= link_to 'スポット登録', new_public_place_path %></li>
+                <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
+                <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
+                <li class="link"><%= link_to 'グループ作成', new_public_group_path %></li>
+                <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
+                <li class="link"><%= link_to 'お問い合わせした内容', public_inquiries_path%></li>
+                <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
+              </ul>
         </div>
       </header>
     </div>
   <% else %>
-    <div class="col-lg-3">
+  <!-- ログインしていない場合 -->
+    <div class="row">
       <header>
         <%= image_tag 'logo.png' %>
         <div class="header">
@@ -51,6 +54,65 @@
           </ul>
         </div>
       </header>
-    </div>
   <% end %>
+    </div>
 <% end %>
+<div class="row profile">
+    <!-- profile画像 -->
+    <div>
+      <%= attachment_image_tag current_customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", size:'100x100' %>
+    </div>
+    <div class="profile__name">
+      <h3>ようこそ!!<br><%= current_customer.nick_name%>さん</h3>
+    </div>
+    <div>
+      <!-- ゲストアカウントの場合 -->
+      <% if current_customer.nick_name == 'ゲストアカウント'%>
+        <h3>加入しているグループ</h3>
+        <ul>
+          <li>スノーボー好きが知る場所</li>
+          <li>東京食べ歩き同好会</li>
+          <li>魚好き</li>
+          <li>辺境の食</li>
+        </ul>
+    </div>
+      <% else %>
+    <div>
+        <!-- グループに加入していない場合 -->
+        <% if GroupsCustomer.where(customer_id: current_customer.id).blank?%>
+          <%= link_to "グループを探そう(リンクなし)",class: "btn btn-info"%>
+        <% else %>
+          <div>
+            <h3>加入しているグループ</h3>
+            <ul>
+              <% GroupsCustomer.where(customer_id: current_customer.id).each do |group|%>
+              <li><%= group.name%>(groupに関するリンクを付ける)</li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+      <!-- ゲストアカウントの場合 -->
+    <div>
+      <% if current_customer.nick_name == 'ゲストアカウント'%>
+        <h3>スポット登録数</h3>
+        <p>77件</p>
+    </div>
+      <% else %>
+    <div>
+        <!-- スポット登録が無い場合 -->
+        <% if Place.where(customer_id: current_customer.id).blank?%>
+          <%= link_to "スポット登録してみよう(リンクなし)",class: "btn btn-info"%>
+        <% else %>
+          <div>
+            <h3>スポット登録数</h3>
+            <%= link_to "場所の一覧詳細" do%>
+            <p><%= Place.where(customer_id: current_customer.id).count%>件</p>
+            <% end %>
+          </div>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+</div>

@@ -33,9 +33,8 @@ class Customer < ApplicationRecord
 
 # ゲストログイン用
   def self.guest
-    find_or_create_by!(email: 'guest@guestpp', nick_name: "ゲストアカウント") do |customer|
+    find_or_create_by!(email: 'guest@gmail', nick_name: "ゲストアカウント") do |customer|
       customer.password = SecureRandom.urlsafe_base64
-      # user.confirmed_at = Time.now  # Confirmable を使用している場合は必要
     end
   end
 end
