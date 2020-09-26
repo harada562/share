@@ -17,11 +17,9 @@
 	<table class="table">
 		<tr>
 			<% @genres.each do |genre| %>
-			<% if genre.customer_id == current_customer.id %>
 				<td><%= genre.name %></td>
 				<td><%= link_to "編集画面", edit_admin_genre_path(genre.id),class: "btn btn-success" %></td>
 				<td><%= link_to "削除", admin_genre_path(genre.id), method: :delete , class: "btn btn-danger"%></td>
-			<% end %>
 		</tr>
 		<% end %>
 	</table>
