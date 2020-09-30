@@ -15,13 +15,18 @@ class Public::PlacesController < ApplicationController
 	def create
 		@place = Place.new(place_params)
 			if @place.save
-				redirect_to public_customer_path(@place.customer.id)
+				redirect_to place_new_add_public_place_path(@place.id)
 			else
 				render :new
 			end
 	end
+
+	def place_new_add
+		@place = Place.find(params[:id])
+	end
 	def show
 		@place = Place.find(params[:id])
+		@like = Like.where(place_id: @place.id).count
 		# binding.pry
 	end
 

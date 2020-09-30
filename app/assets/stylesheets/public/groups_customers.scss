@@ -1,3 +1,95 @@
 // Place all the styles related to the public/groups_customers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.create_group{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.group_members_index{
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 30px 0;
+}
+
+.group_members_index__table{
+	width: 80%;
+	display: flex;
+}
+
+.maps_index_top{
+	margin: 30px 0;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.maps_index_gmap{
+	display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.maps_index_places{
+	display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.maps_index_places table{
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 100px;
+}
+
+.groups_customer_index{
+	margin-bottom: 100px;
+}
+
+.maps_index_flash{
+	width: 60%;
+	// height: 30px;
+	margin: 0 auto;
+}
+
+.maps_index_flash p{
+	display: flex;
+	text-align: center;
+}
+
+.key_word{
+	width: 70%;
+	margin: 10px auto;
+}
+
+.key_word h1{
+	text-align: center;
+}
+.not_key_word{
+	width: 70%;
+	margin: 0 auto
+}
+
+.not_key_word p{
+	text-align: center;
+}
+
+.gorup_key_word__form form{
+	display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: 30px auto;
+}
+
+.key_word_submit{
+	margin: 10px auto;
+	width: 40%;
+}
+
+.maps_index_flash{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}

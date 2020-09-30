@@ -2,7 +2,7 @@ class Public::CustomersController < ApplicationController
 	before_action :authenticate
 	before_action :guest, except: [:index, :show]
 	def index
-		@customers = Customer.all
+		@customers = Customer.all.page(params[:page]).per(8)
 	end
 
 	def show
@@ -10,9 +10,9 @@ class Public::CustomersController < ApplicationController
 		# 投稿件数
 		@places = Place.where(customer_id: @customer.id)
 		# 所属グループ
-		@groups = GroupsCustomer.where(customer_id: @customer.id)
+		@groups = GroupsCustomer.where(customer_id: @customer.id).page(params[:page]).per(3)
 		# 自分の投稿
-		@places = Place.where(customer_id: @customer.id)
+		@places = Place.where(customer_id: @customer.id).page(params[:page]).per(4)
 		# マップの初期値
 		@center_place = @places.first
 		# binding.pry
@@ -23,7 +23,6 @@ class Public::CustomersController < ApplicationController
 			@center_place.latitude = 35.6828387
 			@center_place.longitude = 139.7594549
 		end
-
 	end
 
 	def edit
@@ -32,8 +31,11 @@ class Public::CustomersController < ApplicationController
 
 	def update
 		@customer = Customer.find(params[:id])
-		@customer.update(customer_params)
-        redirect_to public_customers_path
+		if @customer.update(customer_params)
+       		redirect_to public_customer_path(@customer.id)
+       	else
+       		render :edit
+       	end
 	end
 	def confirm
 		@customer = Customer.find(params[:id])
@@ -41,7 +43,6 @@ class Public::CustomersController < ApplicationController
 	def withdrawal
 		@customer = Customer.find(params[:id])
         #is_deletedカラムにフラグを立てる(defaultはfalse)
-        binding.pry
         @customer.update(is_deleted: true)
         #ログアウトさせる
         reset_session

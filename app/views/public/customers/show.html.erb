@@ -1,110 +1,298 @@
 <%= render 'layouts/customer_header' %>
-<div class="col-lg-9">
+<div class="show_customer_h1">
 	<h1>マイページ</h1>
-	<div>
-		<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", size:'100x100' %>
-	</div>
-	<div>
-		<h3>ニックネーム</h3>
-		<%= @customer.nick_name%>
-	</div>
-	<div>
-		<h3>自己紹介</h3>
-		<%= @customer.intoroduction%>
-	</div>
-	<div>
-		<h3>スポット投稿件数</h3>
-		<%= @places.count%>件
-	</div>
-	<div>
-		<table class="table">
-		<tr>
-			<th><h3>所属グループ</h3></th>
-		</tr>
-			<tr>
-				<% @groups.each do |group|%>
-				<td>
-					<% if @customer.id == current_customer.id %>
-						<%= link_to group.group.name, maps_public_groups_customer_path(group.group.id)%>
-					<% else %>
-						<%= group.group.name %>
-					<% end %>
-				</td>
-				<% end %>
-			</tr>
-		</table>
-	</div>
-	<div>
-	</div>
-	<div>
-		<% if @customer.id == current_customer.id %>
-			<%= link_to "編集画面", edit_public_customer_path(@customer.id),class: "btn btn-success" %>
-		<% end %>
-	</div>
-	<% unless @places.empty?%>
-	<script async defer
-                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-  </script>
-	 <div id="map"></div>
-  	<style type="text/css">
-    	#map { height: 300px;
-           width: 100%;}
-  	</style>
-  <script>
-      function initMap() {
+</div>
 
-        //初期表示位置
-        var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 9,
-            center: latlng
-        });
-        var transitLayer = new google.maps.TransitLayer();
-        transitLayer.setMap(map);
-
-        //複数マーカー ここから
-        <% @places.each do |place| %>
-        <% unless place.latitude.nil?%>
-        (function(){
-          var contentString = "住所：<%= place.address %>";
-          var infowindow = new google.maps.InfoWindow({
-              content: contentString
-          });
-
-          var marker = new google.maps.Marker({
-              position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
-              map: map,
-              title: contentString
-          });
-
-          marker.addListener('click', function() {
-            infowindow.open(map, marker, contentString);
-          });
-         })();
-        <% end %>
-       <% end %>
-        //複数マーカー ここまで
-    }
-  </script>
-
+<!-- ユーザーの名前、プロフィール画像 -->
+<div class="row">
+	<div class="col-lg-12 show_customer_top">
 		<div>
-			<table class="table">
-				<tr>
-					<th>場所名</th>
-					<th>住所</th>
-					<th>場所詳細</th>
-				</tr>
-				<% @places.each do |place| %>
-				<tr>
-					<td><%= place.place_name%></td>
-					<td><%= place.address%></td>
-					<% if @customer.id == current_customer.id %>
-						<td><%= link_to "場所の詳細", edit_public_place_path(place.id)%></td>
-					<% end %>
-				</tr>
+			<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", size:'100x100' %>
+		</div>
+		<div>
+			<h3><%= @customer.nick_name%>さん</h3>
+		</div>
+		<div>
+			<% if @customer.id == current_customer.id %>
+				<%= link_to "編集画面", edit_public_customer_path(@customer.id),class: "btn btn-success" %>
 			<% end %>
-			</table>
+		</div>
+	</div>
+</div>
+
+<!-- current_customerの自己紹介文 -->
+<% if @customer.id == current_customer.id%>
+	<div class="row">
+		<div class="col-lg-12 show_customer_intoroduction">
+			<% if @customer.intoroduction.blank?%>
+				<%= link_to "自己紹介文を追加しよう", edit_public_customer_path(@customer.id), class: "btn btn-warning"%>
+			<% else %>
+					<h3>自己紹介</h3>
+					<%= @customer.intoroduction%>
+			<% end %>
+		</div>
+	</div>
+<% else %>
+<!-- 他のユーザーの自己紹介文 -->
+<div class="row">
+	<div class="col-lg-12 show_customer_intoroduction">
+			<% if @customer.intoroduction.blank?%>
+			<% else %>
+					<h3>自己紹介</h3>
+					<%= @customer.intoroduction%>
+			<% end %>
+	</div>
+</div>
+<% end %>
+
+
+<!-- current_customerの所属グループ（退会ボタン付き） -->
+<% if @customer.id == current_customer.id%>
+		<div class="row">
+			<div class="col-lg-12 show_customer_groups">
+				<% if @groups.blank?%>
+					<%= link_to "グループを探そう", public_groups_customers_path, class: "btn btn-success"%>
+				<% else %>
+				<table class="table">
+				<tr>
+					<th></th>
+					<th>所属グループ名</th>
+					<th></th>
+				</tr>
+						<% @groups.each do |group|%>
+					<tr>
+						<td><%= attachment_image_tag group.group, :image, :fill, 100, 100, format: 'jpg', fallback: "group.png", size:'60x60'%></td>
+							<% if @customer.id == current_customer.id %>
+								<td><%= link_to group.group.name, maps_public_groups_customer_path(group.group.id)%></td>
+							<% else %>
+								<td><%= group.group.name %></td>
+							<% end %>
+							<% if @customer.id == current_customer.id %>
+								<td><%= link_to "グループを抜ける", public_groups_customer_path(group.id), method: :delete, data: {confirm: "本当に抜けますか？"} ,class: "btn btn-danger"%></td>
+							<% end %>
+						<% end %>
+					</tr>
+				</table>
+				<%= paginate @groups %>
+				<% end %>
+			</div>
+		</div>
+<!-- current_customerの所属グループ表示ここまで -->
+<% else %>
+<!-- 他のユーザーの所属グループ -->
+	<% if @groups.blank?%>
+		<h1>所属グループはありません</h1>
+	<% else %>
+		<div class="row">
+			<div class="col-lg-12 show_customer_groups">
+				<table class="table">
+					<tr>
+						<th></th>
+						<th>所属グループ名</th>
+					</tr>
+					<% @groups.each do |group|%>
+					<tr>
+						<td><%= attachment_image_tag group.group, :image, :fill, 100, 100, format: 'jpg', fallback: "group.png", size:'60x60'%></td>
+							<td><%= group.group.name %></td>
+						<% end %>
+					</tr>
+				</table>
+				<%= paginate @groups %>
+			</div>
 		</div>
 	<% end %>
+<% end %>
+
+
+<!-- 他のユーザーの詳細画面 -->
+<!-- Google Mapの表示 -->
+<div class="row">
+	<div class="col-lg-12 show_customer_maps">
+	<% unless @customer.id == current_customer.id%>
+		<% if @places.empty?%>
+			<h2>場所の投稿がありません</h2>
+		<% else %>
+			<script async defer
+	                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+	  </script>
+		 <div id="map"></div>
+	  	<style type="text/css">
+	    	#map { height: 300px;
+	           width: 80%;}
+	  	</style>
+	  <script>
+	      function initMap() {
+
+	        //初期表示位置
+	        var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
+
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	            zoom: 9,
+	            center: latlng
+	        });
+	        var transitLayer = new google.maps.TransitLayer();
+	        transitLayer.setMap(map);
+
+	        //複数マーカー ここから
+	        <% @places.each do |place| %>
+	        <% unless place.latitude.nil?%>
+	        (function(){
+	          var contentString = "住所：<%= place.address %>";
+	          var infowindow = new google.maps.InfoWindow({
+	              content: contentString
+	          });
+
+	          var marker = new google.maps.Marker({
+	              position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
+	              map: map,
+	              title: contentString
+	          });
+
+	          marker.addListener('click', function() {
+	            infowindow.open(map, marker, contentString);
+	          });
+	         })();
+	        <% end %>
+	       <% end %>
+	        //複数マーカー ここまで
+	    }
+	  </script>
+	  <% end %>
+	 </div>
+	</div>
+
+<!-- 場所の詳細（文字情報） -->
+	  <div class="row">
+	  	<div class="col-lg-12 show_customer_places">
+	  		<table class="table">
+					<tr>
+						<th class="show_customer__place_name">場所名</th>
+						<th>住所</th>
+						<th class="show_customer__table_link">場所詳細</th>
+						<th class="show_customer__delete"></th>
+					</tr>
+					<% @places.each do |place| %>
+					<tr>
+						<td><%= place.place_name%></td>
+						<td><%= place.address%></td>
+						<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
+						<div class="show_customer__likes">
+							<td>
+								<% if current_customer.already_liked?(place) %>
+									<%= link_to public_place_like_path(place), method: :delete do %>
+										<i class="fas fa-heart"></i>
+									<% end %>
+								<% else %>
+									<%= link_to public_place_likes_path(place), method: :post do %>
+										<i class="far fa-heart"></i>
+									<% end %>
+								<% end %>
+									<%= Like.where(place_id: place.id).count%>
+							</td>
+						</div>
+					</tr>
+				<% end %>
+				</table>
+				<%= paginate @places %>
+	  	</div>
+	  </div>
+<!-- 他のユーザーの詳細画面はここまで -->
+	<% else %>
+
+<!-- ログイン中のユーザーの詳細画面（削除buttonなどがついています）ここから -->
+	<div class="row">
+	<div class="col-lg-12">
+		<% if @places.empty?%>
+			<%= link_to "スポット登録してみよう", new_public_place_path,class: "btn btn-info customer_show__link"%>
+		<% else %>
+		<script async defer
+	                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+	  </script>
+		 <div id="map"></div>
+	  	<style type="text/css">
+	    	#map { height: 300px;
+	           width: 80%;}
+	  	</style>
+	  <script>
+	      function initMap() {
+
+	        //初期表示位置
+	        var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
+
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	            zoom: 9,
+	            center: latlng
+	        });
+	        var transitLayer = new google.maps.TransitLayer();
+	        transitLayer.setMap(map);
+
+	        //複数マーカー ここから
+	        <% @places.each do |place| %>
+	        <% unless place.latitude.nil?%>
+	        (function(){
+	          var contentString = "住所：<%= place.address %>";
+	          var infowindow = new google.maps.InfoWindow({
+	              content: contentString
+	          });
+
+	          var marker = new google.maps.Marker({
+	              position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
+	              map: map,
+	              title: contentString
+	          });
+
+	          marker.addListener('click', function() {
+	            infowindow.open(map, marker, contentString);
+	          });
+	         })();
+	        <% end %>
+	       <% end %>
+	        //複数マーカー ここまで
+	    }
+	  </script>
+	</div>
+</div>
+	<div class="row">
+		<div class="show_customer_places">
+				<table class="table">
+					<tr>
+						<th class="show_customer__place_name">場所名</th>
+						<th>住所</th>
+						<th class="show_customer__table_link">場所詳細</th>
+						<th class="show_customer__delete"></th>
+						<th></th>
+					</tr>
+					<% @places.each do |place| %>
+					<tr>
+						<td><%= place.place_name%></td>
+						<td><%= place.address%></td>
+						<% if @customer.id == current_customer.id %>
+							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
+						<% end %>
+						<% if @customer.id == current_customer.id%>
+							<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
+						<% end %>
+						<div class="show_customer__likes">
+							<td>
+								<% if current_customer.already_liked?(place) %>
+									<%= link_to public_place_like_path(place), method: :delete do %>
+										<i class="fas fa-heart"></i>
+									<% end %>
+								<% else %>
+									<%= link_to public_place_likes_path(place), method: :post do %>
+										<i class="far fa-heart"></i>
+									<% end %>
+								<% end %>
+									<%= Like.where(place_id: place.id).count%>
+							</td>
+						</div>
+					</tr>
+				<% end %>
+				</table>
+				<%= paginate @places %>
+		</div>
+		<!-- if @places.empty?と if @customer.id == current_customer.id のend -->
+		<% end %>
+		<% end %>
+	</div>
 </div>

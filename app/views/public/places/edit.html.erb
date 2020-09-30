@@ -1,43 +1,37 @@
 <%= render 'layouts/customer_header' %>
-<div class="col-lg-3">
+<%= render 'layouts/customer_profile' %>
+<div class="col-lg-4">
 	<h1>スポット編集</h1>
 	<%= form_with model: @place, url: public_place_path, local: true do |f| %>
 	<%= render 'layouts/error_messages', model: @place %>
-		<% if @place.genre_id.blank? %>
-			<div>
-				<%= f.label :ジャンル %><br />
-				<%= f.collection_select :genre_id,Genre.where(customer_id: current_customer.id), :id, :name, :include_blank => 'ジャンル登録なし' %>
-			</div>
-		<% else %>
-			<div>
-				<%= f.label :ジャンル %><br />
-				<%= f.collection_select :genre_id, Genre.where(customer_id: current_customer.id), :id, :name %>
-			</div>
-		<% end %>
-		<div>
+		<div class="place_edit_form">
+			<%= f.label :ジャンル %><br />
+			<%= f.collection_select :genre_id, Genre.all, :id, :name %>
+		</div>
+		<div class="place_edit_form">
 			<%= f.label :場所名 %>(必須)<br />
 			<%= f.text_field :place_name%>
 		</div>
-		<div>
+		<div class="place_edit_form">
 			<%= f.label :住所 %>(必須)<br />
 			<%= f.text_field :address%>
 		</div>
-		<div>
-			<%= f.label :場所のURL %>(追加しとくと便利)<br />
-			<%= f.url_field :place_url%>
+		<div class="place_edit_form">
+			<%= f.label :場所のURL %><br />
+			<%= f.url_field :place_url, size:40, maxlength:15 %>
 		</div>
-		<div>
+		<div class="place_edit_form">
 			<%= f.label :電話番号 %><br />
 			<%= f.telephone_field :number%>
 		</div>
-		<div>
+		<div  class="place_edit_form">
 			<%= f.label :平均予算 %><br />
 			<%= f.text_field :budget%>円
 		</div>
 		<%= f.submit "スポット変更",class: "btn btn-success" %>
 	<% end %>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-8">
 <!-- #以下の記述の中にあるYOUR_API_KEYには取得したご自身のAPIキーを記述してください -->
 <script async defer
                 src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">

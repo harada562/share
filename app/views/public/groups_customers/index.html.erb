@@ -1,62 +1,40 @@
 <%= render 'layouts/customer_header' %>
-<div class="col-lg-9">
-	<h1>加入しているグループ</h1>
-	<strong><%= flash[:group_add]%></strong>
-	<table class="table">
-		<tr>
-			<th>グループ_id</th>
-			<th>グループ名(グループメンバ一覧)</th>
-			<th>メンバー数</th>
-		</tr>
-			<% @groups.each do |groups| %>
-				<tr>
-					<td><%= link_to "マップ一覧", maps_public_groups_customer_path(groups.group.id)%></td>
-					<td><%= link_to groups.group.name, menbers_public_groups_customer_path(groups.group.id)%></td>
-					<td><%= GroupsCustomer.where(group_id: groups.group_id).count%></td>
-				</tr>
-			<% end %>
-	</table>
+<%= render 'layouts/customer_profile' %>
+<div class="col-lg-12 groups_customer_index">
 	<h1>全てのグループ</h1>
-	<strong><%= flash[:not_key_word]%></strong>
-	<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
 	<table class="table">
 		<tr>
-			<th>メンバー一覧</th>
-			<th>グループ名</th>
 			<th></th>
+			<th>グループ名</th>
+			<th>グループ人数</th>
+			<th>スポット登録数</th>
 		</tr>
 		<tr>
 		<% @groups_customer.each do |groups_customer| %>
-		<tr>
-			<td><%= f.hidden_field :customer_id, :value => current_customer.id%></td>
-			<td><%= f.hidden_field :group_id, :value => groups_customer.group.id %></td>
-			<td><%= f.hidden_field :is_admin, :value => false %></td>
-		</tr>
-		<!-- 現在ログイン中のユーザーが所属しているグループは表示しない -->
-		 <% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
-		 	<!-- 非公開のグループのマップ一覧とメンバ一覧はlink表示しない -->
-		 	<% if groups_customer.group.is_closed == false %>
-				<td><%= link_to groups_customer.group.name, menbers_public_groups_customer_path(groups_customer.group.id)%></td>
-				<td><%= link_to "マップ一覧", maps_public_groups_customer_path(groups_customer.group.id)%></td>
-			<% else %>
-				<td>合言葉が必要です</td>
-				<td><%= groups_customer.group.name%></td>
-			<% end %>
+			<% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
+			 	<% if groups_customer.group.is_closed == false %>
 
-				<% unless current_customer.email == "guest@guest" %>
-				<!-- 中間テーブルに保存するためのform_with -->
-						<!-- グループが非公開(groupsテーブルのis_clased == true)の場合は合言葉(key_word)は必須 -->
-						<% if groups_customer.group.is_closed == true %>
-								<td><%= f.text_field :key_word%></td>
-								<td><%= f.submit "合言葉チェック",class: "btn btn-success" %></td>
-						<% else%>
-							<!-- グループが公開(is_closed == false)の場合は合言葉(key_word)は不要 -->
-							<td><%= f.submit "グループ加入",class: "btn btn-success" %></td>
-						<% end %>
-				<% end %>
+			 		<!-- グループ画像 -->
+			 		<td><%= attachment_image_tag groups_customer.group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80'%></td>
+
+					<!-- グループ詳細 -->
+					<td><%= link_to groups_customer.group.name, public_group_path(groups_customer.group.id)%></td>
+
+					<!-- グループメンバー -->
+					<td><%= link_to GroupsCustomer.where(group_id: groups_customer.group_id).count, menbers_public_groups_customer_path(groups_customer.group.id)%>人</td>
+
+					<!-- グループマップ -->
+					<td><%= link_to Place.where(group_id: groups_customer.group.id).count, maps_public_groups_customer_path(groups_customer.group.id)%>箇所</td>
+
+				<% else %>
+					<td><%= image_tag 'stop.png', :size =>'80x80'%></td>
+					<td><%= link_to groups_customer.group.name, key_word_public_groups_customer_path(groups_customer.group.id)%></td>
+					<td><%= GroupsCustomer.where(group_id: groups_customer.group_id).count%>人</td>
+					<td><%=  Place.where(group_id: groups_customer.group.id).count%>箇所</td>
 				<% end %>
 			<% end %>
 			</tr>
 		<% end %>
 	</table>
+	<%= paginate @groups_customer %>
 </div>

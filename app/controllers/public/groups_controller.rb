@@ -7,7 +7,6 @@ class Public::GroupsController < ApplicationController
 	end
 	def create
 		@group = Group.new(group_params)
-		binding.pry
 			groups_customer = @group.groups_customers.build
 			groups_customer.group_id = @group.id
 			groups_customer.customer_id = current_customer.id
@@ -19,6 +18,31 @@ class Public::GroupsController < ApplicationController
 			render :new
 		end
 	end
+
+	def show
+		@group = Group.find(params[:id])
+		 @group_customer_add = GroupsCustomer.new
+		@groups = GroupsCustomer.where(group_id: @group.id)
+		# 管理者を見つける
+		@is_admin = GroupsCustomer.where(group_id: @group.id, is_admin: true)
+		@places = Place.where(group_id: @group.id)
+	end
+
+	def new_key_word
+		@key_word = Group.find(params[:id])
+	end
+
+	def edit
+		@group = Group.find(params[:id])
+	end
+	def update
+		@group = Group.find(params[:id])
+		if @group.update(group_params)
+        	redirect_to public_groups_customers_path
+		else
+			render :edit
+		end
+	end
 	def destroy
       @group = Group.find(params[:id])
       @group.destroy
@@ -26,7 +50,7 @@ class Public::GroupsController < ApplicationController
     end
 	private
 	def group_params
-		params.require(:group).permit(:name, :is_closed, :key_word, :customer_id,
+		params.require(:group).permit(:name, :is_closed, :key_word, :customer_id, :image, :introduction,
 			groups_customers_attributes: [:customer_id, :group_id, :is_admin])
 	end
 	def guest

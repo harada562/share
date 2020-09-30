@@ -12,6 +12,7 @@ ja:
         address: 住所
       group:
         name: グループ名
+        key_word: 合言葉
       customer:
         nick_name: ニックネーム
         password: パスワード

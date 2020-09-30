@@ -1,61 +1,134 @@
-// 新規登録画面
-.customer_new{
-	background-image: image-url('lego.jpg');
-	 background-size:  cover;
-	 height: 800px;
+
+
+// _customer_profile
+.profile__image_name{
 	display: flex;
-	flex-direction: column;
-	// flex-direction: row;
-	align-items: center;
 	justify-content: center;
+	margin-bottom: 30px;
 }
 
-.customer_new h2{
+.profile__group{
+	margin: 0 30px;
+}
+
+.profile__place{
+	margin: 0 30px;
+}
+
+.profile__group_place{
+	display: flex;
+	align-items: center;
+}
+
+// customer_show
+.show_customer_h1 h1{
+	text-align: center;
 	font-size: 30px;
 }
 
-.customer_new__form{
-	text-align: center;
-	background-color: white;
-	width: 300px;
-}
-
-.customer_new__form_action{
-	margin-top: 20px;
-}
-
-.customer_new__link{
-	margin-bottom: 20px;
-	margin-top: 20px;
-}
-
-// ログイン画面
-.customer_sessions_new{
-	background-image: image-url('lego.jpg');
-	 background-size:  cover;
-	 height: 800px;
+.show_customer_top{
 	display: flex;
-	flex-direction: column;
-	// flex-direction: row;
-	align-items: center;
-	justify-content: center;
+	justify-content: space-evenly;
+    align-items: center;
 }
 
-.customer_sessions_new h2{
+.show_customer_intoroduction{
+	margin: 30px 0;
+	display: block;
+	text-align: center;
+
+}
+
+.show_customer_groups table{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.show_customer_maps{
+	margin: 30px 0;
+	display: flex;
+    justify-content: center;
+}
+
+.show_customer_places table{
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 100px;
+}
+
+.show_customer__table_link{
+	width: 20%;
+}
+.show_customer__place_name{
+	width: 20%;
+}
+
+.show_customer__delete{
+	width: 20%;
+}
+
+.show_customer__likes{
+	width: 5%;
+}
+
+// customer_inex
+.customer_index table{
+	width: 80%;
+	margin: 30px auto;
+}
+
+.customer_index__h1{
+	text-align: center;
+}
+.customer_index__h1 h1{
 	font-size: 30px;
 }
 
-.customer_sessions_new__form{
+.show_customer_groups{
+	display: flex;
+	justify-content: center;
+
+}
+
+.show_customer_groups a{
+	width: 200px;
+}
+
+.show_customer_intoroduction a{
+	width: 200px;
+}
+
+.customer_show__link {
+	width: 200px;
+}
+
+.customer_edit__h1 h1{
 	text-align: center;
-	background-color: white;
-	width: 300px;
 }
 
-.customer_sessions_new__form_action{
-	margin-top: 20px;
+.customer_edit__form{
+	display: flex;
+    justify-content: center;
 }
 
-.customer_sessions_new__link{
-	margin-bottom: 20px;
-	margin-top: 20px;
+.customer_edit__form{
+	margin: 20px auto;
+}
+
+.cutomer_edit__link{
+	display: flex;
+    justify-content: center;
+}
+
+.cutomer_edit__link_btn{
+	margin: 20px;
+}
+
+.customer_edit{
+	margin-bottom: 100px;
+}
+
+.cutomer_confirm{
+	width: 80%;
+	margin: 0 auto;
 }

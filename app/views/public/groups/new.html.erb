@@ -1,27 +1,43 @@
 <%= render 'layouts/customer_header' %>
-<div class="col-lg-9">
-	<h1>グループ作成</h1>
-	<%= form_with model: @group, url: public_groups_path, local: true do |f|%>
-	<%= render 'layouts/error_messages', model: @group %>
-	<div>
-		<%= f.label :グループ名 %><br />
-		<%= f.text_field :name%>
-	</div>
-	<div>
-		<h2>公開ステータス</h2>
+<%= render 'layouts/customer_profile' %>
+<div class="row">
+	<div class="col-lg-12 group_new">
 		<div>
-			<%= f.label :公開 %><br />
-			<%= f.radio_button :is_closed, [false] , local: true%>
+			<h1>グループ作成</h1>
 		</div>
-		<div>
-			<%= f.label :非公開 %><br />
-			<%= f.radio_button :is_closed, [true]%>
+		<div class="group_new__form">
+			<%= form_with model: @group, url: public_groups_path, local: true do |f|%>
+			<%= render 'layouts/error_messages', model: @group %>
+			<div>
+				<%= f.label :グループ名 %><br />
+				<%= f.text_field :name%>
+			</div>
+			<div>
+				<%= f.label :グループ画像 %><br />
+				<%= f.attachment_field :image %>
+			</div>
+			<div>
+				<%= f.label :グループ紹介文 %><br />
+				<%= f.text_area :introduction ,:size=>"60x5"%>
+			</div>
+			<h2>公開ステータス</h2>
+			<div class="group_new__form_radio">
+				<%= f.label :is_closed, "公開" %><br />
+				<%= f.radio_button :is_closed, [false] , local: true%>
+			</div>
+			<h2>非公開の場合、合言葉が必要になります</h2>
+			<div class="group_new__form_radio">
+				<%= f.label :is_closed, "非公開" %><br />
+				<%= f.radio_button :is_closed, [true]%>
+			</div>
+			<div class="gorup_new__form_key_word">
+				<%= f.label :key_word, "合言葉" %><br />
+				<%= f.text_field :key_word, size:"30",placeholder:"合言葉を入力してください"%>
+			</div>
+			<div>
+				<%= f.submit "グループ作成",class: "btn btn-success group_new__form_submit"%>
+			</div>
+			<% end %>
 		</div>
 	</div>
-	<div>
-			<%= f.label :合言葉 %><br />
-			<%= f.text_field :key_word%>
-	</div>
-		<%= f.submit "グループ作成",class: "btn btn-success" %>
-	<% end %>
 </div>

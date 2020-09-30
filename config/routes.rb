@@ -16,12 +16,16 @@ Rails.application.routes.draw do
 		resources :groups
 		resources :groups_customers do
 			member do
-				get 'menbers', to: 'groups_customers#members_show'
-				get 'maps', to: 'groups_customers#maps_show'
+				get 'menbers', to: 'groups_customers#members_index'
+				get 'maps', to: 'groups_customers#maps_index'
+				get 'key_word', to: 'groups_customers#key_word'
 			end
 		end
 		resources :places do
 			resources :likes, only: [:create, :destroy]
+			member do
+				get 'place_new_add', to: 'places#place_new_add'
+			end
 		end
 	end
 

@@ -1,0 +1,42 @@
+<%= render 'layouts/customer_header' %>
+<%= render 'layouts/customer_profile' %>
+<div class="row group_members_index">
+	<%= attachment_image_tag @group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80'%>
+	<h1><%= @group.name%></h1>
+	<% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+		<%= link_to "変更", edit_public_group_path(@group.id), class: "btn btn-success"%>
+	<% end %>
+	<% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+		<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
+			<%= f.hidden_field :customer_id, :value => current_customer.id%>
+			<%= f.hidden_field :group_id, :value => @group.id %>
+			<%= f.hidden_field :is_admin, :value => false %>
+			<%= f.submit "グループ加入",class: "btn btn-success" %>
+		<% end %>
+	<% end %>
+</div>
+<div class="row group_members_index__table ">
+	<table class="table">
+		<tr>
+			<th>名前</th>
+			<th>会員ステータス</th>
+			<th></th>
+		</tr>
+		<tr>
+			<% @groups.each do |member|%>
+				<td><%= link_to member.customer.nick_name, public_customer_path(member.customer_id)%></td>
+				<% if member.is_admin == true%>
+					<td>オーナー</td>
+				<% else %>
+					<td>一般会員</td>
+				<% end %>
+				<% if member.customer_id == current_customer.id%>
+					<td><%= link_to "このグループを抜ける", public_groups_customer_path(member.id), method: :delete, data: { confirm: '退会しますか？' },class: "btn btn-danger"%></td>
+				<% end %>
+				<% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+					<td><%= link_to "このグループを抜けさせる", public_groups_customer_path(member.id), method: :delete, data: { confirm: '退会させますか？' },class: "btn btn-danger"%></td>
+				<% end %>
+		</tr>
+			<% end %>
+	</table>
+</div>

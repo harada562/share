@@ -16,13 +16,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-// @font-face{
-// 	font-family: "font";
-//    src: font-url('siteseeing.ttf') format('truetype');
-// }
-// h1{
-//   font-family: 'font';
-// }
+*{
+	margin:0;
+	padding: 0;
+}
+
+.shore_margin{
+	margin-bottom: 100px;
+}
+
+ul{
+	list-style: none;
+}
 
 // ヘッダー
 .header{
@@ -69,10 +74,15 @@
 
 
 // profile
-.profile{
-	display: flex;
-}
 
 .profile__name{
 	margin-left: 30px;
+}
+
+// kaminari
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    border-radius: 4px;
 }

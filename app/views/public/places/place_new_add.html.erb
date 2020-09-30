@@ -1,0 +1,28 @@
+<%= render 'layouts/customer_header'%>
+<div class="row">
+	<div class="col-lg-12 place_new">
+		<div>
+		<h1>これを追加すると便利ですよ？？</h1>
+		</div>
+			<%= link_to "追加しない", public_place_path(@place.id),class: "btn btn-success" %>
+		<div>
+		<%= form_with model: @place, url: public_place_path(@place.id), local: true do |f|%>
+		<%= flash[:not_latitude]%>
+		<%= render 'layouts/error_messages', model: @place %>
+				<div class="place_new__form">
+					<%= f.label :場所URL %><br />
+					<%= f.text_field :place_url%>
+				</div>
+				<div class="place_new__form">
+					<%= f.label :電話番号 %><br />
+					<%= f.text_field :number%>
+				</div>
+				<div class="place_new__form">
+					<%= f.label :平均予算 %><br />
+					<%= f.text_field :budget%>円
+				</div>
+			<%= f.submit "追加",class: "btn btn-success" %>
+		<% end %>
+		</div>
+	</div>
+</div>
