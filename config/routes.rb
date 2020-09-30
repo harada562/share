@@ -6,15 +6,15 @@ Rails.application.routes.draw do
 	get 'home/top_select', to:'homes#top_select'
 	devise_for :customers
 	namespace :public do
-		resources :customers do
+		resources :customers, only: [:index, :show, :edit, :update]do
 			member do
 				get 'confirm', to:'customers#confirm'
 				put "withdrawal" => "customers#withdrawal"
 			end
 		end
-		resources :inquiries
-		resources :groups
-		resources :groups_customers do
+		resources :inquiries, only: [:index, :create]
+		resources :groups, only: [:new, :create, :show, :edit, :update, :destroy]
+		resources :groups_customers ,only: [:index, :create, :destroy] do
 			member do
 				get 'menbers', to: 'groups_customers#members_index'
 				get 'maps', to: 'groups_customers#maps_index'

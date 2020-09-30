@@ -69,7 +69,7 @@ class Public::GroupsCustomersController < ApplicationController
 	def destroy
       @group_customer = GroupsCustomer.find(params[:id])
       @group_customer.destroy
-      redirect_to public_groups_customers_path
+      redirect_to public_customer_path(current_customer.id)
     end
 	private
 	def group_customer_params
@@ -77,7 +77,7 @@ class Public::GroupsCustomersController < ApplicationController
 	end
 	# ゲストログインの制限
 	def guest
-		redirect_to root_path if current_customer.email == "guest@guestpp"
+		redirect_to root_path if current_customer.nick_name == "げすと"
 	end
 	# ログインしていないユーザーはTOPページに遷移
 	def authenticate

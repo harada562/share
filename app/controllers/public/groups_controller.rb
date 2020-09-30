@@ -1,6 +1,6 @@
 class Public::GroupsController < ApplicationController
 	before_action :authenticate
-	before_action :guest
+	before_action :guest, except: [:show]
 	def new
 		@group = Group.new
 		# @group.groups_customers.build
@@ -54,7 +54,7 @@ class Public::GroupsController < ApplicationController
 			groups_customers_attributes: [:customer_id, :group_id, :is_admin])
 	end
 	def guest
-		redirect_to root_path if current_customer.email == "guest@guestpp"
+		redirect_to root_path if current_customer.nick_name == "げすと"
 	end
 	# ログインしていないユーザーはTOPページに遷移
 	def authenticate

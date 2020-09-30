@@ -1,16 +1,16 @@
 <%= render 'layouts/customer_header' %>
 <%= render 'layouts/customer_profile' %>
 
-<!-- グループのボタン -->
 <div class="row">
   <p class="maps_index_flash bg-info"><%= flash[:group_add]%></p>
   <div class="col-lg-12 maps_index_top">
-    <%= attachment_image_tag @group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80'%>
+    <%= attachment_image_tag @group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%>
   	<h1><%= @group.name%></h1>
+    <!-- グループの管理者の場合（is_admin == true） -->
     <% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
       <%= link_to "グループ編集", edit_public_group_path(@group.id)%>
     <% end %>
-    <!-- グループ加入 -->
+    <!-- グループ未加入の場合 -->
     <% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
       <%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
         <%= f.hidden_field :customer_id, :value => current_customer.id%>
@@ -25,7 +25,6 @@
 <!-- グループのマップ表示 -->
 <div class="row">
    <div class="col-lg-12 maps_index_gmap">
-<!-- マップ表示 -->
   <script async defer
                 src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAMaUX8y-y1Kk4TzBmDmjBIylax5DvqfaE&callback=initMap">
   </script>
@@ -73,52 +72,57 @@
   </div>
 </div>
 
-<!-- グループの場所表示（文字情報） -->
-<div class="row">
-  <div class="col-lg-12  maps_index_places">
-    <!-- 場所一覧 -->
-    <!-- 現在ログイン中のカスタマーがグループに加入していて、
-      そのグループが場所の登録をしていない場合、
-      場所投稿のリンクを表示する -->
-    <% if @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+
+
+<!-- グループ加入中の場合 -->
+<% if @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+  <!-- グループの場所表示（文字情報） -->
+  <div class="row">
+    <div class="col-lg-12  maps_index_places">
+      <!-- このグループの場所未登録の場合 -->
       <% if @places.blank? %>
         <%= link_to "グループに場所を投稿してみよう", new_public_place_path,class: "btn btn-success" %>
       <% else %>
-      	<table class="table">
-      		<tr>
-      			<th>プロフィール画像</th>
-      			<th>ニックネーム</th>
-      			<th>場所</th>
-      		</tr>
-      		<tr>
-      			<% @places.each do |place|%>
-      				<td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "", size:'40x40'%></td>
-      				<td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
-      				<td><%= link_to place.address, public_place_path(place.id)%></td>
-      		</tr>
-      			<% end %>
-      	</table>
-      <% end %>
-      <% else %>
-        <% if @places.blank? %>
-          <p><%= @group.name%>は場所の投稿がありません</p>
-        <% end %>
+      <!-- グループに場所の登録がある場合 -->
         <table class="table">
           <tr>
             <th>プロフィール画像</th>
-            <th>ニックネーム</th>
+            <th>投稿者</th>
             <th>場所</th>
           </tr>
-          <tr>
-            <% @places.each do |place|%>
-              <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "", size:'40x40'%></td>
+          <% @places.each do |place|%>
+            <tr>
+              <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40',  class: "img-circle"%></td>
               <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
               <td><%= link_to place.address, public_place_path(place.id)%></td>
-          </tr>
-            <% end %>
+            </tr>
+          <% end %>
         </table>
-    <% end %>
-
-    <!-- グループ非加入者 -->
+      <% end %>
+    </div>
   </div>
-</div>
+<% else %>
+<!-- グループ加入中の場合 -->
+  <div class="row">
+    <div class="col-lg-12  maps_index_places">
+      <% if @places.blank? %>
+        <p><%= @group.name%>は場所の投稿がありません</p>
+      <% else %>
+        <table class="table">
+          <tr>
+            <th>プロフィール画像</th>
+            <th>投稿者</th>
+            <th>場所</th>
+          </tr>
+          <% @places.each do |place|%>
+            <tr>
+              <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40', class: "img-circle"%></td>
+              <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
+              <td><%= link_to place.address, public_place_path(place.id)%></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+<% end %>

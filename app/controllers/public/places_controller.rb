@@ -1,6 +1,5 @@
 class Public::PlacesController < ApplicationController
 	before_action :authenticate
-	before_action :guest, except: [:index, :show]
 	def index
 		@place = Place.new
 		@places = Place.all.page(params[:page]).per(7)
@@ -52,10 +51,6 @@ class Public::PlacesController < ApplicationController
 	private
 	def place_params
 		params.require(:place).permit( :genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget, :place_url)
-	end
-	# ゲストログインの制限
-	def guest
-		redirect_to root_path if current_customer.email == "guest@guestpp"
 	end
 	# ログインしていないユーザーはTOPページに遷移
 	def authenticate

@@ -53,7 +53,7 @@ class Public::CustomersController < ApplicationController
 		params.require(:customer).permit( :nick_name, :email, :intoroduction, :image, :group_id, :namber, :place_url, :budget)
 	end
 	def guest
-		redirect_to root_path if current_customer.email == "guest@guestpp"
+		redirect_to root_path if current_customer.nick_name == "げすと"
 	end
 	# ログインしていないユーザーはTOPページに遷移
 	def authenticate
