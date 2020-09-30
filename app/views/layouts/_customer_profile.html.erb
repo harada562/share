@@ -7,45 +7,43 @@
       <h3>ようこそ!!<br><%= current_customer.nick_name%>さん</h3>
     </div>
     <div class="profile__group_place">
-      <!-- グループに加入していない場合 -->
+    <% if current_customer.nick_name == "げすと"%>
+      <div class="customer_progile__guest">
+        <a href="#" class="btn btn-success" disabled="disabled">グループ加入するには<br>新規登録が必要です</a>
+      </div>
+    <% else %>
+    <!-- グループに加入していない場合 -->
       <% if GroupsCustomer.where(customer_id: current_customer.id).blank?%>
-      <div class="profile__group">
-        <%= link_to "グループを探そう", public_groups_customers_path,class: "btn btn-info"%>
-      </div>
+        <div class="profile__group">
+          <%= link_to "グループを探そう", public_groups_customers_path,class: "btn btn-info"%>
+        </div>
       <% else %>
-      <div class="profile__group">
-        <h3>加入しているグループ</h3>
-        <ul>
-          <% GroupsCustomer.where(customer_id: current_customer.id).each do |group_customer|%>
-          <li><%= link_to group_customer.group.name, maps_public_groups_customer_path(group_customer.group.id)%></li>
-          <% end %>
-        </ul>
-      </div>
+        <div class="profile__group">
+          <h3>加入しているグループ</h3>
+            <ul>
+              <% GroupsCustomer.where(customer_id: current_customer.id).each do |group_customer|%>
+                <li><%= link_to group_customer.group.name, maps_public_groups_customer_path(group_customer.group.id)%></li>
+            <% end %>
+            </ul>
+        </div>
       <% end %>
-      <!-- ゲストアカウントの場合 -->
-      <div>
-        <% if current_customer.nick_name == 'ゲストアカウント'%>
-        <h3>スポット登録数</h3>
-        <p>77件</p>
-      </div>
-      <% else %>
-      <div class="customer_profile__place">
+    <% end %>
+
+        <div class="customer_profile__place">
         <!-- スポット登録が無い場合 -->
-        <% if Place.where(customer_id: current_customer.id).blank?%>
-          <div class="profile__place">
-            <%= link_to "スポット登録してみよう", new_public_place_path,class: "btn btn-info"%>
-          </div>
+          <% if Place.where(customer_id: current_customer.id).blank?%>
+            <div class="profile__place">
+              <%= link_to "スポット登録してみよう", new_public_place_path,class: "btn btn-info"%>
+            </div>
           <% else %>
             <div class="profile__place">
               <h3>スポット登録数</h3>
               <%= link_to public_customer_path(current_customer.id), class: "btn btn-info" do %>
-              <%= Place.where(customer_id: current_customer.id).count%>件
-          <% end %>
+                <%= Place.where(customer_id: current_customer.id).count%>件
+              <% end %>
             </div>
           <% end %>
-        <% end %>
-      </div>
+        </div>
     </div>
   </div>
-</div>
 </div>

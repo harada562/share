@@ -60,7 +60,7 @@
     </tr>
     <% @places.where(group_id: nil).each do |place| %>
     <tr>
-      <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60'%></td>
+      <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60', class: "img-circle"%></td>
       <td><%= place.customer.nick_name%></td>
       <% if place.genre.nil? %>
         <td>ジャンルなし</td>
