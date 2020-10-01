@@ -14,13 +14,6 @@
       <%= f.password_field :password, autocomplete: "current-password" %>
     </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="customer_sessions_new__form_field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :ログイン情報を保存 %>
-      </div>
-    <% end %>
-
     <div class="customer_sessions_new__form_action">
       <%= f.submit "ログイン" ,class: "btn btn-success" %>
     </div>
