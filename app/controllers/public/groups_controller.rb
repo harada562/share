@@ -7,12 +7,12 @@ class Public::GroupsController < ApplicationController
 	end
 	def create
 		@group = Group.new(group_params)
-			groups_customer = @group.groups_customers.build
-			groups_customer.group_id = @group.id
-			groups_customer.customer_id = current_customer.id
-			groups_customer.is_admin = true
+			@groups_customer = @group.groups_customers.build
+			@groups_customer.group_id = @group.id
+			@groups_customer.customer_id = current_customer.id
+			@groups_customer.is_admin = true
 		if @group.save
-			groups_customer.save
+			@groups_customer.save
 			redirect_to public_groups_customers_path
 		else
 			render :new

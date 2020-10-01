@@ -7,7 +7,7 @@ class Group < ApplicationRecord
   	# validates :is_closed, presence: true
 
   	# 一意性
-  	validates :name, uniqueness: true, allow_nil: true
+  	validates :name, uniqueness: true
   	# validates :key_word, uniqueness: true, allow_nil: true
 
   	# 画像アップロード機能

@@ -223,76 +223,81 @@
 
 <!-- current_customerの場所（文字情報） -->
 <% if @customer.id == current_customer.id%>
-	<div class="row">
-		<div class="col-lg-12 show_customer_places">
-			<table class="table">
-				<tr>
-					<th class="show_customer__place_name">場所名</th>
-					<th>住所</th>
-					<th class="show_customer__table_link">場所詳細</th>
-					<th class="show_customer__delete"></th>
-					<th></th>
-				</tr>
-				<% @places.each do |place| %>
+	<!-- 場所登録がない場合は下記を表示しない -->
+	<% unless @places.blank?%>
+		<div class="row">
+			<div class="col-lg-12 show_customer_places">
+				<table class="table">
 					<tr>
-						<td><%= place.place_name%></td>
-						<td><%= place.address%></td>
-						<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
-						<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
-						<div class="show_customer__likes">
-							<td>
-								<% if current_customer.already_liked?(place) %>
-									<%= link_to public_place_like_path(place), method: :delete do %>
-										<i class="fas fa-heart"></i>
-									<% end %>
-								<% else %>
-									<%= link_to public_place_likes_path(place), method: :post do %>
-										<i class="far fa-heart"></i>
-									<% end %>
-								<% end %>
-								<%= Like.where(place_id: place.id).count%>
-							</td>
-						</div>
+						<th class="show_customer__place_name">場所名</th>
+						<th>住所</th>
+						<th class="show_customer__table_link">場所詳細</th>
+						<th class="show_customer__delete"></th>
+						<th></th>
 					</tr>
-				<% end %>
-			</table>
-			<%= paginate @places %>
+					<% @places.each do |place| %>
+						<tr>
+							<td><%= place.place_name%></td>
+							<td><%= place.address%></td>
+							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
+							<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
+							<div class="show_customer__likes">
+								<td>
+									<% if current_customer.already_liked?(place) %>
+										<%= link_to public_place_like_path(place), method: :delete do %>
+											<i class="fas fa-heart"></i>
+										<% end %>
+									<% else %>
+										<%= link_to public_place_likes_path(place), method: :post do %>
+											<i class="far fa-heart"></i>
+										<% end %>
+									<% end %>
+									<%= Like.where(place_id: place.id).count%>
+								</td>
+							</div>
+						</tr>
+					<% end %>
+				</table>
+				<%= paginate @places %>
+			</div>
 		</div>
-	</div>
+	<% end %>
 <% else %>
 <!-- 他のユーザーの場所（文字情報） -->
-	<div class="row">
-		<div class="col-lg-12 show_customer_places">
-			<table class="table">
-				<tr>
-					<th class="show_customer__place_name">場所名</th>
-					<th>住所</th>
-					<th class="show_customer__table_link">場所詳細</th>
-					<th></th>
-				</tr>
-				<% @places.each do |place| %>
+	<% unless @places.blank?%>
+		<div class="row">
+			<div class="col-lg-12 show_customer_places">
+				<table class="table">
 					<tr>
-						<td><%= place.place_name%></td>
-						<td><%= place.address%></td>
-						<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
-						<div class="show_customer__likes">
-							<td>
-								<% if current_customer.already_liked?(place) %>
-									<%= link_to public_place_like_path(place), method: :delete do %>
-										<i class="fas fa-heart"></i>
-									<% end %>
-								<% else %>
-									<%= link_to public_place_likes_path(place), method: :post do %>
-										<i class="far fa-heart"></i>
-									<% end %>
-								<% end %>
-								<%= Like.where(place_id: place.id).count%>
-							</td>
-						</div>
+						<th class="show_customer__place_name">場所名</th>
+						<th>住所</th>
+						<th class="show_customer__table_link">場所詳細</th>
+						<th></th>
 					</tr>
-				<% end %>
-			</table>
-			<%= paginate @places %>
+					<% @places.each do |place| %>
+						<tr>
+							<td><%= place.place_name%></td>
+							<td><%= place.address%></td>
+							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
+							<div class="show_customer__likes">
+								<td>
+									<% if current_customer.already_liked?(place) %>
+										<%= link_to public_place_like_path(place), method: :delete do %>
+											<i class="fas fa-heart"></i>
+										<% end %>
+									<% else %>
+										<%= link_to public_place_likes_path(place), method: :post do %>
+											<i class="far fa-heart"></i>
+										<% end %>
+									<% end %>
+									<%= Like.where(place_id: place.id).count%>
+								</td>
+							</div>
+						</tr>
+					<% end %>
+				</table>
+				<%= paginate @places %>
+			</div>
 		</div>
-	</div>
+	<% end  %>
 <% end %>
