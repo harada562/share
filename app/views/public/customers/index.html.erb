@@ -17,7 +17,7 @@
 			</tr>
 			<tr>
 				<% @customers.each do |customer| %>
-				<td><%= attachment_image_tag customer, :image, :fill, 50, 50, fallback: "profile.png", size:'80x80' %></td>
+				<td><%= attachment_image_tag customer, :image, :fill, 50, 50, fallback: "profile.png", size:'80x80', class: "img-circle"%></td>
 				<td><%= customer.nick_name %></td>
 				<td><%= Place.where(customer_id: customer.id).count%></td>
 				<td><%= GroupsCustomer.where(customer_id: customer.id).count%></td>

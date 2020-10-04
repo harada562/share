@@ -13,7 +13,7 @@ class Public::GroupsController < ApplicationController
 			@groups_customer.is_admin = true
 		if @group.save
 			@groups_customer.save
-			redirect_to public_groups_customers_path
+			redirect_to public_group_path(@group.id)
 		else
 			render :new
 		end

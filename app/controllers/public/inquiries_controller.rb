@@ -1,7 +1,7 @@
 class Public::InquiriesController < ApplicationController
 	before_action :authenticate
 	def index
-		@inquiries = Inquiry.where(customer_id: current_customer.id)
+		@inquiries = Inquiry.where(customer_id: current_customer.id).order(id: "DESC")
 		@inquiry = Inquiry.new
 	end
 

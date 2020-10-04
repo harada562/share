@@ -2,7 +2,7 @@ class Public::CustomersController < ApplicationController
 	before_action :authenticate
 	before_action :guest, except: [:index, :show]
 	def index
-		@customers = Customer.all.page(params[:page]).per(8)
+		@customers = Customer.all.page(params[:page]).per(8).order(id: "DESC")
 	end
 
 	def show

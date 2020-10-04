@@ -2,7 +2,7 @@ class Public::PlacesController < ApplicationController
 	before_action :authenticate
 	def index
 		@place = Place.new
-		@places = Place.all.page(params[:page]).per(7)
+		@places = Place.all.page(params[:page]).per(7).order(id: "DESC")
 		@center_place = Place.first
 		if @center_place.nil? or @center_place.latitude.nil?
 			@center_place = Place.new

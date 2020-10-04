@@ -3,9 +3,9 @@ class Public::GroupsCustomersController < ApplicationController
 	before_action :guest, except: [:index, :members_show, :maps_show]
 	def index
 		# 重複しているグループを表示させない
-		@groups_customer = GroupsCustomer.select(:group_id).distinct.page(params[:page]).per(7)
+		@groups_customer = GroupsCustomer.select(:group_id).distinct.page(params[:page]).per(7).order(id: "DESC")
 		# ログイン中のユーザーが所属しているグループ
-		@groups = GroupsCustomer.where(customer_id: current_customer.id)
+		@groups = GroupsCustomer.where(customer_id: current_customer.id).order(id: "DESC")
 	end
 
 	def members_index
