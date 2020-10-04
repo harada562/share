@@ -4,6 +4,12 @@ class Public::PlacesController < ApplicationController
 		@place = Place.new
 		@places = Place.all.page(params[:page]).per(7)
 		@center_place = Place.first
+		if @center_place.nil? or @center_place.latitude.nil?
+			@center_place = Place.new
+			# 東京の緯度と経度
+			@center_place.latitude = 35.6828387
+			@center_place.longitude = 139.7594549
+		end
 	end
 
 	def new

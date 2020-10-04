@@ -19,6 +19,11 @@ RSpec.describe "Admin::Genres", type: :request do
 				get admin_genres_path
 				expect(response).to have_http_status "200"
 			end
+			it 'タイトルが正しく表示されていること' do
+				get admin_genres_path
+        		expect(response.body).to include("スポット一覧")
+        		expect(response.body).to include("全てのジャンル")
+      		end
     	end
 	end
 end

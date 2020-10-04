@@ -7,8 +7,12 @@ class Public::InquiriesController < ApplicationController
 
 	def create
 		@inquiry = Inquiry.new(inquiry_params)
-		@inquiry.save
-		redirect_to public_inquiries_path
+		if @inquiry.save
+			redirect_to public_inquiries_path
+		else
+			@inquiries = Inquiry.where(customer_id: current_customer.id)
+			render :index
+		end
 	end
 
 	private

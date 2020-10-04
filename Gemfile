@@ -44,7 +44,10 @@ group :development, :test do
   gem 'rspec-rails'
 
   # adminとcustomerのログイン状態を作成するため
-   gem "factory_bot_rails", "~> 4.10.0"
+  gem "factory_bot_rails", "~> 4.10.0"
+
+  # テスト用コントローラ
+  gem "rails-controller-testing"
 
   # 継続運用
   gem 'capistrano'

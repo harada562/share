@@ -4,6 +4,7 @@ ja:
       genre: ジャンル
       place: 場所
       group: グループ
+      inquiry: お問い合わせ
     attributes:
       genre:
         name: ジャンル名
@@ -18,6 +19,9 @@ ja:
         password: パスワード
         password_confirmation: パスワード確認
         email: メールアドレス
+      inquiry:
+        title: タイトル
+        body: 内容
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>
