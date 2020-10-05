@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "System::Customers", type: :request do
-
   describe "新規登録画面" do
     before do
       visit new_customer_registration_path
     end
+
     it "表示の確認" do
       expect(page).to have_content("新規登録")
     end
@@ -43,7 +43,7 @@ RSpec.describe "System::Customers", type: :request do
   end
 
   describe "ログイン画面" do
-  	before do
+    before do
       visit new_customer_registration_path
       fill_in 'customer[nick_name]', with: 'example'
       fill_in 'customer[email]', with: 'foooo@example.com'
@@ -53,6 +53,7 @@ RSpec.describe "System::Customers", type: :request do
       click_link 'ログアウト'
       visit new_customer_session_path
     end
+
     it "表示の確認" do
       expect(page).to have_content("新規登録が済んでない方")
     end
@@ -72,8 +73,8 @@ RSpec.describe "System::Customers", type: :request do
     end
 
     it '新規登録画面に移動' do
-    	click_link '新規登録が済んでない方'
-    	expect(page).to have_content("新規登録")
+      click_link '新規登録が済んでない方'
+      expect(page).to have_content("新規登録")
     end
   end
 
@@ -87,6 +88,7 @@ RSpec.describe "System::Customers", type: :request do
       click_button '新規登録'
       click_link 'マイページ'
     end
+
     it "表示の確認" do
       expect(page).to have_content 'マイページ'
     end
@@ -97,6 +99,7 @@ RSpec.describe "System::Customers", type: :request do
       expect(page).to have_link '編集'
     end
   end
+
   describe "編集" do
     before do
       visit new_customer_registration_path
@@ -108,6 +111,7 @@ RSpec.describe "System::Customers", type: :request do
       click_link 'マイページ'
       click_link '編集'
     end
+
     it "表示の確認" do
       expect(page).to have_content 'ユーザー編集画面'
     end
@@ -117,9 +121,9 @@ RSpec.describe "System::Customers", type: :request do
     end
     context '編集の実行' do
       it "値が正しい場合" do
-          fill_in 'customer[nick_name]', with: 'イグザンプル'
-          click_button '変更'
-          expect(page).to have_content 'イグザンプル'
+        fill_in 'customer[nick_name]', with: 'イグザンプル'
+        click_button '変更'
+        expect(page).to have_content 'イグザンプル'
       end
       it "ニックネームが正しくない場合" do
         fill_in 'customer[nick_name]', with: ''
@@ -133,6 +137,7 @@ RSpec.describe "System::Customers", type: :request do
       end
     end
   end
+
   describe "退会" do
     before do
       visit new_customer_registration_path
@@ -145,6 +150,7 @@ RSpec.describe "System::Customers", type: :request do
       click_link '編集'
       click_link '退会'
     end
+
     it "表示の確認" do
       expect(page).to have_content '本当に退会しますか？'
     end
@@ -162,8 +168,8 @@ RSpec.describe "System::Customers", type: :request do
         expect(page).to have_content 'ログイン'
       end
       it "退会しない場合" do
-         click_link '退会しない'
-         expect(page).to have_content 'マイページ'
+        click_link '退会しない'
+        expect(page).to have_content 'マイページ'
       end
     end
   end

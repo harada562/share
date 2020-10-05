@@ -7,6 +7,7 @@ RSpec.describe Genre, type: :model do
       @genre.name = "Hello WebCamp"
       @genre.save
     end
+
     it "全て入力してあるので保存される" do
       expect(@genre).to be_valid
     end
@@ -18,6 +19,7 @@ RSpec.describe Genre, type: :model do
       @genre.name = ""
       @genre.save
     end
+
     it "nameが入力されていないので保存されない" do
       expect(@genre).to be_invalid
       expect(@genre.errors[:name]).to include("を入力してください")

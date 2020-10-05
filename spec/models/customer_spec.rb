@@ -9,10 +9,12 @@ RSpec.describe Customer, type: :model do
       @customer.password = "qqqqqq"
       @customer.save
     end
+
     it "全て入力してあるので保存される" do
       expect(@customer).to be_valid
     end
   end
+
   context "データが正しく保存されない" do
     before do
       @customer = Customer.new
@@ -21,6 +23,7 @@ RSpec.describe Customer, type: :model do
       @customer.password = ""
       @customer.save
     end
+
     it "nameが入力されていないので保存されない" do
       expect(@customer).to be_invalid
       expect(@customer.errors[:nick_name]).to include("は3文字以上で入力してください")

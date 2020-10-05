@@ -3,7 +3,7 @@
 class Customers::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
-# ゲストログイン用
+  # ゲストログイン用
   def new_guest
     customer = Customer.guest
     sign_in customer

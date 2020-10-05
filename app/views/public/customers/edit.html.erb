@@ -7,22 +7,22 @@
 		<div class="customer_edit__form">
 			<%= form_with model: @customer, url: public_customer_path, local: true do |f|%>
 			<%= render 'layouts/error_messages', model: @customer %>
-			<div>
+			<div class="form-gorup">
 				<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "" %>
 				<%= f.label :プロフィール画像 %><br />
 				<%= f.attachment_field :image %>
 			</div>
-			<div>
+			<div class="form-gorup">
 				<%= f.label :ニックネーム %><br />
-				<%= f.text_field :nick_name%>
+				<%= f.text_field :nick_name, class: "form-control"%>
 			</div>
-			<div>
+			<div class="form-gorup">
 				<%= f.label :メールアドレス %><br />
-				<%= f.text_field :email%>
+				<%= f.text_field :email, class: "form-control"%>
 			</div>
-			<div>
+			<div class="form-gorup">
 				<%= f.label :自己紹介文 %><br />
-				<%= f.text_area :intoroduction, size: '70x5'%>
+				<%= f.text_area :intoroduction, size: '70x5', class: "form-control"%>
 			</div>
 			<div class="cutomer_edit__link">
 				<div class="cutomer_edit__link_btn" >

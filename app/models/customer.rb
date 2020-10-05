@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
   has_many :groups_customers, dependent: :destroy
 
   # 3文字以上
-  validates :nick_name,length: { minimum: 3 }
+  validates :nick_name, length: { minimum: 3 }
 
   # 一意性
   validates :nick_name, uniqueness: true
@@ -20,7 +20,7 @@ class Customer < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :place
   def already_liked?(place)
-    self.likes.exists?(place_id: place.id)
+    likes.exists?(place_id: place.id)
   end
 
   # 画像アップロード機能
@@ -28,10 +28,10 @@ class Customer < ApplicationRecord
 
   # 退会済みならログイン不可
   def active_for_authentication?
-    super && (self.is_deleted == false)
+    super && (is_deleted == false)
   end
 
-# ゲストログイン用
+  # ゲストログイン用
   def self.guest
     find_or_create_by!(email: 'guest@gmail.work', nick_name: "げすと") do |customer|
       customer.password = SecureRandom.urlsafe_base64

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "DeviseAdmins", type: :request do
   # adminの作成
-	let(:admin) { create(:admin) }
+  let(:admin) { create(:admin) }
   # adminの正しいパロメータ
   let(:admin_params) { attributes_for(:admin) }
   # adminの正しくないパロメータ
@@ -12,6 +12,7 @@ RSpec.describe "DeviseAdmins", type: :request do
     before do
       ActionMailer::Base.deliveries.clear
     end
+
     context 'パラメータが妥当な場合' do
       it 'リクエストが成功すること' do
         post admin_registration_path, params: { admin: admin_params }
