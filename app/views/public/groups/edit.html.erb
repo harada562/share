@@ -1,7 +1,7 @@
 <%= render 'layouts/customer_header' %>
 <%= render 'layouts/customer_profile' %>
 <div class="col-lg-9">
-	<h1>グループ作成</h1>
+	<h1>グループ編集</h1>
 	<%= form_with model: @group, url: public_group_path(@group.id), local: true do |f|%>
 	<%= render 'layouts/error_messages', model: @group %>
 	<div>

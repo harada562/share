@@ -1,6 +1,10 @@
 class Public::PlacesController < ApplicationController
 	before_action :authenticate
 	def index
+		# 検索機能
+		@q = Place.ransack(params[:q])
+  		@ransack_place = @q.result(distinct: true)
+
 		@place = Place.new
 		@places = Place.all.page(params[:page]).per(7).order(id: "DESC")
 		@center_place = Place.first
