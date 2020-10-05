@@ -126,3 +126,13 @@
 .public_place_index_search input[type="submit"]{
 	margin-left: 10px;
 }
+
+.place_edit_form__yen{
+	display: flex;
+    align-items: flex-end;
+    font-size: 20px;
+}
+
+.place_edit_form__yen span{
+	margin-left: 10px;
+}

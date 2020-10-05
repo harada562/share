@@ -4,29 +4,36 @@
 	<h1>スポット編集</h1>
 	<%= form_with model: @place, url: public_place_path, local: true do |f| %>
 	<%= render 'layouts/error_messages', model: @place %>
-		<div class="place_edit_form">
+		<div class="place_edit_form form-group">
 			<%= f.label :ジャンル %><br />
-			<%= f.collection_select :genre_id, Genre.all, :id, :name %>
+			<%= f.select :genre_id, Genre.all.map{|a| [a.name , a.id]},  {},class: "form-control"%>
 		</div>
-		<div class="place_edit_form">
+		<div class="place_edit_form form-group">
 			<%= f.label :場所名 %>(必須)<br />
-			<%= f.text_field :place_name%>
+			<%= f.text_field :place_name, class: "form-control"%>
 		</div>
-		<div class="place_edit_form">
+		<div class="place_edit_form form-group">
 			<%= f.label :住所 %>(必須)<br />
-			<%= f.text_field :address%>
+			<%= f.text_field :address, class: "form-control"%>
 		</div>
-		<div class="place_edit_form">
+		<div class="place_edit_form form-group">
 			<%= f.label :場所のURL %><br />
-			<%= f.url_field :place_url, size:40, maxlength:15 %>
+			<%= f.url_field :place_url, size:40, maxlength:15 , class: "form-control"%>
 		</div>
-		<div class="place_edit_form">
+		<div class="place_edit_form form-group">
 			<%= f.label :電話番号 %><br />
-			<%= f.telephone_field :number%>
+			<%= f.telephone_field :number, class: "form-control"%>
 		</div>
-		<div  class="place_edit_form">
+		<div  class="place_edit_form form-group">
 			<%= f.label :平均予算 %><br />
-			<%= f.text_field :budget%>円
+			<div class="place_edit_form__yen">
+				<%= f.text_field :budget, class: "form-control"%>
+				<span>円</span>
+			</div>
+		</div>
+		<div class="place_edit_form form-group">
+			<%= f.label :detail, "詳細" %><br />
+			<%= f.text_area :detail, size: '7x10', class: "form-control"%>
 		</div>
 		<%= f.submit "スポット変更",class: "btn btn-success" %>
 	<% end %>
