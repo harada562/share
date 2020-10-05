@@ -14,14 +14,14 @@
 		</div>
 		<div>
 			<!-- ゲストログインの編集ボタン -->
-			<% if @customer.nick_name == "げすと"%>
-				<button type="button" class="btn btn-success" disabled="disabled">編集</button>
-			<% else %>
+			
+				
+			
 				<!-- 通常会員の編集ボタン -->
 				<% if @customer.id == current_customer.id %>
 					<%= link_to "編集画面", edit_public_customer_path(@customer.id),class: "btn btn-success" %>
 				<% end %>
-			<% end %>
+			
 		</div>
 	</div>
 </div>
@@ -30,11 +30,22 @@
 <% if @customer.id == current_customer.id%>
 	<div class="row">
 		<div class="col-lg-12 show_customer_intoroduction">
-			<% if @customer.intoroduction.blank?%>
-				<%= link_to "自己紹介文を追加しよう", edit_public_customer_path(@customer.id), class: "btn btn-warning"%>
-			<% else %>
+			<!-- ゲストログインの場合 -->
+			<% if @customer.nick_name == "げすと"%>
+				<% if @customer.intoroduction.blank?%>
+					<button type="button" class="btn btn-warning" disabled="disabled">自己紹介文を追加しよう</button>
+				<% else %>
 					<h3>自己紹介</h3>
 					<%= @customer.intoroduction%>
+				<% end %>
+			<% else %>
+			<!-- それ以外の場合 -->
+				<% if @customer.intoroduction.blank?%>
+					<%= link_to "自己紹介文を追加しよう", edit_public_customer_path(@customer.id), class: "btn btn-warning"%>
+				<% else %>
+						<h3>自己紹介</h3>
+						<%= @customer.intoroduction%>
+				<% end %>
 			<% end %>
 		</div>
 	</div>
