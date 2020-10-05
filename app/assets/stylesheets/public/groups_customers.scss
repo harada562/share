@@ -23,6 +23,7 @@
 	margin: 30px 0;
 	display: flex;
 	justify-content: space-evenly;
+	align-items: center;
 }
 
 .maps_index_gmap{
@@ -105,4 +106,19 @@
 
 .show_customer_intoroduction a{
 	width: 200px;
+}
+
+.groups_customer_index__search{
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.groups_customer_index__search form{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.groups_customer_index__search input[type="submit"]{
+	margin-left: 15px;
 }

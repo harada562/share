@@ -2,6 +2,9 @@ class Public::GroupsCustomersController < ApplicationController
   before_action :authenticate
   before_action :guest, except: [:index, :members_show, :maps_show]
   def index
+    # 検索機能
+    @q = Group.ransack(params[:q])
+    @ransack_groups = @q.result(distinct: true).page(params[:page]).per(7).order(id: "DESC")
     # 重複しているグループを表示させない
     @groups_customer = GroupsCustomer.select(:group_id).distinct.page(params[:page]).per(7).order(id: "DESC")
     # ログイン中のユーザーが所属しているグループ

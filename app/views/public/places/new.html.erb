@@ -21,8 +21,13 @@
 						<%= f.text_field :address, class: "form-control"%>
 					</div>
 					<div class="place_new__form form-group">
-						<%= f.label :グループ選択 %><br />
-						<%= f.select :group_id, GroupsCustomer.where(customer_id: current_customer.id).map { |g| [g.group.name, g.group.id]}, {}, class: "form-control", :include_blank => 'グループ選択なし'%>
+						<% if GroupsCustomer.where(customer_id: current_customer.id).blank? %>
+							<%= f.label :グループ選択 %><br />
+							<input type="text" class="form-control" id="InputText" placeholder="グループに加入しよう" disabled>
+						<% else %>
+							<%= f.label :グループ選択 %><br />
+							<%= f.select :group_id, GroupsCustomer.where(customer_id: current_customer.id).map { |g| [g.group.name, g.group.id]}, {include_blank: '選択してください'}, class: "form-control"%>
+						<% end %>
 					</div>
 				<%= f.hidden_field :customer_id, :value => current_customer.id %>
 				<div class="place_new__form_action">

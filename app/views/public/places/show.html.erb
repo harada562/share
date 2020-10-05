@@ -6,13 +6,13 @@
 	<!-- 登録者が本人の場合表示しない -->
 	<% unless @place.customer_id == current_customer.id%>
 		<div>
-			<h2>登録者名</h2>
+			<h3>登録者名</h3>
 			<%= @place.customer.nick_name%>
 		</div>
 	<% end %>
 
 	<div>
-	<h2>ジャンル</h2>
+	<h3>ジャンル</h3>
 		<% if @place.genre.blank? %>
 			<p>ジャンルなし</p>
 		<% else %>
@@ -21,13 +21,13 @@
 	</div>
 
 	<div>
-		<h2>場所名</h2>
+		<h3>場所名</h3>
 			<p><%= @place.place_name%></p>
-		<h2>住所</h2>
+		<h3>住所</h3>
 			<p><%= @place.address%></p>
 	</div>
 	<div>
-		<h2>場所URL</h2>
+		<h3>場所URL</h3>
 		<!-- 登録者本人の場合の表示 -->
 		<% if @place.customer_id == current_customer.id %>
 			<% if @place.place_url.blank? %>
@@ -46,7 +46,7 @@
 	</div>
 
 	<div>
-		<h2>お店の電話番号</h2>
+		<h3>お店の電話番号</h3>
 	<!-- 登録者本人の場合 -->
 	<% if @place.customer_id == current_customer.id %>
 		<% if @place.number.blank? %>
@@ -65,11 +65,19 @@
 	</div>
 
 	<div>
-		<h2>平均予算</h2>
+		<h3>平均予算</h3>
 		<% if @place.budget.nil? %>
-			<p>???円</p>
+			<%= link_to "平均予算を登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%>
 		<% else %>
 			<%= @place.budget%>円
+		<% end %>
+	</div>
+	<div>
+		<h3>メモ</h3>
+		<% if @place.detail.nil? %>
+			<%= link_to "メモ", edit_public_place_path(@place.id),class: "btn btn-info"%>
+		<% else %>
+			<%= @place.detail%>
 		<% end %>
 	</div>
 

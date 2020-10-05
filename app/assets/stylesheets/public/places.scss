@@ -71,3 +71,58 @@
 	font-size: 20px;
 	width: 200px;
 }
+
+
+.place_new_add{
+	margin-bottom: 40px;
+	// width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.place_new_add h1{
+	text-align: center;
+}
+.place_new_add a{
+	width: 30%;
+    display: flex;
+    justify-content: center;
+    margin: 30px auto 0 auto;
+
+}
+
+.place_new_add__form {
+	width: 300px;
+	margin: 0 auto;
+}
+
+.place_new_add__form_action input{
+	text-align: center;
+	margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.place_new_add__buget{
+	display: flex;
+}
+
+.public_place_index_search{
+	width: 100%;
+    margin: 0;
+	display: flex;
+    justify-content: flex-end;
+    margin: 10px 0 10px 0;
+    
+}
+.public_place_index_search form{
+	display: flex;
+}
+.public_place_index_search select{
+	margin-right: 10px;
+}
+
+.public_place_index_search input[type="submit"]{
+	margin-left: 10px;
+}

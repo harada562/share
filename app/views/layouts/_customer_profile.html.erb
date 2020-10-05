@@ -22,7 +22,7 @@
           <h3>加入しているグループ</h3>
             <ul>
               <% GroupsCustomer.where(customer_id: current_customer.id).each do |group_customer|%>
-                <li><%= link_to group_customer.group.name, maps_public_groups_customer_path(group_customer.group.id)%></li>
+                <li><%= link_to group_customer.group.name, public_group_path(group_customer.group.id)%></li>
             <% end %>
             </ul>
         </div>

@@ -61,7 +61,7 @@ class Public::PlacesController < ApplicationController
   private
 
   def place_params
-    params.require(:place).permit(:genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget, :place_url)
+    params.require(:place).permit(:genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget, :place_url, :detail)
   end
 
   # ログインしていないユーザーはTOPページに遷移

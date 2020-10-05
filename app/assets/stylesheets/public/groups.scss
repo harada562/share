@@ -46,10 +46,29 @@
 	display: flex;
     align-items: center;
     font-size: 20px;
+    justify-content: space-evenly;
 }
 
 .gorup_new__form_key_word label{
 	font-size: 20px;
 	margin-top: 20px;
-	
+}
+
+
+// グループ編集
+.public_group_edit__h1{
+	text-align: center;
+}
+
+.public_group_edit__h1 h1{
+	font-size: 25px;
+}
+
+.group_new__form_h2 h2{
+	text-align: center;
+}
+
+.gorup_new__form_action{
+	display: flex;
+    justify-content: center;
 }

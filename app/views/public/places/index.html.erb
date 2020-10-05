@@ -77,11 +77,13 @@
     }
   </script>
   <!-- 検索機能 -->
-  <%= search_form_for @q, url: public_places_path do |f| %>
-    <%= f.label :場所名 %>
-    <%= f.search_field :place_name_eq %>
-    <%= f.submit "検索" %>
-  <% end %>
+  <div class="public_place_index_search form-group">
+    <%= search_form_for @q, url: public_places_path do |f| %>
+      <%= f.select :genre_id_eq, Genre.all.map { |a| [a.name, a.id ] }, { include_blank: '選択してください'}, class: "form-control"%>
+      <%= f.search_field :address_cont , placeholder:"住所を入力してください", size:30, class: "form-control" %>
+      <%= f.submit "検索" %>
+    <% end %>
+  </div>
 
   <% if @ransack_place.blank? %>
     <table class="table">

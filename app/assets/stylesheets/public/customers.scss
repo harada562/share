@@ -118,3 +118,17 @@
 	width: 80%;
 	margin: 0 auto;
 }
+
+.customer_index__search{
+	width: 90%;
+	display: flex;
+    justify-content: flex-end;
+}
+
+.customer_index__search form{
+	display: flex;
+}
+
+.customer_index__search input[type="submit"]{
+	margin-left: 15px;
+}
