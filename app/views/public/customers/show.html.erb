@@ -14,14 +14,14 @@
 		</div>
 		<div>
 			<!-- ゲストログインの編集ボタン -->
-			
-				
-			
+			<% if @customer.nick_name == "げすと"%>
+				<button type="button" class="btn btn-success" disabled="disabled">編集</button>
+			<% else %>
 				<!-- 通常会員の編集ボタン -->
 				<% if @customer.id == current_customer.id %>
 					<%= link_to "編集画面", edit_public_customer_path(@customer.id),class: "btn btn-success" %>
 				<% end %>
-			
+			<% end %>
 		</div>
 	</div>
 </div>

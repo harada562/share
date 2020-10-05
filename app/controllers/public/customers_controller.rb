@@ -1,6 +1,6 @@
 class Public::CustomersController < ApplicationController
   before_action :authenticate
-  # before_action :guest, except: [:index, :show]
+  before_action :guest, except: [:index, :show]
   def index
     # 検索機能
     @q = Customer.ransack(params[:q])
@@ -61,9 +61,9 @@ class Public::CustomersController < ApplicationController
     params.require(:customer).permit(:nick_name, :email, :intoroduction, :image)
   end
 
-  # def guest
-  #   redirect_to root_path if current_customer.nick_name == "げすと"
-  # end
+  def guest
+    redirect_to root_path if current_customer.nick_name == "げすと"
+  end
 
   # ログインしていないユーザーはTOPページに遷移
   def authenticate
