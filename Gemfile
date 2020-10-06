@@ -116,6 +116,3 @@ end
 
 # 検索機能
 gem 'ransack'
-
-# N+1問題
-gem "bullet"
