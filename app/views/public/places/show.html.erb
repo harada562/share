@@ -66,18 +66,32 @@
 
 	<div>
 		<h3>平均予算</h3>
-		<% if @place.budget.nil? %>
-			<%= link_to "平均予算を登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%>
+		<% if @place.customer_id == current_customer.id %>
+			<% if @place.budget.nil? %>
+				<%= link_to "平均予算を登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%>
+			<% else %>
+				<%= @place.budget%>円
+			<% end %>
 		<% else %>
-			<%= @place.budget%>円
+			<% if @place.budget.nil? %>
+				<p>????円</p>
+			<% else %>
+				<%= @place.budget%>円
+			<% end %>
 		<% end %>
 	</div>
 	<div>
 		<h3>メモ</h3>
-		<% if @place.detail.nil? %>
-			<%= link_to "メモ", edit_public_place_path(@place.id),class: "btn btn-info"%>
+		<% if @place.customer_id == current_customer.id %>
+			<% if @place.detail.nil? %>
+				<%= link_to "メモ", edit_public_place_path(@place.id),class: "btn btn-info"%>
+			<% else %>
+				<%= @place.detail%>
+			<% end %>
 		<% else %>
-			<%= @place.detail%>
+			<% unless @place.detail.nil? %>
+				<%= @place.detail%>
+			<% end %>
 		<% end %>
 	</div>
 
