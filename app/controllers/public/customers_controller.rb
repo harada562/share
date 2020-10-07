@@ -2,11 +2,10 @@ class Public::CustomersController < ApplicationController
   before_action :authenticate
   before_action :guest, except: [:index, :show]
   def index
-    # 検索機能
-    @q = Customer.ransack(params[:q])
-    @ransack_customer = @q.result(distinct: true).page(params[:page]).per(8).order(id: "DESC")
-
-    @customers = Customer.all.page(params[:page]).per(8).order(id: "DESC")
+    # 検索機能(退会中のcustomerは表示しない)is_deleted == trueが退会中
+    @customers = Customer.where(is_deleted: false).page(params[:page]).per(8).order(id: "DESC")
+    @q = @customers.ransack(params[:q])
+    @ransack_customer = @q.result(distinct: true, is_deleted: false).page(params[:page]).per(8).order(id: "DESC")
   end
 
   def show
