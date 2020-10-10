@@ -1,11 +1,12 @@
 class Public::PlacesController < ApplicationController
   before_action :authenticate
   def index
+    # @places = Place.all.page(params[:page]).per(7).order(id: "DESC")
     # 検索機能
     @q = Place.ransack(params[:q])
-    @ransack_place = @q.result(distinct: true).page(params[:page]).per(7).order(id: "DESC")
+    @ransack_place = @q.result(distinct: true).includes(:customer, :genre).where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
+    # binding.pry
     @place = Place.new
-    @places = Place.all.page(params[:page]).per(7).order(id: "DESC")
     @center_place = Place.first
     if @center_place.nil? || @center_place.latitude.nil?
       @center_place = Place.new
