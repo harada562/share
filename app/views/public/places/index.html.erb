@@ -26,30 +26,6 @@
         transitLayer.setMap(map);
 
         //複数マーカー ここから
-        <% if @ransack_place.blank? %>
-            <% @places.each do |place| %>
-              <% if place.group_id.nil?%>
-                <% unless place.latitude.nil?%>
-                  (function(){
-                    var contentString = "住所：<%= place.address %>";
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-
-                    var marker = new google.maps.Marker({
-                        position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
-                        map: map,
-                        title: contentString
-                    });
-
-                    marker.addListener('click', function() {
-                      infowindow.open(map, marker, contentString);
-                    });
-                   })();
-                <% end %>
-              <% end %>
-            <% end %>
-          <% else %>
             <% @ransack_place.each do |place| %>
               <% if place.group_id.nil?%>
                 <% unless place.latitude.nil?%>
@@ -72,7 +48,6 @@
                 <% end %>
               <% end %>
             <% end %>
-        <% end %>
         //複数マーカー ここまで
     }
   </script>
@@ -85,54 +60,32 @@
     <% end %>
   </div>
 
-  <% if @ransack_place.blank? %>
-    <table class="table">
-      <tr>
-        <th></th>
-        <th>ジャンル名</th>
-        <th>場所名</th>
-        <th>住所</th>
-        <th>いいねの数</th>
-      </tr>
-      <% @places.where(group_id: nil).each do |place| %>
-      <tr>
-        <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60', class: "img-circle"%></td>
-        <% if place.genre.nil? %>
-          <td>ジャンルなし</td>
-        <% else %>
-          <td><%= place.genre.name%></td>
-        <% end %>
-        <td><%= link_to place.place_name, public_place_path(place.id)%></td>
-        <td><%= link_to place.address, public_place_path(place.id)%></td>
-        <td><%= place.liked_customers.count %></td>
-      </tr>
-        <% end %>
-    </table>
-    <%= paginate @places %>
-  <% else %>
   <!-- 検索表示 -->
-    <table class="table">
-      <tr>
-        <th></th>
-        <th>ジャンル名</th>
-        <th>場所名</th>
-        <th>住所</th>
-        <th>いいねの数</th>
-      </tr>
-      <% @ransack_place.where(group_id: nil).each do |place| %>
-      <tr>
-        <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60', class: "img-circle"%></td>
-        <% if place.genre.nil? %>
-          <td>ジャンルなし</td>
-        <% else %>
-          <td><%= place.genre.name%></td>
+  <% if @ransack_place.blank?%>
+    <h1>検索した内容はありません</h1>
+  <% else %>
+      <table class="table">
+        <tr>
+          <th></th>
+          <th>ジャンル名</th>
+          <th>場所名</th>
+          <th>住所</th>
+          <th>いいねの数</th>
+        </tr>
+        <% @ransack_place.each do |place| %>
+          <tr>
+            <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60', class: "img-circle"%></td>
+            <% if place.genre.nil? %>
+              <td>ジャンルなし</td>
+            <% else %>
+              <td><%= place.genre.name%></td>
+            <% end %>
+            <td><%= link_to place.place_name, public_place_path(place.id)%></td>
+            <td><%= link_to place.address, public_place_path(place.id)%></td>
+            <td><%= place.liked_customers.count %></td>
+          </tr>
         <% end %>
-        <td><%= link_to place.place_name, public_place_path(place.id)%></td>
-        <td><%= link_to place.address, public_place_path(place.id)%></td>
-        <td><%= place.liked_customers.count %></td>
-      </tr>
-        <% end %>
-    </table>
-    <%= paginate @places %>
-  <% end %>
+      </table>
+    <%= paginate @ransack_place %>
+    <% end %>
 </div>

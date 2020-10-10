@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2020_10_05_065111) do
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "ImageId"
     t.string "nick_name"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["nick_name"], name: "index_customers_on_nick_name", unique: true
