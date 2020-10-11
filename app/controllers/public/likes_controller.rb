@@ -4,6 +4,7 @@ class Public::LikesController < ApplicationController
     @place = Place.find(params[:place_id])
     @like = current_customer.likes.build(place_id: params[:place_id])
     @like.save
+    @likes = Like.where(place_id: @place.id).count
     # binding.pry
   end
 
@@ -11,6 +12,7 @@ class Public::LikesController < ApplicationController
     @place = Place.find(params[:place_id])
     @like = Like.find_by(place_id: params[:place_id], customer_id: current_customer.id)
     @like.destroy
+    @likes = Like.where(place_id: @place.id).count
   end
 
   private
