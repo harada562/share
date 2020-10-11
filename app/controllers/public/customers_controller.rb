@@ -20,7 +20,7 @@ class Public::CustomersController < ApplicationController
     @center_place = @places.first
     # binding.pry
     # グループの場所の投稿が無い場合
-    if @center_place.nil?
+    if @center_place.nil? || @center_place.latitude.nil?
       @center_place = Place.new
       # 東京の緯度と経度
       @center_place.latitude = 35.6828387
