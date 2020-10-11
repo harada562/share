@@ -6,7 +6,7 @@
         <%= image_tag 'logo.png' %>
           <ul class="header__link_signed_in">
             <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
-            <li class="link"><%= link_to 'トップページ', root_path %></li>
+            <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
             <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
             <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
             <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
