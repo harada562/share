@@ -103,11 +103,11 @@
 		<% end %>
 		<div class="place_show__like">
 			<% if current_customer.already_liked?(@place) %>
-			  <%= link_to public_place_like_path(@place), method: :delete, remote: true do %>
+			  <%= link_to public_place_like_path(@place), method: :delete do %>
 			  	<i class="fas fa-heart"></i>
 			  <% end %>
 			<% else %>
-			  <%= link_to public_place_likes_path(@place), method: :post, remote: true do %>
+			  <%= link_to public_place_likes_path(@place), method: :post do %>
 			  	<i class="far fa-heart"></i>
 			  <% end %>
 			<% end %>
