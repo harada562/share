@@ -1,0 +1,10 @@
+
+<% if Like.find_by(place_id: place.id, customer_id: current_customer.id) %>
+	<%= link_to public_place_like_path(place.id, place), method: :delete, remote: true do %>
+		<i class="fas fa-heart"></i>
+	<% end %>
+<% else %>
+	<%= link_to public_place_likes_path(place.id), method: :post, remote: true do %>
+		<i class="far fa-heart"></i>
+	<% end %>
+<% end %>
