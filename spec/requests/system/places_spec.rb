@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "System::Places", type: :request do
   scenario "場所の作成" do
-  	# customer作成
-  	@customer = create(:customer)
+    # customer作成
+    @customer = create(:customer)
     # genre作成
     @genre = create(:genre)
     # binding.pry
@@ -12,7 +12,7 @@ RSpec.describe "System::Places", type: :request do
     fill_in "customer[nick_name]", with: @customer.nick_name
     fill_in "customer[password]", with: @customer.password
     click_button "ログイン"
-	#場所作成画面に遷移
+    # 場所作成画面に遷移
     visit new_public_place_path
     # 必須項目を入力
     select @genre.name, from: "place[genre_id]"
@@ -73,7 +73,7 @@ RSpec.describe "System::Places", type: :request do
     expect(page).to have_content '大阪府大阪市'
   end
   scenario "場所の削除" do
-  	@place = create(:place)
+    @place = create(:place)
     # ログイン
     visit new_customer_session_path
     fill_in "customer[nick_name]", with: @place.customer.nick_name
@@ -85,8 +85,7 @@ RSpec.describe "System::Places", type: :request do
 
     # 削除されたかの確認
     visit public_customer_path(@place.customer.id)
-    expect(page).to_not have_content @place.place_name
-    expect(page).to_not have_content @place.address
-
+    expect(page).not_to have_content @place.place_name
+    expect(page).not_to have_content @place.address
   end
 end

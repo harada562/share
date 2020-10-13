@@ -6,7 +6,8 @@ class Public::GroupsCustomersController < ApplicationController
     @q = Group.ransack(params[:q])
     @ransack_groups = @q.result(distinct: true).page(params[:page]).per(7).order(id: "DESC")
     # 重複しているグループを表示させない
-    @groups_customer = GroupsCustomer.select(:group_id).distinct.page(params[:page]).per(7).order(id: "DESC")
+    @groups_customer = GroupsCustomer.select(:group_id).
+      distinct.page(params[:page]).per(7).order(id: "DESC")
     # ログイン中のユーザーが所属しているグループ
     @groups = GroupsCustomer.where(customer_id: current_customer.id).order(id: "DESC")
   end
