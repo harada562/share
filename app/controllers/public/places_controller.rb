@@ -1,11 +1,10 @@
 class Public::PlacesController < ApplicationController
   before_action :authenticate
   def index
-    # @places = Place.all.page(params[:page]).per(7).order(id: "DESC")
     # 検索機能
     @q = Place.ransack(params[:q])
-    @ransack_place = @q.result(distinct: true).includes(:customer, :genre).where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
-    # binding.pry
+    @ransack_place = @q.result(distinct: true).includes(:customer, :genre).
+      where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
     @place = Place.new
     @center_place = Place.first
     if @center_place.nil? || @center_place.latitude.nil?
@@ -62,7 +61,9 @@ class Public::PlacesController < ApplicationController
   private
 
   def place_params
-    params.require(:place).permit(:genre_id, :place_name, :customer_id, :address, :latitude, :longitude, :group_id, :number, :budget, :place_url, :detail)
+    params.require(:place).permit(:genre_id, :place_name, :customer_id, :address,
+                                  :latitude, :longitude,
+                                  :group_id, :number, :budget, :place_url, :detail)
   end
 
   # ログインしていないユーザーはTOPページに遷移
