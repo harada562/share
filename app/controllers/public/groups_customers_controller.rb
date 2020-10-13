@@ -1,6 +1,6 @@
 class Public::GroupsCustomersController < ApplicationController
   before_action :authenticate
-  before_action :guest, except: [:index, :members_show, :maps_show]
+  before_action :guest, except: [:index, :members_index, :maps_index]
   def index
     # 検索機能
     @q = Group.ransack(params[:q])

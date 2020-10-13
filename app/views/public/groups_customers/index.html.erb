@@ -1,57 +1,5 @@
 <%= render 'layouts/customer_header' %>
 <%= render 'layouts/customer_profile' %>
-<!-- ゲストログインの場合 -->
-<% if current_customer.nick_name == "げすと"%>
-	<div class="row">
-		<div class="col-lg-12 groups_customer_index">
-			<div class="groups_customer_index__search form-group">
-				<%= search_form_for @q, url: public_groups_customers_path do |f| %>
-					<%= f.search_field :name_cont , placeholder:"グループ名を入力してください", size: 27, class: "form-control"%>
-					<%= f.submit "検索" %>
-				<% end %>
-			</div>
-			<h1>全てのグループ</h1>
-			<table class="table">
-				<tr>
-					<th></th>
-					<th>グループ名</th>
-					<th>グループ人数</th>
-					<th>スポット登録数</th>
-				</tr>
-				<tr>
-				<% @groups_customer.each do |groups_customer| %>
-					<% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
-						<!-- 公開グループの場合 -->
-					 	<% if groups_customer.group.is_closed == false %>
-
-					 		<!-- グループ画像 -->
-					 		<td><%= attachment_image_tag groups_customer.group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%></td>
-
-							<!-- グループ詳細 -->
-							<td><%= link_to groups_customer.group.name, public_group_path(groups_customer.group.id)%></td>
-
-							<!-- グループメンバー -->
-							<td><%= link_to GroupsCustomer.where(group_id: groups_customer.group_id).count, menbers_public_groups_customer_path(groups_customer.group.id)%>人</td>
-
-							<!-- グループマップ -->
-							<td><%= link_to Place.where(group_id: groups_customer.group.id).count, maps_public_groups_customer_path(groups_customer.group.id)%>箇所</td>
-
-						<% else %>
-						<!-- 非公開グループの場合 -->
-							<td><%= image_tag 'stop.png', :size =>'80x80'%></td>
-							<td><%= groups_customer.group.name %></td>
-							<td><%= GroupsCustomer.where(group_id: groups_customer.group_id).count%>人</td>
-							<td><%=  Place.where(group_id: groups_customer.group.id).count%>箇所</td>
-						<% end %>
-					<% end %>
-					</tr>
-				<% end %>
-			</table>
-			<%= paginate @groups_customer %>
-		</div>
-	</div>
-<% else %>
-<!-- ゲストログイン以外の場合 -->
 	<div class="row">
 		<div class="col-lg-12 groups_customer_index">
 			<div class="groups_customer_index__search form-group">
@@ -61,43 +9,6 @@
 			<% end %>
 			</div>
 			<h1>全てのグループ</h1>
-			<% if @ransack_groups.blank?%>
-				<table class="table">
-					<tr>
-						<th></th>
-						<th>グループ名</th>
-						<th>グループ人数</th>
-						<th>スポット登録数</th>
-					</tr>
-					<tr>
-					<% @groups_customer.each do |groups_customer| %>
-						<% unless @groups.group_by{|s| s.group_id}.include?(groups_customer.group.id)%>
-						 	<% if groups_customer.group.is_closed == false %>
-
-						 		<!-- グループ画像 -->
-						 		<td><%= attachment_image_tag groups_customer.group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%></td>
-
-								<!-- グループ詳細 -->
-								<td><%= link_to groups_customer.group.name, public_group_path(groups_customer.group.id)%></td>
-
-								<!-- グループメンバー -->
-								<td><%= link_to GroupsCustomer.where(group_id: groups_customer.group_id).count, menbers_public_groups_customer_path(groups_customer.group.id)%>人</td>
-
-								<!-- グループマップ -->
-								<td><%= link_to Place.where(group_id: groups_customer.group.id).count, maps_public_groups_customer_path(groups_customer.group.id)%>箇所</td>
-
-							<% else %>
-								<td><%= image_tag 'stop.png', :size =>'80x80'%></td>
-								<td><%= link_to groups_customer.group.name, key_word_public_groups_customer_path(groups_customer.group.id)%></td>
-								<td><%= GroupsCustomer.where(group_id: groups_customer.group_id).count%>人</td>
-								<td><%=  Place.where(group_id: groups_customer.group.id).count%>箇所</td>
-							<% end %>
-						<% end %>
-						</tr>
-					<% end %>
-				</table>
-				<%= paginate @groups_customer %>
-			<% else %>
 				<table class="table">
 						<tr>
 							<th></th>
@@ -133,7 +44,5 @@
 						<% end %>
 					</table>
 					<%= paginate @groups_customer %>
-			<% end %>
 		</div>
 	</div>
-<% end %>

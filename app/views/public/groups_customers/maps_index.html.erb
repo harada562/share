@@ -10,13 +10,18 @@
     <% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
       <%= link_to "グループ編集", edit_public_group_path(@group.id), class: "btn btn-success"%>
     <% end %>
+
+    <% if current_customer.nick_name == "げすと"%>
+      <button type="button" class="btn btn-success" disabled="disabled">グループ加入</button>
+    <% else %>
     <!-- グループ未加入の場合 -->
-    <% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
-      <%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
-        <%= f.hidden_field :customer_id, :value => current_customer.id%>
-        <%= f.hidden_field :group_id, :value => @group.id %>
-        <%= f.hidden_field :is_admin, :value => false %>
-        <%= f.submit "グループ加入",class: "btn btn-success" %>
+      <% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+        <%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
+          <%= f.hidden_field :customer_id, :value => current_customer.id%>
+          <%= f.hidden_field :group_id, :value => @group.id %>
+          <%= f.hidden_field :is_admin, :value => false %>
+          <%= f.submit "グループ加入",class: "btn btn-success" %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
