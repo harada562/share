@@ -38,8 +38,6 @@ RSpec.describe "System::Genres", type: :request do
 	expect(page).to have_content "昼食"
     expect(page).to have_link "編集画面"
     expect(page).to have_link "削除"
-
-
   end
   scenario "ジャンルの削除" do
   	@admin = create(:admin)
@@ -56,7 +54,5 @@ RSpec.describe "System::Genres", type: :request do
 	expect(page).to have_content @genre2.name
     expect(page).to have_link "編集画面"
     expect(page).to have_link "削除"
-
-
   end
 end
