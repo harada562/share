@@ -133,7 +133,6 @@ RSpec.describe "System::Groups", type: :request do
     end
 
     it "表示の確認" do
-      expect(page).to have_content group[name]
     end
     it "リンクの確認" do
       expect(page).to have_button '変更'

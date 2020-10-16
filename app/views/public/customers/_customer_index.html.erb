@@ -1,0 +1,23 @@
+<% if ransack_customer.blank? %>
+	<h1>検索したユーザーがいません</h1>
+<% else %>
+	<table class="table">
+		<tr>
+			<th>プロフィール画像</th>
+			<th>ニックネーム</th>
+			<th>スポット投稿数</th>
+			<th>グループ加入数</th>
+			<th></th>
+		</tr>
+		<tr>
+			<% ransack_customer.each do |customer| %>
+			<td><%= attachment_image_tag customer, :image, :fill, 50, 50, fallback: "profile.png", size:'80x80', class: "img-circle"%></td>
+			<td><%= customer.nick_name %></td>
+			<td><%= Place.where(customer_id: customer.id).count%></td>
+			<td><%= GroupsCustomer.where(customer_id: customer.id).count%></td>
+			<td><%= link_to "詳細画面", public_customer_path(customer.id),class: "btn btn-success" %></td>
+		</tr>
+		<% end %>
+	</table>
+	<%= paginate ransack_customer %>
+<% end %>

@@ -254,16 +254,9 @@
 							<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
 							<div class="show_customer__likes">
 								<td>
-									<% if current_customer.already_liked?(place) %>
-										<%= link_to public_place_like_path(place), method: :delete do %>
-											<i class="fas fa-heart"></i>
-										<% end %>
-									<% else %>
-										<%= link_to public_place_likes_path(place), method: :post do %>
-											<i class="far fa-heart"></i>
-										<% end %>
-									<% end %>
-									<%= Like.where(place_id: place.id).count%>
+									<div id="likes_buttons">
+             							<%= render partial: 'public/likes/like', locals: { place: place } %>
+          							</div>
 								</td>
 							</div>
 						</tr>

@@ -81,3 +81,44 @@
 	display: flex;
 	justify-content: center;
 }
+
+@media screen
+    and (max-width: 767px) {
+	.home_top__logo > img {
+		width: 100px;
+		height: 100px;
+	}
+	.home_top__h1 > h1 {
+		font-size: 18px;
+		color: black;
+		border-bottom: solid 3px blue;
+		position: relative;
+		line-height: 30px;
+	}
+	.home_top__header {
+	    display: flex;
+	    justify-content: center;
+	    align-items: flex-end;
+	}
+	.home_top__link {
+	    display: block;
+	    margin-top: 10px;
+	}
+	.home_top__link_item a {
+	    margin: 10px;
+	    font-size: 15px;
+	    width: 150px;
+	}
+	.home_top__link_box{
+		text-align: center;
+	}
+	.home_top__header {
+	    display: flex;
+	    justify-content: center;
+	    align-items: end;
+	}
+	.home_top__h1 {
+		margin-top: 0px;
+		margin-left: 0px;
+}
+}

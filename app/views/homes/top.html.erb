@@ -28,24 +28,6 @@
 			</div>
 		</div>
 		<% else %>
-		<!-- ゲストログインのリンク -->
-		<div class="home_top__link">
-			<% if current_customer.nick_name == 'げすと'%>
-				<div class="home_top__link_box">
-						<div class="home_top__link_item">
-							<%= link_to 'スポット一覧', public_places_path,  class: "btn btn-info"%>
-						</div>
-						<div class="home_top__link_item">
-							<%= link_to 'グループ一覧', public_groups_customers_path, class: "btn btn-warning"%>
-						</div>
-				</div>
-				<div class="home_top__link_box">
-						<div class="home_top__link_item">
-							<%= link_to '会員一覧', public_customers_path, class: "btn btn-danger"%>
-						</div>
-				</div>
-		</div>
-			<% else %>
 		<!-- ログイン中のリンク -->
 		<div class="home_top__link">
 				<div class="home_top__link_box">
@@ -64,7 +46,6 @@
 							<%= link_to '会員一覧', public_customers_path, class: "btn btn-danger"%>
 						</div>
 				</div>
-				<% end %>
 		</div>
 			<% end %>
 		</div>

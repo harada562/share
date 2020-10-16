@@ -3,25 +3,33 @@
   <% if current_customer.nick_name == "げすと" %>
       <div class="row">
         <div class="header">
-        <%= image_tag 'logo.png' %>
+        <%= image_tag 'logo.png', size: "200x200" %>
           <ul class="header__link_signed_in">
             <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
-            <li class="link"><%= link_to 'トップページ', root_path %></li>
+            <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
             <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
             <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
             <li class="link"><%= link_to '会員一覧', public_customers_path%></li>
             <li class="link"><%= link_to 'お問い合わせ', public_inquiries_path%></li>
             <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
           </ul>
+          <div class="phone_header">
+            <ul class="phone_header_link">
+              <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
+              <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
+              <li class="link"><%= link_to 'お問い合わせ', public_inquiries_path%></li>
+              <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
+            </ul>
+          </div>
         </div>
   <% else %>
     <!-- ログインしている場合 -->
     <% if customer_signed_in? %>
         <div class="header">
-        <%= image_tag 'logo.png' %>
+        <%= image_tag 'logo.png' , size: "200x200"%>
               <ul class="header__link_signed_in">
-                <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
                 <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
+                <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
                 <li class="link"><%= link_to 'スポット登録', new_public_place_path %></li>
                 <li class="link"><%= link_to 'スポット一覧', public_places_path %></li>
                 <li class="link"><%= link_to 'グループ一覧', public_groups_customers_path %></li>
@@ -30,10 +38,18 @@
                 <li class="link"><%= link_to 'お問い合わせ', public_inquiries_path%></li>
                 <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
               </ul>
+          <div class="phone_header">
+            <ul class="phone_header_link">
+              <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
+              <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
+              <li class="link"><%= link_to 'お問い合わせ', public_inquiries_path%></li>
+              <li class="link"><%= link_to 'ログアウト',  destroy_customer_session_path, method: :delete %></li>
+            </ul>
+          </div>
         </div>
     <% else %>
     <!-- ログインしていない場合 -->
-        <%= image_tag 'logo.png' %>
+        <%= image_tag 'logo.png' , size: "200x200"%>
         <div class="header">
           <ul class="header__link_unsign">
             <li class="link"><%= link_to 'トップページ', root_path %></li>

@@ -1,14 +1,18 @@
 class Public::LikesController < ApplicationController
   before_action :authenticate
   def create
-    @like = current_customer.likes.create(place_id: params[:place_id])
-    redirect_back(fallback_location: root_path)
+    @place = Place.find(params[:place_id])
+    @like = current_customer.likes.build(place_id: params[:place_id])
+    @like.save
+    @likes = Like.where(place_id: @place.id).count
+    # binding.pry
   end
 
   def destroy
+    @place = Place.find(params[:place_id])
     @like = Like.find_by(place_id: params[:place_id], customer_id: current_customer.id)
     @like.destroy
-    redirect_back(fallback_location: root_path)
+    @likes = Like.where(place_id: @place.id).count
   end
 
   private
