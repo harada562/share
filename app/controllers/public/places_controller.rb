@@ -6,7 +6,7 @@ class Public::PlacesController < ApplicationController
     @ransack_place = @q.result(distinct: true).includes(:customer, :genre).
       where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
     @place = Place.new
-    @center_place = Place.first
+    @center_place = @ransack_place.first
     if @center_place.nil? || @center_place.latitude.nil?
       @center_place = Place.new
       # 東京の緯度と経度
