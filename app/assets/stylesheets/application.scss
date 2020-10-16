@@ -73,7 +73,6 @@ ul{
 	margin: 10px;
 }
 
-
 // profile
 
 .profile__name{
@@ -98,4 +97,35 @@ ul{
 
 .btn{
 	background-color: #7db74a;
+}
+@media screen
+    and (min-width: 767px){
+	.phone_header{
+		display: none;
+	}
+
+    }
+@media screen
+    and (max-width: 767px) {
+    img {
+	    vertical-align: middle;
+	    width: 100px;
+	    height: 100px;
+	}
+	.header__link_signed_in {
+	    margin-left: auto;
+	    display: none;
+	}
+	.phone_header_link{
+		display: flex;
+	}
+	.header {
+	    text-align: center;
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	}
+	.phone_header_link :nth-child(odd){
+		margin-right: 10px;
+	}
 }
