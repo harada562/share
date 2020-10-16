@@ -1,3 +1,6 @@
+<% if ransack_groups.blank? %>
+<h1>検索したグループはありません</h1>
+<% else %>
 <table class="table">
 	<tr>
 		<th></th>
@@ -33,3 +36,4 @@
 	<% end %>
 </table>
 <%= paginate ransack_groups %>
+<% end %>
