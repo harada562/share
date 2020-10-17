@@ -29,6 +29,11 @@
 							<%= f.select :group_id, GroupsCustomer.where(customer_id: current_customer.id).map { |g| [g.group.name, g.group.id]}, {include_blank: '選択してください'}, class: "form-control"%>
 						<% end %>
 					</div>
+
+					<!-- place_images_imagesに画像ファイルを入れて、place#createに送る -->
+					<div>
+						<%= f.attachment_field :place_images_images, multiple: true %>
+					</div>
 				<%= f.hidden_field :customer_id, :value => current_customer.id %>
 				<div class="place_new__form_action">
 					<%= f.submit "スポット登録",class: "btn btn-success" %>
