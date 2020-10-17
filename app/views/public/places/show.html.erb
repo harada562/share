@@ -1,5 +1,6 @@
 <%= render 'layouts/customer_header'%>
 <%= render 'layouts/customer_profile'%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
 <div class="row place_show">
 	<div class="col-lg-10">
 		<h1>スポット詳細</h1>
@@ -13,13 +14,16 @@
 		<% if @place.place_images.blank? %>
 			<h1>画像はありません</h1>
 		<% else %>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
 				<% @place.place_images.each do |image|%>
-					<div id="container">
-						<div id="theTarget">
-							<%= attachment_image_tag image, :image, class: "default_image", size: "400x400" %>
-						</div>
-					</div>
+					<div class="swiper-slide"><%= attachment_image_tag image, :image, class: "default_image", size: "600x300" %></div>
 				<% end %>
+			</div>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-pagination"></div>
+		</div>
 		<% end %>
 		<div>
 		<h3>ジャンル</h3>
@@ -119,5 +123,4 @@
 			</div>
 		</div>
 		<%= javascript_include_tag "public/place_image.js" %>
-		<%= javascript_include_tag "skippr.min.js" %>
 </div>
