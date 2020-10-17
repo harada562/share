@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         get 'place_new_add', to: 'places#place_new_add'
       end
     end
+    resources :place_images
   end
 
   # 管理者routes
