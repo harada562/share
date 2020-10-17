@@ -17,10 +17,12 @@ class Public::PlacesController < ApplicationController
 
   def new
     @place = Place.new
+    @place.place_images.build
     @genre = Genre.where(customer_id: current_customer.id)
   end
 
   def create
+    # Placeの空のモデルにplace_paramsの型をはめてデータ保存
     @place = Place.new(place_params)
     if @place.save
       redirect_to place_new_add_public_place_path(@place.id)
@@ -63,7 +65,8 @@ class Public::PlacesController < ApplicationController
   def place_params
     params.require(:place).permit(:genre_id, :place_name, :customer_id, :address,
                                   :latitude, :longitude,
-                                  :group_id, :number, :budget, :place_url, :detail)
+                                  :group_id, :number, :budget, :place_url, :detail,
+                                  place_images_images: [])
   end
 
   # ログインしていないユーザーはTOPページに遷移
