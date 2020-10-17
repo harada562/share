@@ -1,7 +1,8 @@
 <%= render 'layouts/customer_header'%>
 <%= render 'layouts/customer_profile'%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
 <div class="row place_show">
-	<div class="col-lg-4">
+	<div class="col-lg-10">
 		<h1>スポット詳細</h1>
 		<!-- 登録者が本人の場合表示しない -->
 		<% unless @place.customer_id == current_customer.id%>
@@ -13,9 +14,16 @@
 		<% if @place.place_images.blank? %>
 			<h1>画像はありません</h1>
 		<% else %>
-			<% @place.place_images.each do |image|%>
-				<%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
-			<% end %>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<% @place.place_images.each do |image|%>
+					<div class="swiper-slide"><%= attachment_image_tag image, :image, class: "default_image", size: "600x300" %></div>
+				<% end %>
+			</div>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-pagination"></div>
+		</div>
 		<% end %>
 		<div>
 		<h3>ジャンル</h3>
@@ -31,6 +39,7 @@
 				<p><%= @place.place_name%></p>
 			<h3>住所</h3>
 				<p><%= @place.address%></p>
+				<%= render partial: 'public/places/map', locals: { place: @place }%>
 		</div>
 		<div>
 			<h3>場所URL</h3>
@@ -113,49 +122,5 @@
 	          	</div>
 			</div>
 		</div>
-	<div class="col-lg-6">
-		<script async defer
-		                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-		  </script>
-
-		<% if @place.latitude.nil?%>
-			<h1>入力された住所は存在しません</h1>
-		<% else %>
-		<style type="text/css">
-		  #map { height: 700px;
-		         width: 100%;}
-		</style>
-
-		<!-- #mapの表示 -->
-		<div id="map"></div>
-		<script type="text/javascript">
-		  function initMap() {
-		// #latitude,longitudeから位置を特定
-		    var test ={lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
-		    var map = new google.maps.Map(document.getElementById('map'), {
-		              zoom: 15,
-		              center: test
-		              });
-		    var transitLayer = new google.maps.TransitLayer();
-		    transitLayer.setMap(map);
-
-		    var contentString = '住所：<%= @place.address %>';
-		    var infowindow = new google.maps.InfoWindow({
-		      content: contentString
-		    });
-
-		 // #Map上の指定した位置にピンを挿して表示する
-		    var marker = new google.maps.Marker({
-		                  position:test,
-		                  map: map,
-		                  title: contentString
-		                 });
-
-		     marker.addListener('click', function() {
-		       infowindow.open(map, marker);
-		     });
-		  }
-		</script>
-		<% end %>
-	</div>
+		<%= javascript_include_tag "public/place_image.js" %>
 </div>
