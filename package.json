@@ -1,5 +1,7 @@
 {
   "name": "share",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "swiper": "^6.3.3"
+  }
 }

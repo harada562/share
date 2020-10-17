@@ -123,3 +123,6 @@ gem 'ransack'
 
 # N+1問題
 gem "bullet"
+
+# スライドショー
+gem 'bxslider-rails'
