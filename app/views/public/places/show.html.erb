@@ -6,13 +6,13 @@
 		<h1>スポット詳細</h1>
 		<!-- 登録者が本人の場合表示しない -->
 		<% unless @place.customer_id == current_customer.id%>
-			<div>
-				<h3>登録者名</h3>
-				<%= @place.customer.nick_name%>
-			</div>
 		<% end %>
 		<% if @place.place_images.blank? %>
 			<h1>画像はありません</h1>
+		<% elsif @place.place_images.count == 1%>
+			<% @place.place_images.each do |image|%>
+				<%= attachment_image_tag image, :image, class: "default_image", size: "600x300" %>
+			<% end %>
 		<% else %>
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
@@ -24,6 +24,14 @@
 				<div class="swiper-button-next"></div>
 				<div class="swiper-pagination"></div>
 		</div>
+
+		<% end %>
+		<!-- 登録者が本人の場合表示しない -->
+		<% unless @place.customer_id == current_customer.id%>
+			<div>
+				<h3>登録者名</h3>
+				<%= @place.customer.nick_name%>
+			</div>
 		<% end %>
 		<div>
 		<h3>ジャンル</h3>
@@ -118,7 +126,7 @@
 			<% end %>
 			<div class="place_show__like">
 				<div id="likes_buttons">
-	             <%= render partial: 'public/likes/like', locals: { place: @place } %>
+	             <%= render partial: 'public/likes/like' %>
 	          	</div>
 			</div>
 		</div>
