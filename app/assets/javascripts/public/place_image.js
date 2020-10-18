@@ -1,10 +1,10 @@
-var mySwiper = new Swiper('.swiper-container', {
+let mySwiper = new Swiper('.swiper-container', {
       // アニメーション
       effect: 'cube',
       // ループ
       loop: true,
       // スライドスピード
-      speed: 200,
+      speed: 250,
       navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
