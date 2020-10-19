@@ -157,7 +157,6 @@
 						<th>住所</th>
 						<th class="show_customer__table_link">場所詳細</th>
 						<th class="show_customer__delete"></th>
-						<th></th>
 					</tr>
 					<% @places.each do |place| %>
 						<tr>
@@ -165,13 +164,6 @@
 							<td><%= place.address%></td>
 							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
 							<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
-							<div class="show_customer__likes">
-								<td>
-									<div id="like_button">
-             							
-          							</div>
-								</td>
-							</div>
 						</tr>
 					<% end %>
 				</table>
@@ -189,20 +181,12 @@
 						<th class="show_customer__place_name">場所名</th>
 						<th>住所</th>
 						<th class="show_customer__table_link">場所詳細</th>
-						<th></th>
 					</tr>
 					<% @places.each do |place| %>
 						<tr>
 							<td><%= place.place_name%></td>
 							<td><%= place.address%></td>
 							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
-							<div class="show_customer__likes">
-								<td>
-									<div id="like_button">
-             							
-          							</div>
-								</td>
-							</div>
 						</tr>
 					<% end %>
 				</table>
