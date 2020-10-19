@@ -7,10 +7,14 @@
 		<div class="customer_edit__form">
 			<%= form_with model: @customer, url: public_customer_path, local: true do |f|%>
 			<%= render 'layouts/error_messages', model: @customer %>
-			<div class="form-gorup">
-				<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "" %>
-				<%= f.label :プロフィール画像 %><br />
-				<%= f.attachment_field :image %>
+			<div class="form-gorup customer_edit__image">
+				<div>
+					<%= f.label :プロフィール画像 %><br />
+					<%= f.attachment_field :image, onchange: 'previewImage(preview)' %>
+				</div>
+				<div id="item_image">
+					<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "", id: 'preview', size: "200x200", class: "img-circle" %>
+				</div>
 			</div>
 			<div class="form-gorup">
 				<%= f.label :ニックネーム %><br />
@@ -35,4 +39,5 @@
 			<% end %>
 		</div>
 	</div>
+	<%= javascript_include_tag "public/preview.js" %>
 </div>

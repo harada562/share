@@ -43,12 +43,14 @@ class Public::PlacesController < ApplicationController
 
   def edit
     @place = Place.find(params[:id])
+    # @place.place_images.build
   end
 
   def update
     @place = Place.find(params[:id])
-    if @place.update(place_params)
+    if @place.update!(place_params)
       redirect_to public_place_path(@place.id)
+
     else
       render :edit
     end
