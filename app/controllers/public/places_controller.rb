@@ -6,7 +6,7 @@ class Public::PlacesController < ApplicationController
     @ransack_place = @q.result(distinct: true).includes(:customer, :genre).
       where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
     @place = Place.new
-    @center_place = Place.first
+    @center_place = @ransack_place.first
     if @center_place.nil? || @center_place.latitude.nil?
       @center_place = Place.new
       # 東京の緯度と経度
@@ -17,10 +17,12 @@ class Public::PlacesController < ApplicationController
 
   def new
     @place = Place.new
+    @place.place_images.build
     @genre = Genre.where(customer_id: current_customer.id)
   end
 
   def create
+    # Placeの空のモデルにplace_paramsの型をはめてデータ保存
     @place = Place.new(place_params)
     if @place.save
       redirect_to place_new_add_public_place_path(@place.id)
@@ -41,12 +43,14 @@ class Public::PlacesController < ApplicationController
 
   def edit
     @place = Place.find(params[:id])
+    # @place.place_images.build
   end
 
   def update
     @place = Place.find(params[:id])
-    if @place.update(place_params)
+    if @place.update!(place_params)
       redirect_to public_place_path(@place.id)
+
     else
       render :edit
     end
@@ -63,7 +67,8 @@ class Public::PlacesController < ApplicationController
   def place_params
     params.require(:place).permit(:genre_id, :place_name, :customer_id, :address,
                                   :latitude, :longitude,
-                                  :group_id, :number, :budget, :place_url, :detail)
+                                  :group_id, :number, :budget, :place_url, :detail,
+                                  place_images_images: [])
   end
 
   # ログインしていないユーザーはTOPページに遷移

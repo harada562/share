@@ -13,6 +13,10 @@
 			<%= form_with model: @place, url: public_place_path(@place.id), local: true do |f|%>
 			<%= flash[:not_latitude]%>
 			<%= render 'layouts/error_messages', model: @place %>
+					<!-- place_images_imagesに画像ファイルを入れて、place#createに送る -->
+					<div>
+						<%= f.attachment_field :place_images_images, multiple: true %>
+					</div>
 					<div class="place_new_add__form form-group">
 						<%= f.label :場所URL %><br />
 						<%= f.text_field :place_url , class: "form-control"%>
@@ -35,4 +39,5 @@
 			<% end %>
 		</div>
 	</div>
+	<%= javascript_include_tag "public/preview.js" %>
 </div>

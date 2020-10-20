@@ -1,0 +1,39 @@
+<% if ransack_groups.blank? %>
+<h1>検索したグループはありません</h1>
+<% else %>
+<table class="table">
+	<tr>
+		<th></th>
+		<th>グループ名</th>
+		<th>グループ人数</th>
+		<th>スポット登録数</th>
+	</tr>
+	<tr>
+	<% ransack_groups.each do |groups_customer| %>
+		<% unless groups.group_by{|s| s.group_id}.include?(groups_customer.id)%>
+		 	<% if groups_customer.is_closed == false %>
+
+		 		<!-- グループ画像 -->
+		 		<td><%= attachment_image_tag groups_customer, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%></td>
+
+				<!-- グループ詳細 -->
+				<td><%= link_to groups_customer.name, public_group_path(groups_customer.id)%></td>
+
+				<!-- グループメンバー -->
+				<td><%= link_to GroupsCustomer.where(group_id: groups_customer.id).count, menbers_public_groups_customer_path(groups_customer.id)%>人</td>
+
+				<!-- グループマップ -->
+				<td><%= link_to Place.where(group_id: groups_customer.id).count, maps_public_groups_customer_path(groups_customer.id)%>箇所</td>
+
+			<% else %>
+				<td><%= image_tag 'stop.png', :size =>'80x80'%></td>
+				<td><%= link_to groups_customer.name, key_word_public_groups_customer_path(groups_customer.id)%></td>
+				<td><%= GroupsCustomer.where(group_id: groups_customer.id).count%>人</td>
+				<td><%=  Place.where(group_id: groups_customer.id).count%>箇所</td>
+			<% end %>
+		<% end %>
+		</tr>
+	<% end %>
+</table>
+<%= paginate ransack_groups %>
+<% end %>

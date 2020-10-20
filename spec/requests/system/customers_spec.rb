@@ -1,176 +1,100 @@
 require 'rails_helper'
 
 RSpec.describe "System::Customers", type: :request do
-  describe "新規登録画面" do
-    before do
-      visit new_customer_registration_path
-    end
-
-    it "表示の確認" do
-      expect(page).to have_content("新規登録")
-    end
-    context '新規登録実行' do
-      it "値が正しい場合" do
-        fill_in 'customer[nick_name]', with: 'example'
-        fill_in 'customer[email]', with: 'foooo@example.com'
-        fill_in 'customer[password]', with: '123456'
-        fill_in 'customer[password_confirmation]', with: '123456'
-        click_button '新規登録'
-        expect(page).to have_content 'ようこそ'
-      end
-      it "ニックネームが正しくない場合" do
-        fill_in 'customer[nick_name]', with: ''
-        fill_in 'customer[email]', with: 'foooo@example.com'
-        fill_in 'customer[password]', with: '123456'
-        fill_in 'customer[password_confirmation]', with: '123456'
-        click_button '新規登録'
-        expect(page).to have_content '3文字以上で入力してください'
-      end
-      it "パスワードが一致しない場合" do
-        fill_in 'customer[nick_name]', with: ''
-        fill_in 'customer[email]', with: 'foooo@example.com'
-        fill_in 'customer[password]', with: '123456'
-        fill_in 'customer[password_confirmation]', with: '1234567'
-        click_button '新規登録'
-        expect(page).to have_content 'パスワード確認とパスワードの入力が一致しません'
-      end
-    end
-
-    it 'ログイン画面に移動' do
-      click_link '新規登録がお済みの方'
-      expect(page).to have_content("ログイン")
-    end
+  scenario "新規登録" do
+    visit new_customer_registration_path
+    fill_in "customer[nick_name]", with: "いっしー"
+    fill_in "customer[email]", with: "issi@issi"
+    fill_in "customer[password]", with: "123456"
+    fill_in "customer[password_confirmation]", with: "123456"
+    click_button "新規登録"
+    # 表示確認
+    expect(page).to have_content "いっしー"
   end
+  scenario "ログイン" do
+    @customer = create(:customer)
 
-  describe "ログイン画面" do
-    before do
-      visit new_customer_registration_path
-      fill_in 'customer[nick_name]', with: 'example'
-      fill_in 'customer[email]', with: 'foooo@example.com'
-      fill_in 'customer[password]', with: '123456'
-      fill_in 'customer[password_confirmation]', with: '123456'
-      click_button '新規登録'
-      click_link 'ログアウト'
-      visit new_customer_session_path
-    end
-
-    it "表示の確認" do
-      expect(page).to have_content("新規登録が済んでない方")
-    end
-    context 'ログイン実行' do
-      it "値が正しい場合" do
-        fill_in 'customer[nick_name]', with: 'example'
-        fill_in 'customer[password]', with: '123456'
-        click_button 'ログイン'
-        expect(page).to have_content 'ようこそ'
-      end
-      it "ニックネームが正しくない場合" do
-        fill_in 'customer[nick_name]', with: 'exa'
-        fill_in 'customer[password]', with: '123456'
-        click_button 'ログイン'
-        expect(page).to have_content 'ログイン'
-      end
-    end
-
-    it '新規登録画面に移動' do
-      click_link '新規登録が済んでない方'
-      expect(page).to have_content("新規登録")
-    end
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    expect(page).to have_content @customer.nick_name
   end
+  scenario "退会処理" do
+     @customer = create(:customer)
+     # ログインから退会までの流れ
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    visit edit_public_customer_path(@customer.id)
+    click_link "退会"
+    click_link "退会する"
 
-  describe "マイページ" do
-    before do
-      visit new_customer_registration_path
-      fill_in 'customer[nick_name]', with: 'example'
-      fill_in 'customer[email]', with: 'foooo@example.com'
-      fill_in 'customer[password]', with: '123456'
-      fill_in 'customer[password_confirmation]', with: '123456'
-      click_button '新規登録'
-      click_link 'マイページ'
-    end
-
-    it "表示の確認" do
-      expect(page).to have_content 'マイページ'
-    end
-    it "リンクの確認" do
-      expect(page).to have_link '自己紹介文を追加しよう'
-      expect(page).to have_link 'グループを探そう'
-      expect(page).to have_link 'スポット登録してみよう'
-      expect(page).to have_link '編集'
-    end
+    # 退会したcustomerはログインできないか確認
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    expect(page).to have_content "ログイン"
   end
-
-  describe "編集" do
-    before do
-      visit new_customer_registration_path
-      fill_in 'customer[nick_name]', with: 'example'
-      fill_in 'customer[email]', with: 'foooo@example.com'
-      fill_in 'customer[password]', with: '123456'
-      fill_in 'customer[password_confirmation]', with: '123456'
-      click_button '新規登録'
-      click_link 'マイページ'
-      click_link '編集'
-    end
-
-    it "表示の確認" do
-      expect(page).to have_content 'ユーザー編集画面'
-    end
-    it "リンクの確認" do
-      expect(page).to have_button '変更'
-      expect(page).to have_link '退会'
-    end
-    context '編集の実行' do
-      it "値が正しい場合" do
-        fill_in 'customer[nick_name]', with: 'イグザンプル'
-        click_button '変更'
-        expect(page).to have_content 'イグザンプル'
-      end
-      it "ニックネームが正しくない場合" do
-        fill_in 'customer[nick_name]', with: ''
-        click_button '変更'
-        expect(page).to have_content '3文字以上で入力してください'
-      end
-      it "メールアドレスが正しくない場合" do
-        fill_in 'customer[email]', with: ''
-        click_button '変更'
-        expect(page).to have_content 'メールアドレスを入力してください'
-      end
-    end
+  scenario "退会しない場合" do
+    @customer = create(:customer)
+     # ログインから退会までの流れ
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    visit edit_public_customer_path(@customer.id)
+    click_link "退会"
+    click_link "退会しない"
+    expect(page).to have_content @customer.nick_name
   end
+  scenario "会員一覧" do
+    @customer1 = create(:customer)
+    @customer2 = create(:customer)
+    @customer3 = create(:customer)
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer1.nick_name
+    fill_in "customer[password]", with: @customer1.password
+    click_button "ログイン"
 
-  describe "退会" do
-    before do
-      visit new_customer_registration_path
-      fill_in 'customer[nick_name]', with: 'example'
-      fill_in 'customer[email]', with: 'foooo@example.com'
-      fill_in 'customer[password]', with: '123456'
-      fill_in 'customer[password_confirmation]', with: '123456'
-      click_button '新規登録'
-      click_link 'マイページ'
-      click_link '編集'
-      click_link '退会'
-    end
+    visit public_customers_path
+    expect(page).to have_content @customer2.nick_name
+    expect(page).to have_content @customer3.nick_name
+  end
+  scenario "編集" do
+    @customer = create(:customer)
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    visit edit_public_customer_path(@customer.id)
+    # すべの値を変更
+    attach_file "customer[image]", "app/assets/images/profile.png"
+    fill_in "customer[nick_name]", with: "山田太郎23"
+    fill_in "customer[email]", with: "yamada@yamada.yamada1"
+    fill_in "customer[intoroduction]", with: "よろしくお願いします。よろしくお願いします。"
+    click_button "変更"
+    # 表示確認
+    expect(page).to have_content "山田太郎23"
+    expect(page).to have_content "よろしくお願いします。よろしくお願いします。"
 
-    it "表示の確認" do
-      expect(page).to have_content '本当に退会しますか？'
-    end
-    it "リンクの確認" do
-      expect(page).to have_link '退会しない'
-      expect(page).to have_link '退会する'
-    end
-    context '退会の実行' do
-      it "退会する場合" do
-        click_link '退会する'
-        click_link 'ログイン'
-        fill_in 'customer[nick_name]', with: 'example'
-        fill_in 'customer[password]', with: '123456'
-        click_button 'ログイン'
-        expect(page).to have_content 'ログイン'
-      end
-      it "退会しない場合" do
-        click_link '退会しない'
-        expect(page).to have_content 'マイページ'
-      end
-    end
+  end
+  scenario "詳細" do
+    @customer = create(:customer)
+    @customer2 = create(:customer)
+    visit new_customer_session_path
+    fill_in "customer[nick_name]", with: @customer.nick_name
+    fill_in "customer[password]", with: @customer.password
+    click_button "ログイン"
+    visit public_customers_path
+    # ログインカスタマーは一覧に表示されないことを確認する
+    expect(page).to_not have_link '詳細画面', href: public_customer_path(@customer.id)
+    click_link '詳細画面', href: public_customer_path(@customer2.id)
+    # 表示されてはいけないリンク
+    expect(page).to_not have_link '編集画面', href: edit_public_customer_path(@customer.id)
+    # 表示の確認
+    expect(page).to have_content @customer2.nick_name
   end
 end

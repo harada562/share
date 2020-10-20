@@ -2,6 +2,9 @@ class Place < ApplicationRecord
   belongs_to :genre, optional: true
   belongs_to :customer
   belongs_to :group, optional: true
+  # 複数画像投稿用
+  has_many :place_images, dependent: :destroy
+  accepts_attachments_for :place_images, attachment: :image
 
   # 3文字以上
   validates :address, length: { minimum: 3 }
