@@ -53,7 +53,6 @@
 .show_customer_places table{
 	width: 80%;
 	margin: 0 auto;
-	margin-bottom: 100px;
 }
 
 .show_customer__table_link{
@@ -137,4 +136,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen
+    and (max-width: 767px) {
+    .show_customer_top img{
+	    width: 50px;
+	    height: 50px;
+	}
 }
