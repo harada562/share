@@ -1,52 +1,12 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="home_top">
-				<div class="home_top__header">
-					<div class="home_top__logo">
-						<%= image_tag 'logo.png' %>
-					</div>
-					<div class="home_top__h1">
-						<h1>ようこそ<br>シェアマップへ</h1>
-					</div>
+		<div class="col-md-12 home_top">
+			<div class="home_top__header">
+				<div class="home_top__logo">
+					<%= image_tag 'logo.png' %>
 				</div>
-				<div class="home_top__link">
-				<% unless customer_signed_in? %>
-				<!-- ログインしていないときのリンク -->
-				<div class="home_top__link_box">
-					<div class="home_top__link_item home_top__link_item2">
-						<%= link_to '新規登録', new_customer_registration_path, class: "btn btn-info"%>
-					</div>
-					<div class="home_top__link_item home_top__link_item1">
-						<%= link_to 'ゲストログイン', customers_guest_sign_in_path, method: :post, class: "btn btn-success"%>
-					</div>
-				</div>
-				<div class="home_top__link_box">
-					<div class="home_top__link_item home_top__link_item3">
-						<%= link_to 'ログイン', new_customer_session_path, class: "btn btn-warning"%>
-					</div>
-				</div>
-				<% else %>
-				<!-- ログイン中のリンク -->
-				<div class="home_top__link">
-						<div class="home_top__link_box">
-								<div class="home_top__link_item">
-									<%= link_to 'スポット一覧', public_places_path,  class: "btn btn-info"%>
-								</div>
-								<div class="home_top__link_item">
-									<%= link_to 'スポット登録', new_public_place_path, class: "btn btn-success"%>
-								</div>
-						</div>
-						<div class="home_top__link_box">
-								<div class="home_top__link_item">
-									<%= link_to 'グループ一覧', public_groups_customers_path, class: "btn btn-warning"%>
-								</div>
-								<div class="home_top__link_item">
-									<%= link_to '会員一覧', public_customers_path, class: "btn btn-danger"%>
-								</div>
-						</div>
-				</div>
-					<% end %>
+				<div class="home_top__h1">
+					<h1>ようこそ<br>シェアマップへ</h1>
 				</div>
 			</div>
 		</div>
@@ -54,10 +14,10 @@
 	<div class="row home_top_demo">
 		<div class="col-md-6 home_left">
 			<div class="home_left__sentence">
-				<h1>自分で作れる<br>
+				<h1>みんなで作れる<br>
 				好きな場所だけのマップ</h1>
 				<p>グループを作ってメンバーとシェアすることもできます。<br>
-			自分だけのオリジナルマップが、今すぐはじめられます。</p>
+			私たちだけのオリジナルマップが、今すぐはじめられます。</p>
 				<%= link_to '登録してみよう', new_customer_registration_path%>
 			</div>
 		</div>
@@ -81,5 +41,8 @@
 			</div>
 		</div>
 	</div>
+	<div id="page-top" class="blogicon-chevron-up"><i class="fas fa-angle-double-up"></i></div>
 	<%= javascript_include_tag "home_top.js" %>
+	<%= javascript_include_tag "home_scroll.js" %>
+
 </div>
