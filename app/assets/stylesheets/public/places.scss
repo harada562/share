@@ -114,7 +114,6 @@
 	display: flex;
     justify-content: flex-end;
     margin: 10px 0 10px 0;
-    
 }
 .public_place_index_search form{
 	display: flex;
@@ -137,3 +136,63 @@
 	margin-left: 10px;
 }
 
+.public_place_index img{
+	width: 100%;
+	height: 140px;
+	border-radius: 30px;
+}
+
+.public_place_index_images{
+	width: 100%;
+	height: 140px;
+}
+.public_place_index_images2{
+	width: 100%;
+	height: 140px;
+}
+.public_place_index_images3{
+	width: 100%;
+	height: 140px;
+}
+.place_index_render{
+	margin-top: 30px;
+}
+
+.gallery-top {
+  height: 80%;
+  width: 100%;
+}
+
+.gallery-thumbs {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.gallery-thumbs .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.gallery-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.place_show_swiper_main img{
+	width: 100%;
+	border-radius: 20px;
+}
+
+.place_show_wrapper{
+	text-align: center;
+}
+
+.place_show_sub img{
+	border-radius: 20px;
+}
+
+.place_show__like {
+    display: flex;
+    justify-content: flex-end;
+}

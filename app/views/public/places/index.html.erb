@@ -1,20 +1,26 @@
 <div class="container shore_margin">
-<%= render 'layouts/customer_header' %>
-<%= render 'layouts/customer_profile' %>
-<div class="col-lg-12 place_index">
-  <div class="place_index__h1">
-    <h1>おすすめの場所</h1>
+  <%= render 'layouts/customer_header' %>
+  <%= render 'layouts/customer_profile' %>
+  <div class="col-lg-12 place_index">
+    <div class="place_index__h1">
+      <h1>おすすめの場所</h1>
+    </div>
+    <!-- 検索機能 -->
+    <div class="public_place_index_search form-group">
+      <%= search_form_for @q, url: public_places_path , remote: true do |f| %>
+        <%= f.select :genre_id_eq, Genre.all.map { |a| [a.name, a.id ] }, { include_blank: '選択してください'}, class: "form-control"%>
+        <%= f.search_field :address_cont , placeholder:"住所を入力してください", size:30, class: "form-control" %>
+        <%= f.submit "検索" %>
+      <% end %>
+    </div>
+    <script async defer
+                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+  </script>
+    <div id="ransack_map">
+      <%= render partial: 'public/places/maps_index', locals: {ransack_place: @ransack_place, center_place: @center_place}%>
+    </div>
+    <div id="ransack_place">
+      <%= render partial: 'public/places/places_index', locals: { ransack_place: @ransack_place }%>
+    </div>
   </div>
-  <!-- 検索機能 -->
-  <div class="public_place_index_search form-group">
-    <%= search_form_for @q, url: public_places_path , remote: true do |f| %>
-      <%= f.select :genre_id_eq, Genre.all.map { |a| [a.name, a.id ] }, { include_blank: '選択してください'}, class: "form-control"%>
-      <%= f.search_field :address_cont , placeholder:"住所を入力してください", size:30, class: "form-control" %>
-      <%= f.submit "検索" %>
-    <% end %>
-  </div>
-  <div id="ransack_place">
-    <%= render partial: 'public/places/places_index', locals: { ransack_place: @ransack_place, center_place: @center_place }%>
-  </div>
-</div>
 </div>

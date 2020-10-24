@@ -3,8 +3,9 @@ class Public::PlacesController < ApplicationController
   def index
     # 検索機能
     @q = Place.ransack(params[:q])
-    @ransack_place = @q.result(distinct: true).includes(:customer, :genre).
+    @ransack_place = @q.result(distinct: true).includes( :genre).
       where(group_id: nil).page(params[:page]).per(7).order(id: "DESC")
+      # binding.pry
     @place = Place.new
     @center_place = @ransack_place.first
     if @center_place.nil? || @center_place.latitude.nil?

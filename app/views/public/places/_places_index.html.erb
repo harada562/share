@@ -1,76 +1,57 @@
-<script async defer
-                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-  </script>
-  <div id="map"></div>
-  <style type="text/css">
-    #map { height: 300px;
-           width: 100%;}
-  </style>
-  <script>
-      function initMap() {
-
-        //初期表示位置
-        var latlng = new google.maps.LatLng({lat: <%= center_place.latitude %>, lng: <%= center_place.longitude %>});
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 9,
-            center: latlng
-        });
-        var transitLayer = new google.maps.TransitLayer();
-        transitLayer.setMap(map);
-
-        //複数マーカー ここから
-            <% ransack_place.each do |place| %>
-              <% if place.group_id.nil?%>
-                <% unless place.latitude.nil?%>
-                  (function(){
-                    var contentString = "住所：<%= place.address %>";
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-
-                    var marker = new google.maps.Marker({
-                        position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
-                        map: map,
-                        title: contentString
-                    });
-
-                    marker.addListener('click', function() {
-                      infowindow.open(map, marker, contentString);
-                    });
-                   })();
-                <% end %>
-              <% end %>
-            <% end %>
-        //複数マーカー ここまで
-    }
-  </script>
-
-  <!-- 検索表示 -->
-  <% if ransack_place.blank?%>
-    <h1>検索した内容はありません</h1>
-  <% else %>
-      <table class="table">
-        <tr>
-          <th></th>
-          <th>ジャンル名</th>
-          <th>場所名</th>
-          <th>住所</th>
-          <th>いいねの数</th>
-        </tr>
-        <% ransack_place.each do |place| %>
-          <tr>
-            <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'60x60', class: "img-circle"%></td>
-            <% if place.genre.nil? %>
-              <td>ジャンルなし</td>
-            <% else %>
-              <td><%= place.genre.name%></td>
-            <% end %>
-            <td><%= link_to place.place_name, public_place_path(place.id)%></td>
-            <td><%= link_to place.address, public_place_path(place.id)%></td>
-            <td><%= place.liked_customers.count %></td>
-          </tr>
+<!-- 検索表示 -->
+  <div class="row place_index_render">
+    <% if ransack_place.blank?%>
+      <div class="col-md-12">
+        <h1>検索した内容はありません</h1>
+      </div>
+    <% else %>
+    <% ransack_place.includes([:place_images]).each do |place| %>
+    <div class="col-md-5 public_place_index">
+      <% if place.place_images.blank?%>
+        <%= image_tag 'no_place.png' %>
+      <% elsif place.place_images.count == 1%>
+        <% place.place_images.each do |image|%>
+          <%= attachment_image_tag image, :image, class: "default_image" %>
         <% end %>
-      </table>
-    <%= paginate ransack_place %>
+      <% else %>
+        <div class="swiper-container public_place_index_images">
+          <div class="swiper-wrapper public_place_index_images2">
+            <% place.place_images.each do |image|%>
+              <div class="swiper-slide public_place_index_images3">
+                <%= attachment_image_tag image, :image, class: "default_image", size:"100x100" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-7">
+          <table class="table">
+            <tr>
+              <th class="col-xs-4">ジャンル名</th>
+              <% if place.genre.nil? %>
+                <td class="col-xs-8">ジャンルなし</td>
+              <% else %>
+                <td class="col-xs-8"><%= place.genre.name%></td>
+              <% end %>
+            </tr>
+            <tr>
+              <th class="col-xs-4">場所名</th>
+              <td class="col-xs-8"><%= link_to place.place_name, public_place_path(place.id)%></td>
+            </tr>
+            <tr>
+              <th class="col-xs-4">住所</th>
+              <td class="col-xs-8"><%= link_to place.address, public_place_path(place.id)%></td>
+            </tr>
+            <tr>
+              <th class="col-xs-4">いいねの数</th>
+              <td class="col-xs-8"><%= place.liked_customers.count %></td>
+            </tr>
+          </table>
+    </div>
+      <% end %>
     <% end %>
+  </div>
+  <%= paginate ransack_place %>
+  <%= javascript_include_tag "public/place_index.js" %>
