@@ -1,4 +1,47 @@
+<main role="main">
+  <div class="container marketing">
+    <hr class="featurette-divider">
+    <div class="row featurette">
+      <div class="col-md-5">
+        <%= image_tag 'logo.png' , size: "500x500"%>
+      </div>
+      <div class="col-md-7">
+        <h2 class="featurette-heading">友達と遊ぶ場所を共有したいという想いから<br>このアプリを作成しました</h2>
+      </div>
+    </div>
+    <hr class="featurette-divider">
+    <div class="row featurette">
+      <div class="col-md-5 order-md-1">
+         <%= image_tag 'logo.png' , size: "300x300"%>
+      </div>
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">グループを作成する</h2>
+      </div>
+    </div>
 
-<div class="col-lg-12">
-	<%= image_tag 'logo.png' %>
-</div>
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-5">
+         <%= image_tag 'logo.png' , size: "300x300"%>
+      </div>
+      <div class="col-md-7">
+        <h2 class="featurette-heading">友達が加入する</h2>
+      </div>
+    </div>
+    <div class="row featurette">
+      <div class="col-md-5">
+         <%= image_tag 'logo.png' , size: "300x300"%>
+      </div>
+      <div class="col-md-7">
+        <h2 class="featurette-heading">場所をグループに投稿する</h2>
+      </div>
+    </div>
+    <div class="row featurette">
+      <div class="col-md-12">
+        <h2 class="featurette-heading">さぁ、始めてみよう！！</h2>
+        <%= link_to '新規登録', new_customer_registration_path, class: "btn btn-info"%>
+        <%= link_to 'ゲストログイン', customers_guest_sign_in_path, method: :post, class: "btn btn-success"%>
+        <%= link_to 'ログイン', new_customer_session_path, class: "btn btn-warning"%>
+      </div>
+    </div>

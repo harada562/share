@@ -63,10 +63,6 @@
 	justify-content: center;
 }
 
-.home_top_select{
-
-}
-
 .home_top_select__link_item{
 	// font-size: 40px;
 	margin: 30px;
@@ -80,6 +76,129 @@
 .customer_profile_group{
 	display: flex;
 	justify-content: center;
+}
+
+// 新規home_top
+.home_top_demo{
+	display: flex;
+	width: 100%;
+	height: 600px;
+}
+
+.home_left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.home_left h1{
+	font-size: 4em;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #282828;
+    letter-spacing: .05em;
+}
+
+.home_left p{
+	font-size: 1.5em;
+    line-height: 1.8;
+    color: #282828;
+    letter-spacing: .05em;
+}
+
+.home_left a{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 44px;
+    border: 2px solid #007c6b;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.3em;
+    line-height: 1.8;
+    color: #282828;
+    letter-spacing: .05em;
+    font-weight: 700;
+    color: #007c6b;
+    transition: all .3s ease 0s;
+    line-height: 0;
+    margin-top: 20px;
+}
+
+.home_right{
+	width: 100%;
+}
+
+.home_middle{
+	width: 100%;
+	height: 600px;
+	display: flex;
+    justify-content: center;
+    background-image: image-url('home/top_image.png');
+	background-size: contain;
+	background-color:rgba(255,255,255,0.4);
+	background-blend-mode:lighten;
+}
+
+
+.home_middle_left{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.home_middle_left_sentence{
+    background-color: white;
+    padding: 60px;
+}
+
+.home_middle_left_sentence h1{
+	// font-weight: revert;
+	font-size: 4em;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #282828;
+    letter-spacing: .05em;
+}
+
+.home_middle_left_sentence p{
+	font-size: 1.5em;
+    line-height: 1.8;
+    color: #282828;
+    letter-spacing: .05em;
+}
+
+.home_middle_left_sentence a{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 44px;
+    border: 2px solid #007c6b;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.3em;
+    line-height: 1.8;
+    color: #282828;
+    letter-spacing: .05em;
+    font-weight: 700;
+    color: #007c6b;
+    transition: all .3s ease 0s;
+    line-height: 0;
+    margin-top: 20px;
+}
+
+
+// topの画像
+.js-animation {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(40px);
+  transition: all 1s;
+}
+.js-animation.is-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
 }
 
 @media screen

@@ -1,8 +1,9 @@
+<div class="container shore_margin">
 <%= render 'layouts/customer_header' %>
 <%= render 'layouts/customer_profile' %>
 <div class="col-lg-12 place_index">
   <div class="place_index__h1">
-    <h1>スポット一覧</h1>
+    <h1>おすすめの場所</h1>
   </div>
   <!-- 検索機能 -->
   <div class="public_place_index_search form-group">
@@ -15,4 +16,5 @@
   <div id="ransack_place">
     <%= render partial: 'public/places/places_index', locals: { ransack_place: @ransack_place, center_place: @center_place }%>
   </div>
+</div>
 </div>
