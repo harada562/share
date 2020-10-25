@@ -42,19 +42,13 @@ ul{
 	justify-content: center;
 	align-items: center;
 }
-.header__link_signed_in :nth-of-type(2n){
-	margin-top: 50px;
+
+.header__link_signed_in a{
+	margin-right: 25px;
+	font-weight: 600;
 }
-.header__link_signed_in :nth-child(odd){
-	margin-bottom: 50px;
-}
-// ログインしていない場合
-.header__link_unsign{
-	list-style: none;
-	text-align: center;
-}
-.header__link_unsign :nth-of-type(2n){
-	margin: 10px;
+.header__link_signed_in li:last-child{
+	margin-right: 40px;
 }
 
 // ゲストログインでしている場合
@@ -86,10 +80,6 @@ ul{
     border-radius: 4px;
 }
 
-.customer_progile__guest a{
-	margin: 0 30px;
-}
-
 .header__link_signed_in{
 	margin-left: auto;
 }
@@ -98,13 +88,38 @@ ul{
 	background-color: #7db74a;
 }
 
+.header {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    z-index:500;
+}
+
+.header img{
+	width: 100px;
+	height: 100px;
+}
+
+.customer_profile{
+	margin-top: 100px;
+}
+
+.customer_profile_main{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 @media screen
     and (min-width: 767px){
 	.phone_header{
 		display: none;
 	}
-
-    }
+	footer{
+		display: none;
+	}
+}
 @media screen
     and (max-width: 767px) {
     .header img {
@@ -145,5 +160,46 @@ ul{
 	.home_top_select__link {
 	    display: block;
 	    text-align: center;
+	}
+
+	.container {
+ 	width: 100%;
+    overflow: auto; /* コンテンツの表示を自動に設定（スクロール） */
+	}
+	// footer
+	.footer{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 40px;
+		padding-bottom: 20px;
+		background:rgba(255,255,255,1);
+		color: #FFFFFF;
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.footer_link{
+		text-align: center;
+	}
+
+	.footer_link span{
+		font-size: 5px;
+	}
+
+	.home_top__header{
+		align-items: center;
+	}
+
+	.header img {
+	    vertical-align: middle;
+	    width: 70px;
+	    height: 70px;
+	    margin-left: 20px;
+	}
+
+	#header{
+		height: 70px;
 	}
 }

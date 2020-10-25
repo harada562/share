@@ -1,0 +1,61 @@
+<footer>
+	<div class="footer">
+	<!-- ゲストログイン用 -->
+	<% if current_customer.nick_name == "げすと" %>
+		<!-- マップ一覧 -->
+		<div class="footer_link">
+			<%= link_to public_places_path do %>
+				<i class="fas fa-map-marked-alt footer_icon"></i>
+				<br><span>スポット一覧</span>
+			<% end %>
+		</div>
+		<!-- マップ作成 -->
+		<div class="footer_link">
+			<%= link_to new_public_place_path do %>
+				<i class="fas fa-map-marker-alt footer_icon"></i>
+				<br><span>スポット登録</span>
+			<% end %>
+		</div>
+		<!-- グループ一覧 -->
+		<div class="footer_link">
+			<%= link_to public_groups_customers_path do %>
+				<i class="fas fa-users footer_icon"></i>
+				<br><span>グループ一覧</span>
+			<% end %>
+		</div>
+	<% else %>
+	<!-- 通常会員用 -->
+		<!-- マップ一覧 -->
+		<div class="footer_link">
+			<%= link_to public_places_path do %>
+				<i class="fas fa-map-marked-alt footer_icon"></i>
+				<br><span>スポット一覧</span>
+			<% end %>
+		</div>
+		<!-- マップ作成 -->
+		<div class="footer_link">
+			<%= link_to new_public_place_path do %>
+				<i class="fas fa-map-marker-alt footer_icon"></i>
+				<br><span>スポット登録</span>
+			<% end %>
+		</div>
+		<!-- グループ一覧 -->
+		<div class="footer_link">
+			<%= link_to public_groups_customers_path do %>
+				<i class="fas fa-users footer_icon"></i>
+				<br><span>グループ一覧</span>
+			<% end %>
+		</div>
+		<!-- グループ作成 -->
+		<div class="footer_link">
+			<%= link_to new_public_group_path do %>
+				<i class="fab fa-creative-commons-by footer_icon"></i>
+				<br><span>グループ作成</span>
+			<% end %>
+		</div>
+
+
+
+	<% end %>
+	</div>
+</footer>

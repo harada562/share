@@ -1,135 +1,136 @@
 <div class="container shore_margin">
-<%= render 'layouts/customer_header' %>
-<%= render 'layouts/customer_profile' %>
+  <%= render 'layouts/customer_header' %>
+  <%= render 'layouts/customer_profile' %>
 
-<div class="row">
-  <p class="maps_index_flash bg-info"><%= flash[:group_add]%></p>
-  <div class="col-lg-12 maps_index_top">
-    <%= attachment_image_tag @group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%>
-  	<h1><%= @group.name%></h1>
-    <!-- グループの管理者の場合（is_admin == true） -->
-    <% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
-      <%= link_to "グループ編集", edit_public_group_path(@group.id), class: "btn btn-success"%>
-    <% end %>
-
-    <% if current_customer.nick_name == "げすと"%>
-      <button type="button" class="btn btn-success" disabled="disabled">グループ加入</button>
-    <% else %>
-    <!-- グループ未加入の場合 -->
-      <% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
-        <%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
-          <%= f.hidden_field :customer_id, :value => current_customer.id%>
-          <%= f.hidden_field :group_id, :value => @group.id %>
-          <%= f.hidden_field :is_admin, :value => false %>
-          <%= f.submit "グループ加入",class: "btn btn-success" %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-</div>
-
-<!-- グループのマップ表示 -->
-<div class="row">
-   <div class="col-lg-12 maps_index_gmap">
-  <script async defer
-                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAMaUX8y-y1Kk4TzBmDmjBIylax5DvqfaE&callback=initMap">
-  </script>
-  <div id="map"></div>
-  <style type="text/css">
-    #map { height: 300px;
-           width: 70%;}
-  </style>
-  <script>
-      function initMap() {
-
-        //初期表示位置
-        var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 9,
-            center: latlng
-        });
-        var transitLayer = new google.maps.TransitLayer();
-        transitLayer.setMap(map);
-
-        //複数マーカー
-        <% Place.where(group_id: @group.id).each do |place|%>
-          <% unless place.latitude.nil? %>
-        (function(){
-          var contentString = "住所：<%= place.address %>";
-          var infowindow = new google.maps.InfoWindow({
-              content: contentString
-          });
-
-          var marker = new google.maps.Marker({
-              position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
-              map: map,
-              title: contentString
-          });
-
-          marker.addListener('click', function() {
-            infowindow.open(map, marker, contentString);
-          });
-         })();
-        <% end %>
-        <% end %>
-    }
-  </script>
-  </div>
-</div>
-
-
-
-<!-- グループ加入中の場合 -->
-<% if @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
-  <!-- グループの場所表示（文字情報） -->
   <div class="row">
-    <div class="col-lg-12  maps_index_places">
-      <!-- このグループの場所未登録の場合 -->
-      <% if @places.blank? %>
-        <%= link_to "グループに場所を投稿してみよう", new_public_place_path,class: "btn btn-success" %>
+    <p class="maps_index_flash bg-info"><%= flash[:group_add]%></p>
+    <div class="col-lg-12 maps_index_top">
+      <%= attachment_image_tag @group, :image, :fill, 50, 50, format: 'jpg', fallback: "group.png" , :size =>'80x80', class: "img-circle"%>
+    	<h1><%= @group.name%></h1>
+      <!-- グループの管理者の場合（is_admin == true） -->
+      <% if @is_admin.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+        <%= link_to "グループ編集", edit_public_group_path(@group.id), class: "btn btn-success"%>
+      <% end %>
+
+      <% if current_customer.nick_name == "げすと"%>
+        <button type="button" class="btn btn-success" disabled="disabled">グループ加入</button>
       <% else %>
-      <!-- グループに場所の登録がある場合 -->
-        <table class="table">
-          <tr>
-            <th>プロフィール画像</th>
-            <th>投稿者</th>
-            <th>場所</th>
-          </tr>
-          <% @places.each do |place|%>
-            <tr>
-              <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40',  class: "img-circle"%></td>
-              <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
-              <td><%= link_to place.address, public_place_path(place.id)%></td>
-            </tr>
+      <!-- グループ未加入の場合 -->
+        <% unless @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+          <%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
+            <%= f.hidden_field :customer_id, :value => current_customer.id%>
+            <%= f.hidden_field :group_id, :value => @group.id %>
+            <%= f.hidden_field :is_admin, :value => false %>
+            <%= f.submit "グループ加入",class: "btn btn-success" %>
           <% end %>
-        </table>
+        <% end %>
       <% end %>
     </div>
   </div>
-<% else %>
-<!-- グループ加入中の場合 -->
+
+  <!-- グループのマップ表示 -->
   <div class="row">
-    <div class="col-lg-12  maps_index_places">
-      <% if @places.blank? %>
-        <p><%= @group.name%>は場所の投稿がありません</p>
-      <% else %>
-        <table class="table">
-          <tr>
-            <th>プロフィール画像</th>
-            <th>投稿者</th>
-            <th>場所</th>
-          </tr>
-          <% @places.each do |place|%>
-            <tr>
-              <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40', class: "img-circle"%></td>
-              <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
-              <td><%= link_to place.address, public_place_path(place.id)%></td>
-            </tr>
+     <div class="col-lg-12 maps_index_gmap">
+    <script async defer
+                  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAMaUX8y-y1Kk4TzBmDmjBIylax5DvqfaE&callback=initMap">
+    </script>
+    <div id="map"></div>
+    <style type="text/css">
+      #map { height: 300px;
+             width: 70%;}
+    </style>
+    <script>
+        function initMap() {
+
+          //初期表示位置
+          var latlng = new google.maps.LatLng({lat: <%= @center_place.latitude %>, lng: <%= @center_place.longitude %>});
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 9,
+              center: latlng
+          });
+          var transitLayer = new google.maps.TransitLayer();
+          transitLayer.setMap(map);
+
+          //複数マーカー
+          <% Place.where(group_id: @group.id).each do |place|%>
+            <% unless place.latitude.nil? %>
+          (function(){
+            var contentString = "住所：<%= place.address %>";
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position:{lat: <%= place.latitude %>, lng: <%= place.longitude %>},
+                map: map,
+                title: contentString
+            });
+
+            marker.addListener('click', function() {
+              infowindow.open(map, marker, contentString);
+            });
+           })();
           <% end %>
-        </table>
-      <% end %>
+          <% end %>
+      }
+    </script>
     </div>
   </div>
-<% end %>
+
+
+
+  <!-- グループ加入中の場合 -->
+  <% if @groups.group_by{|s| s.customer_id}.include?(current_customer.id)%>
+    <!-- グループの場所表示（文字情報） -->
+    <div class="row">
+      <div class="col-lg-12  maps_index_places">
+        <!-- このグループの場所未登録の場合 -->
+        <% if @places.blank? %>
+          <%= link_to "グループに場所を投稿してみよう", new_public_place_path,class: "btn btn-success" %>
+        <% else %>
+        <!-- グループに場所の登録がある場合 -->
+          <table class="table">
+            <tr>
+              <th>プロフィール画像</th>
+              <th>投稿者</th>
+              <th>場所</th>
+            </tr>
+            <% @places.each do |place|%>
+              <tr>
+                <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40',  class: "img-circle"%></td>
+                <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
+                <td><%= link_to place.address, public_place_path(place.id)%></td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+  <!-- グループ加入中の場合 -->
+    <div class="row">
+      <div class="col-lg-12  maps_index_places">
+        <% if @places.blank? %>
+          <p><%= @group.name%>は場所の投稿がありません</p>
+        <% else %>
+          <table class="table">
+            <tr>
+              <th>プロフィール画像</th>
+              <th>投稿者</th>
+              <th>場所</th>
+            </tr>
+            <% @places.each do |place|%>
+              <tr>
+                <td><%= attachment_image_tag place.customer, :image, :fill, 60, 60, fallback: "profile.png", size:'40x40', class: "img-circle"%></td>
+                <td><%= link_to place.customer.nick_name, public_customer_path(place.customer_id)%></td>
+                <td><%= link_to place.address, public_place_path(place.id)%></td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <%= render 'layouts/phone_footer'%>
 </div>

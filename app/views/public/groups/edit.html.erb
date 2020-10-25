@@ -1,58 +1,59 @@
 <div class="container shore_margin">
-<%= render 'layouts/customer_header' %>
-<%= render 'layouts/customer_profile' %>
-<div class="row">
-	<div class="col-lg-12">
-		<div class="group_new">
-			<h1>グループ編集</h1>
-		</div>
-		<div class="group_new__form">
-			<%= form_with model: @group, url: public_group_path(@group.id), local: true do |f|%>
-			<%= render 'layouts/error_messages', model: @group %>
-			<div class="form-group gorup_new__image">
-				<div>
-					<%= f.label :グループ画像 %><br />
-					<%= f.attachment_field :image, onchange: 'previewImage(preview)'%>
-				</div>
-				<div>
-					<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", id: 'preview', size: "200x200", class: "img-circle" %>
-				</div>
+	<%= render 'layouts/customer_header' %>
+	<%= render 'layouts/customer_profile' %>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="group_new">
+				<h1>グループ編集</h1>
 			</div>
+			<div class="group_new__form">
+				<%= form_with model: @group, url: public_group_path(@group.id), local: true do |f|%>
+				<%= render 'layouts/error_messages', model: @group %>
+				<div class="form-group gorup_new__image">
+					<div>
+						<%= f.label :グループ画像 %><br />
+						<%= f.attachment_field :image, onchange: 'previewImage(preview)'%>
+					</div>
+					<div>
+						<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", id: 'preview', size: "200x200", class: "img-circle" %>
+					</div>
+				</div>
 
-			<div class="form-group">
-				<%= f.label :グループ名 %><br />
-				<%= f.text_field :name, class: "form-control"%>
-			</div>
-			<div class="form-group">
-				<%= f.label :グループ紹介文 %><br />
-				<%= f.text_area :introduction ,:size=>"60x5", class: "form-control"%>
-			</div>
-			<div class="group_new__form_h2">
-				<h2>公開ステータス</h2>
-			</div>
-			<div class="group_new__form_radio">
-				<div class="group_new__form_radio___true">
-					<%= f.label :公開 %><br />
-					<%= f.radio_button :is_closed, [false] , local: true%>
+				<div class="form-group">
+					<%= f.label :グループ名 %><br />
+					<%= f.text_field :name, class: "form-control"%>
 				</div>
-				<div class="group_new__form_radio___false">
-					<%= f.label :非公開 %><br />
-					<%= f.radio_button :is_closed, [true]%>
+				<div class="form-group">
+					<%= f.label :グループ紹介文 %><br />
+					<%= f.text_area :introduction ,:size=>"60x5", class: "form-control"%>
 				</div>
+				<div class="group_new__form_h2">
+					<h2>公開ステータス</h2>
+				</div>
+				<div class="group_new__form_radio">
+					<div class="group_new__form_radio___true">
+						<%= f.label :公開 %><br />
+						<%= f.radio_button :is_closed, [false] , local: true%>
+					</div>
+					<div class="group_new__form_radio___false">
+						<%= f.label :非公開 %><br />
+						<%= f.radio_button :is_closed, [true]%>
+					</div>
+				</div>
+				<div class="group_new__form_h2">
+					<h2>非公開の場合、合言葉が必要になります</h2>
+				</div>
+				<div class="gorup_new__form_key_word form-group">
+					<%= f.label :key_word, "合言葉" %><br />
+					<%= f.text_field :key_word, size:"30",placeholder:"合言葉を入力してください", class: "form-control"%>
+				</div>
+				<div class="gorup_new__form_action">
+					<%= f.submit "変更",class: "btn btn-success group_new__form_submit"%>
+				</div>
+				<% end %>
 			</div>
-			<div class="group_new__form_h2">
-				<h2>非公開の場合、合言葉が必要になります</h2>
-			</div>
-			<div class="gorup_new__form_key_word form-group">
-				<%= f.label :key_word, "合言葉" %><br />
-				<%= f.text_field :key_word, size:"30",placeholder:"合言葉を入力してください", class: "form-control"%>
-			</div>
-			<div class="gorup_new__form_action">
-				<%= f.submit "変更",class: "btn btn-success group_new__form_submit"%>
-			</div>
-			<% end %>
 		</div>
+		<%= javascript_include_tag "public/preview.js" %>
 	</div>
-	<%= javascript_include_tag "public/preview.js" %>
-</div>
+	<%= render 'layouts/phone_footer'%>
 </div>
