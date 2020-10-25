@@ -42,19 +42,13 @@ ul{
 	justify-content: center;
 	align-items: center;
 }
-.header__link_signed_in :nth-of-type(2n){
-	margin-top: 50px;
+
+.header__link_signed_in a{
+	margin-right: 25px;
+	font-weight: 600;
 }
-.header__link_signed_in :nth-child(odd){
-	margin-bottom: 50px;
-}
-// ログインしていない場合
-.header__link_unsign{
-	list-style: none;
-	text-align: center;
-}
-.header__link_unsign :nth-of-type(2n){
-	margin: 10px;
+.header__link_signed_in li:last-child{
+	margin-right: 40px;
 }
 
 // ゲストログインでしている場合
@@ -86,16 +80,35 @@ ul{
     border-radius: 4px;
 }
 
-.customer_progile__guest a{
-	margin: 0 30px;
-}
-
 .header__link_signed_in{
 	margin-left: auto;
 }
 
 .btn{
 	background-color: #7db74a;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    z-index:500;
+}
+
+.header img{
+	width: 100px;
+	height: 100px;
+}
+
+.customer_profile{
+	margin-top: 100px;
+}
+
+.customer_profile_main{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 @media screen

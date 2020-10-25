@@ -2,8 +2,8 @@
 <!-- ゲストアカウントの場合 -->
   <% if current_customer.nick_name == "げすと" %>
       <div class="row">
-        <div class="header">
-        <%= image_tag 'logo.png', size: "200x200" %>
+        <div id="header" class="header">
+        <%= image_tag 'logo.png' %>
           <ul class="header__link_signed_in">
             <li class="link"><%= link_to 'マイページ', public_customer_path(current_customer.id) %></li>
             <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
@@ -25,7 +25,7 @@
   <% else %>
     <!-- ログインしている場合 -->
     <% if customer_signed_in? %>
-        <div class="header">
+        <div id="header" class="header">
         <%= image_tag 'logo.png' , size: "200x200"%>
               <ul class="header__link_signed_in">
                 <li class="link"><%= link_to 'トップページ', home_top_select_path %></li>
@@ -61,4 +61,5 @@
         </div>
     <% end %>
   <% end %>
+  <%= javascript_include_tag "header.js" %>
 </header>
