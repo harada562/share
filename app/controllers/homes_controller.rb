@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
   before_action :authenticate, only: [:top_select]
+  before_action :logind, only: [:top]
   def top
   end
 
@@ -12,9 +13,11 @@ class HomesController < ApplicationController
   end
 
   private
-
   # ログインしていないユーザーはTOPページに遷移
   def authenticate
     redirect_to root_path unless customer_signed_in?
+  end
+  def logind
+    redirect_to home_top_select_path if customer_signed_in?
   end
 end
