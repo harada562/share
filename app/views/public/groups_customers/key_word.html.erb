@@ -1,26 +1,27 @@
 <div class="container shore_margin">
-<%= render 'layouts/customer_header' %>
-<%= render 'layouts/customer_profile' %>
-<div class="row">
-		<div class="bg-danger not_key_word">
-			<P><%= flash[:not_key_word]%></P>
+	<%= render 'layouts/customer_header' %>
+	<%= render 'layouts/customer_profile' %>
+	<div class="row">
+			<div class="bg-danger not_key_word">
+				<P><%= flash[:not_key_word]%></P>
+			</div>
+		<div class="col-lg-12 key_word">
+			<h1><%= @group.name%></h1>
+			<h1>合言葉を入力してください</h1>
 		</div>
-	<div class="col-lg-12 key_word">
-		<h1><%= @group.name%></h1>
-		<h1>合言葉を入力してください</h1>
 	</div>
-</div>
-<div class="row">
-	<div class="col-lg-12 group_key_word">
-		<div class="gorup_key_word__form">
-		<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
-			<%= f.text_field :key_word%></td>
-			<%= f.submit "合言葉チェック",class: "btn btn-success key_word_submit" %>
-			<%= f.hidden_field :customer_id, :value => current_customer.id%>
-			<%= f.hidden_field :group_id, :value => @group.id %>
-			<%= f.hidden_field :is_admin, :value => false %>
+	<div class="row">
+		<div class="col-lg-12 group_key_word">
+			<div class="gorup_key_word__form">
+			<%= form_with model: @group_customer_add, url: public_groups_customers_path do |f|%>
+				<%= f.text_field :key_word%></td>
+				<%= f.submit "合言葉チェック",class: "btn btn-success key_word_submit" %>
+				<%= f.hidden_field :customer_id, :value => current_customer.id%>
+				<%= f.hidden_field :group_id, :value => @group.id %>
+				<%= f.hidden_field :is_admin, :value => false %>
+			</div>
+			<% end %>
 		</div>
-		<% end %>
 	</div>
-</div>
+	<%= render 'layouts/phone_footer'%>
 </div>

@@ -1,45 +1,46 @@
 <div class="container shore_margin">
-<%= render 'layouts/customer_header'%>
-<div class="row">
-	<div class="col-lg-12 customer_edit">
-		<div class="customer_edit__h1">
-			<h1>ユーザー編集画面</h1>
-		</div>
-		<div class="customer_edit__form">
-			<%= form_with model: @customer, url: public_customer_path, local: true do |f|%>
-			<%= render 'layouts/error_messages', model: @customer %>
-			<div class="form-gorup customer_edit__image">
-				<div>
-					<%= f.label :プロフィール画像 %><br />
-					<%= f.attachment_field :image, onchange: 'previewImage(preview)' %>
+	<%= render 'layouts/customer_header'%>
+	<div class="row">
+		<div class="col-lg-12 customer_edit">
+			<div class="customer_edit__h1">
+				<h1>ユーザー編集画面</h1>
+			</div>
+			<div class="customer_edit__form">
+				<%= form_with model: @customer, url: public_customer_path, local: true do |f|%>
+				<%= render 'layouts/error_messages', model: @customer %>
+				<div class="form-gorup customer_edit__image">
+					<div>
+						<%= f.label :プロフィール画像 %><br />
+						<%= f.attachment_field :image, onchange: 'previewImage(preview)' %>
+					</div>
+					<div id="item_image">
+						<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", id: 'preview', size: "200x200", class: "img-circle" %>
+					</div>
 				</div>
-				<div id="item_image">
-					<%= attachment_image_tag @customer, :image, :fill, 100, 100, format: 'jpg', fallback: "profile.png", id: 'preview', size: "200x200", class: "img-circle" %>
+				<div class="form-gorup">
+					<%= f.label :ニックネーム %><br />
+					<%= f.text_field :nick_name, class: "form-control"%>
 				</div>
-			</div>
-			<div class="form-gorup">
-				<%= f.label :ニックネーム %><br />
-				<%= f.text_field :nick_name, class: "form-control"%>
-			</div>
-			<div class="form-gorup">
-				<%= f.label :メールアドレス %><br />
-				<%= f.text_field :email, class: "form-control"%>
-			</div>
-			<div class="form-gorup">
-				<%= f.label :自己紹介文 %><br />
-				<%= f.text_area :intoroduction, size: '70x5', class: "form-control"%>
-			</div>
-			<div class="cutomer_edit__link">
-				<div class="cutomer_edit__link_btn" >
-				<%= f.submit "変更",class: "btn btn-success" %>
+				<div class="form-gorup">
+					<%= f.label :メールアドレス %><br />
+					<%= f.text_field :email, class: "form-control"%>
 				</div>
-				<div class="cutomer_edit__link_btn">
-				<%= link_to "退会", confirm_public_customer_path(@customer.id), class: "btn btn-danger"%>
+				<div class="form-gorup">
+					<%= f.label :自己紹介文 %><br />
+					<%= f.text_area :intoroduction, size: '70x5', class: "form-control"%>
 				</div>
+				<div class="cutomer_edit__link">
+					<div class="cutomer_edit__link_btn" >
+					<%= f.submit "変更",class: "btn btn-success" %>
+					</div>
+					<div class="cutomer_edit__link_btn">
+					<%= link_to "退会", confirm_public_customer_path(@customer.id), class: "btn btn-danger"%>
+					</div>
+				</div>
+				<% end %>
 			</div>
-			<% end %>
 		</div>
 	</div>
+	<%= render 'layouts/phone_footer'%>
 	<%= javascript_include_tag "public/preview.js" %>
-</div>
 </div>
