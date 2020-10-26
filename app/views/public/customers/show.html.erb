@@ -129,6 +129,9 @@
 				<% if @places.blank?%>
 					<%= link_to "スポット登録してみよう", new_public_place_path,class: "btn btn-info customer_show__link"%>
 				<% else %>
+				<script async defer
+					src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+				</script>
 					<%= render partial: 'maps' %>
 				<% end %>
 			</div>
@@ -140,6 +143,9 @@
 				<% if @places.blank?%>
 					<h1>マップの投稿がありません</h1>
 				<% else %>
+				<script async defer
+					src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+				</script>
 					<%= render partial: 'maps' %>
 				<%end%>
 			</div>
