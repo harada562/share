@@ -76,6 +76,9 @@
 			</tr>
 			<tr>
 				<th>住所</th>
+				<script async defer
+					src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+				</script>
 				<td><%= @place.address%><br><%= render partial: 'public/places/map', locals: { place: @place }%></td>
 			</tr>
 			<!-- 登録者本人の場合の表示 -->
