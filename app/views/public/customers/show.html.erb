@@ -1,10 +1,5 @@
 <div class="container shore_margin">
 	<%= render 'layouts/customer_header' %>
-	<div class="show_customer_h1">
-		<h1>マイページ</h1>
-	</div>
-
-	<!-- ユーザーの名前、プロフィール画像 -->
 	<div class="row">
 		<div class="col-lg-12 show_customer_top">
 			<div class="show_customer_image">
@@ -30,7 +25,7 @@
 	<!-- current_customerの自己紹介文 -->
 	<% if @customer.id == current_customer.id%>
 		<div class="row">
-			<div class="col-lg-12 show_customer_intoroduction">
+			<div class="col-md-12 show_customer_intoroduction">
 				<!-- ゲストログインの場合 -->
 				<% if @customer.nick_name == "げすと"%>
 					<% if @customer.intoroduction.blank?%>
@@ -53,7 +48,7 @@
 	<% else %>
 	<!-- 他のユーザーの自己紹介文 -->
 		<div class="row">
-			<div class="col-lg-12 show_customer_intoroduction">
+			<div class="col-md-12 show_customer_intoroduction">
 				<% unless @customer.intoroduction.blank?%>
 						<h3>自己紹介</h3>
 						<%= @customer.intoroduction%>
@@ -66,7 +61,7 @@
 	<!-- current_customerの所属グループ（退会ボタン付き） -->
 	<% if @customer.id == current_customer.id%>
 		<div class="row">
-			<div class="col-lg-12 show_customer_groups">
+			<div class="col-md-12 show_customer_groups">
 				<!-- グループ未加入の場合 -->
 				<% if @groups.blank?%>
 					<div class="show_customer_groups__group_blank">
@@ -96,7 +91,7 @@
 	<% else %>
 	<!-- 他のユーザーの所属グループ -->
 		<div class="row">
-			<div class="col-lg-12 show_customer_groups">
+			<div class="col-md-12 show_customer_groups">
 				<!-- グループ未加入の場合 -->
 				<% if @groups.blank?%>
 						<h1>所属グループはありません</h1>
@@ -124,7 +119,7 @@
 	<!-- current_customerのmap -->
 	<% if @customer.id == current_customer.id%>
 		<div class="row">
-			<div class="col-lg-12 show_customer_maps">
+			<div class="col-md-12 show_customer_maps">
 				<!-- 場所未登録の場合 -->
 				<% if @places.blank?%>
 					<%= link_to "スポット登録してみよう", new_public_place_path,class: "btn btn-info customer_show__link"%>
@@ -139,7 +134,7 @@
 	<% else %>
 	<!-- 他のユーザーのmap -->
 		<div class="row">
-			<div class="col-lg-12 show_customer_maps">
+			<div class="col-md-12 show_customer_maps">
 				<% if @places.blank?%>
 					<h1>マップの投稿がありません</h1>
 				<% else %>
@@ -157,50 +152,102 @@
 		<!-- 場所登録がない場合は下記を表示しない -->
 		<% unless @places.blank?%>
 			<div class="row">
-				<div class="col-lg-12 show_customer_places">
+				<% @places.includes([:place_images]).each do |place| %>
+					<div class="col-md-3">
+					  <% if place.place_images.blank?%>
+					    <%= image_tag 'no_place.png', size: "100x100" %>
+					  <% elsif place.place_images.count == 1%>
+					    <% place.place_images.each do |image|%>
+					      <%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
+					  	<% end %>
+					  <% else %>
+					    <div class="swiper-container customer_show_swiper_container">
+					      <div class="swiper-wrapper customer_show_swiper_wrapper">
+					        <% place.place_images.each do |image|%>
+					          <div class="swiper-slide customer_show_swiper_slide">
+					            <%= attachment_image_tag image, :image, class: "default_image", size:"100x100" %>
+					          </div>
+					        <% end %>
+					      </div>
+					      <div class="swiper-pagination"></div>
+					    </div>
+					<% end %>
+					</div>
+					<div class="col-md-9 show_customer_places">
 					<table class="table">
 						<tr>
 							<th class="show_customer__place_name">場所名</th>
-							<th>住所</th>
-							<th class="show_customer__table_link">場所詳細</th>
-							<th class="show_customer__delete"></th>
+							<td><%= place.place_name%></td>
 						</tr>
-						<% @places.each do |place| %>
-							<tr>
-								<td><%= place.place_name%></td>
-								<td><%= place.address%></td>
-								<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
-								<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
-							</tr>
-						<% end %>
+						<tr>
+							<th>住所</th>
+							<td><%= place.address%></td>
+						</tr>
+						<tr>
+							<th class="show_customer__table_link">場所詳細</th>
+							<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
+						</tr>
+						<tr>
+							<th class="show_customer__delete"></th>
+							<td><%= link_to "削除", public_place_path(place.id), method: :delete, data: {confirm: "本当に削除しますか？"} ,class: "btn btn-danger"%></td>
+						</tr>
 					</table>
-					<%= paginate @places %>
 				</div>
+				<% end %>
 			</div>
 		<% end %>
+					<%= paginate @places %>
 	<% else %>
 	<!-- 他のユーザーの場所（文字情報） -->
 		<% unless @places.blank?%>
-			<div class="row">
-				<div class="col-lg-12 show_customer_places">
-					<table class="table">
-						<tr>
-							<th class="show_customer__place_name">場所名</th>
-							<th>住所</th>
-							<th class="show_customer__table_link">場所詳細</th>
-						</tr>
-						<% @places.each do |place| %>
+			<% @places.includes([:place_images]).each do |place| %>
+				<div class="row">
+				<div class="col-md-3">
+					<% if place.place_images.blank?%>
+						<div class="customer_show_no_image">
+							<%= image_tag 'no_place.png', size: "100x100" %>
+						</div>
+					<% elsif place.place_images.count == 1%>
+						<div class="customer_show_image_cuont1">
+							<% place.place_images.each do |image|%>
+								<%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
+							<% end %>
+						</div>
+					<% else %>
+						 <div class="swiper-container customer_show_swiper_container">
+					      <div class="swiper-wrapper customer_show_swiper_wrapper">
+								<% place.place_images.each do |image|%>
+									<div class="swiper-slide customer_show_swiper_slide">
+										<%= attachment_image_tag image, :image, class: "default_image", size:"100x100" %>
+									</div>
+								<% end %>
+							</div>
+						<div class="swiper-pagination"></div>
+						</div>
+					<% end %>
+				</div>
+					<div class="col-md-9 show_customer_places">
+						<table class="table">
 							<tr>
+								<th class="show_customer__place_name">場所名</th>
 								<td><%= place.place_name%></td>
+							</tr>
+							<tr>
+								<th>住所</th>
 								<td><%= place.address%></td>
+							</tr>
+							<tr>
+								<th class="show_customer__table_link">場所詳細</th>
 								<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
 							</tr>
-						<% end %>
-					</table>
-					<%= paginate @places %>
+						</table>
+					</div>
 				</div>
-			</div>
-		<% end  %>
+			<% end %>
+						<%= paginate @places %>
+		<% end %>
 	<% end %>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+	<%= javascript_include_tag "public/customer_show.js" %>
 	<%= render 'layouts/phone_footer'%>
 </div>

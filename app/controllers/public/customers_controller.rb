@@ -17,7 +17,7 @@ class Public::CustomersController < ApplicationController
     # 所属グループ
     @groups = GroupsCustomer.where(customer_id: @customer.id).page(params[:page]).per(3)
     # 自分の投稿
-    @places = Place.where(customer_id: @customer.id).page(params[:page]).per(4)
+    @places = Place.where(customer_id: @customer.id).page(params[:page]).per(4).order(id: "DESC")
     # マップの初期値
     @center_place = @places.first
     # binding.pry
