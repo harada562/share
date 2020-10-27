@@ -26,7 +26,9 @@
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - 仮想環境：Vagrant,VirtualBox
-* AWS
-  * EC2
-  * RDS
-  * Route53
+- AWS
+  - EC2
+  - RDS
+  - Route53
+- デプロイ
+  - Capistrano
