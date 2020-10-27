@@ -161,10 +161,10 @@
 					      <%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
 					  	<% end %>
 					  <% else %>
-					    <div class="swiper-container public_place_index_images">
-					      <div class="swiper-wrapper public_place_index_images2">
+					    <div class="swiper-container customer_show_swiper_container">
+					      <div class="swiper-wrapper customer_show_swiper_wrapper">
 					        <% place.place_images.each do |image|%>
-					          <div class="swiper-slide public_place_index_images3">
+					          <div class="swiper-slide customer_show_swiper_slide">
 					            <%= attachment_image_tag image, :image, class: "default_image", size:"100x100" %>
 					          </div>
 					        <% end %>
@@ -204,16 +204,20 @@
 				<div class="row">
 				<div class="col-md-3">
 					<% if place.place_images.blank?%>
-						<%= image_tag 'no_place.png', size: "100x100" %>
+						<div class="customer_show_no_image">
+							<%= image_tag 'no_place.png', size: "100x100" %>
+						</div>
 					<% elsif place.place_images.count == 1%>
-						<% place.place_images.each do |image|%>
-							<%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
-						<% end %>
+						<div class="customer_show_image_cuont1">
+							<% place.place_images.each do |image|%>
+								<%= attachment_image_tag image, :image, class: "default_image", size: "100x100" %>
+							<% end %>
+						</div>
 					<% else %>
-						<div class="swiper-container public_place_index_images">
-							<div class="swiper-wrapper public_place_index_images2">
+						 <div class="swiper-container customer_show_swiper_container">
+					      <div class="swiper-wrapper customer_show_swiper_wrapper">
 								<% place.place_images.each do |image|%>
-									<div class="swiper-slide public_place_index_images3">
+									<div class="swiper-slide customer_show_swiper_slide">
 										<%= attachment_image_tag image, :image, class: "default_image", size:"100x100" %>
 									</div>
 								<% end %>
@@ -237,10 +241,10 @@
 								<td><%= link_to "場所の詳細", public_place_path(place.id),class: "btn btn-info"%></td>
 							</tr>
 						</table>
-						<%= paginate @places %>
 					</div>
 				</div>
 			<% end %>
+						<%= paginate @places %>
 		<% end %>
 	<% end %>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
