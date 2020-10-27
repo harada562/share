@@ -1,25 +1,24 @@
 <div class="container shore_margin">
-	<%= render 'layouts/customer_header'%>
-	<%= render 'layouts/customer_profile'%>
-	<div class="row place_show">
-		<div class="col-md-12">
-			<h1>スポット詳細</h1>
-			<% if @place.place_images.blank? %>
-				<h1>画像はありません</h1>
-			<% elsif @place.place_images.count == 1%>
-				<% @place.place_images.each do |image|%>
-					<%= attachment_image_tag image, :image, class: "default_image" %>
-				<% end %>
-			<% else %>
-				<!-- １個目の画像 -->
-				<div class="swiper-container gallery-top">
-					<div class="swiper-wrapper">
-						<% @place.place_images.each do |image|%>
-							<div class="swiper-slide place_show_swiper_main"><%= attachment_image_tag image, :image, class: "default_image" , size: "300x300"%></div>
-						<% end %>
-					</div>
-						<div class="swiper-button-next next1"></div>
-						<div class="swiper-button-prev prev1"></div>
+<%= render 'layouts/customer_header'%>
+<%= render 'layouts/customer_profile'%>
+<div class="row place_show">
+	<div class="col-lg-10">
+		<!-- 登録者が本人の場合表示しない -->
+		<% unless @place.customer_id == current_customer.id%>
+		<% end %>
+		<% if @place.place_images.blank? %>
+			<h1>画像はありません</h1>
+		<% elsif @place.place_images.count == 1%>
+			<% @place.place_images.each do |image|%>
+				<%= attachment_image_tag image, :image, class: "default_image" %>
+			<% end %>
+		<% else %>
+			<!-- １個目の画像 -->
+			<div class="swiper-container gallery-top">
+				<div class="swiper-wrapper">
+					<% @place.place_images.each do |image|%>
+						<div class="swiper-slide place_show_swiper_main"><%= attachment_image_tag image, :image, class: "default_image" , size: "300x300"%></div>
+					<% end %>
 				</div>
 				<!-- ２個目の画像 -->
 				<div class="swiper-container gallery-thumbs">
@@ -46,16 +45,89 @@
 	          	</div>
 			</div>
 		</div>
-	</div>
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered table-condensed">
-					<!-- ログイン中のユーザー以外の場合 -->
-					<% unless @place.customer_id == current_customer.id%>
-						<tr>
-							<th class="col-xs-2">登録者名</th>
-							<td class="col-xs-10"><%= link_to @place.customer.nick_name, public_customer_path(@place.customer.id)%></td>
-						</tr>
+</div>
+			<%= javascript_include_tag "public/place_image.js" %>
+
+		<table class="table table-bordered table-condensed">
+			<!-- ログイン中のユーザー以外の場合 -->
+			<% unless @place.customer_id == current_customer.id%>
+				<tr>
+					<th class="col-xs-2">登録者名</th>
+					<td class="col-xs-10"><%= @place.customer.nick_name%></td>
+				</tr>
+			<% end %>
+			<!-- ジャンル指定なしの場合 -->
+			<% if @place.genre.blank? %>
+				<tr>
+					<th>ジャンル</th>
+					<td>ジャンルなし</td>
+				</tr>
+			<% else %>
+				<tr>
+					<th>ジャンル</th>
+					<td><%= @place.genre.name%></td>
+				</tr>
+			<% end %>
+			<tr>
+				<th>場所名</th>
+				<td><%= @place.place_name%></td>
+			</tr>
+				<script async defer
+					src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+				</script>
+			<tr>
+				<th>住所</th>
+				<td><%= @place.address%><br><%= render partial: 'public/places/map', locals: { place: @place }%></td>
+			</tr>
+			<!-- 登録者本人の場合の表示 -->
+			<% if @place.customer_id == current_customer.id %>
+				<tr>
+					<th>場所URL</th>
+					<% if @place.place_url.blank? %>
+						<td><%= link_to "お店のURLを登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%></td>
+					<% else %>
+						<td><%= @place.place_url%></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>お店の電話番号</th>
+					<% if @place.number.blank? %>
+						<td><%= link_to "お店の電話番号を登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%></td>
+					<% else %>
+						<tr><%= @place.number%></tr>
+					<% end %>
+				</tr>
+				<tr>
+					<th>平均予算</th>
+					<% if @place.budget.blank? %>
+						<td><%= link_to "平均予算を登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%></td>
+					<% else %>
+						<tr><%= @place.budget%></tr>
+					<% end %>
+				</tr>
+				<tr>
+					<th>メモ</th>
+					<% if @place.detail.blank? %>
+						<td><%= link_to "メモを登録しよう！！", edit_public_place_path(@place.id),class: "btn btn-info"%></td>
+					<% else %>
+						<tr><%= @place.detail%></tr>
+					<% end %>
+				</tr>
+			<% else %>
+				<tr>
+					<th>場所URL</th>
+					<% if @place.place_url.blank? %>
+						<td>???????</td>
+					<% else %>
+						<td><%= @place.place_url%></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>お店の電話番号</th>
+					<% if @place.number.blank? %>
+						<td>???????</td>
+					<% else %>
+						<tr><%= @place.number%></tr>
 					<% end %>
 					<!-- ジャンル指定なしの場合 -->
 					<% if @place.genre.blank? %>

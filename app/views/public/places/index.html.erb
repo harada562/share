@@ -13,9 +13,6 @@
         <%= f.submit "検索" %>
       <% end %>
     </div>
-    <script async defer
-                src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-  </script>
     <div id="ransack_map">
       <%= render partial: 'public/places/maps_index', locals: {ransack_place: @ransack_place, center_place: @center_place}%>
     </div>
@@ -26,4 +23,4 @@
   <%= render 'layouts/phone_footer'%>
 </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
-  <%= javascript_include_tag "public/place_index.js" %>
+      <%= javascript_include_tag "public/place_index.js" %>
