@@ -200,6 +200,11 @@
   transform: translateY(0px);
 }
 
+.home_top_selsect_link{
+	display: flex;
+	justify-content: center;
+}
+
 @media screen
     and (max-width: 767px) {
 	.home_top__logo > img {
@@ -266,6 +271,10 @@
 	    margin-top: 50px;
 	}
 	.home_middle_right {
+    	text-align: center;
+	}
+	.home_top_selsect_link {
+    	display: block;
     	text-align: center;
 	}
 
