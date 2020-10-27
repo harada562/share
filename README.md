@@ -30,5 +30,5 @@
   - EC2
   - RDS
   - Route53
-- デプロイ
+- CI/CD
   - Capistrano
