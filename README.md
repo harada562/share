@@ -27,6 +27,6 @@
 - JSライブラリ：jQuery
 - 仮想環境：Vagrant,VirtualBox
 - AWS
- -EC2
- -RDS
- -Route53
+ - EC2
+ - RDS
+ - Route53
