@@ -50,19 +50,6 @@ RSpec.describe "System::Customers", type: :request do
     click_link "退会しない"
     expect(page).to have_content @customer.nick_name
   end
-  scenario "会員一覧" do
-    @customer1 = create(:customer)
-    @customer2 = create(:customer)
-    @customer3 = create(:customer)
-    visit new_customer_session_path
-    fill_in "customer[nick_name]", with: @customer1.nick_name
-    fill_in "customer[password]", with: @customer1.password
-    click_button "ログイン"
-
-    visit public_customers_path
-    expect(page).to have_content @customer2.nick_name
-    expect(page).to have_content @customer3.nick_name
-  end
   scenario "編集" do
     @customer = create(:customer)
     visit new_customer_session_path
