@@ -9,7 +9,7 @@ var mySwiper2 = new Swiper('.gallery-thumbs', {
       // slideの間隔
       spaceBetween: 10,
       // 一度にスライドできる枚数
-      slidesPerView: 3
+      slidesPerView: 10
 });
 
 

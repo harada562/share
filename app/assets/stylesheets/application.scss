@@ -111,6 +111,9 @@ ul{
     align-items: center;
 }
 
+#header{
+		padding-right: 20px;
+	}
 @media screen
     and (min-width: 767px){
 	.phone_header{
@@ -201,5 +204,6 @@ ul{
 
 	#header{
 		height: 70px;
+		padding-right: 20px;
 	}
 }
