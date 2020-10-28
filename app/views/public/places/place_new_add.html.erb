@@ -15,7 +15,7 @@
 			<%= flash[:not_latitude]%>
 			<%= render 'layouts/error_messages', model: @place %>
 					<!-- place_images_imagesに画像ファイルを入れて、place#createに送る -->
-					<div>
+					<div class="place_new_add_image_field">
 						<%= f.attachment_field :place_images_images, multiple: true %>
 					</div>
 					<div class="place_new_add__form form-group">
