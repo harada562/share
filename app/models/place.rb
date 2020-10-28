@@ -1,7 +1,10 @@
 class Place < ApplicationRecord
-  belongs_to :genre, optional: true
+  belongs_to :genre
   belongs_to :customer
+
+  # group_idを持たなくても保存できる
   belongs_to :group, optional: true
+
   # 複数画像投稿用
   has_many :place_images, dependent: :destroy
   accepts_attachments_for :place_images, attachment: :image
@@ -12,11 +15,6 @@ class Place < ApplicationRecord
   # 空白NG
   validates :customer_id, presence: true
   validates :place_name, presence: true
-  # validates :latitude, presence: true
-  # validates :longitude, presence: true
-
-  # 数値のみ
-  # validates :number, numericality: true
 
   # 経度、緯度表示機能
   geocoded_by :address
