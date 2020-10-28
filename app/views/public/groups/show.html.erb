@@ -50,9 +50,17 @@
 			</div>
 			<div class="col-lg-6">
 				<h2>メンバー数</h2>
-				<p><%= link_to @groups.count, menbers_public_groups_customer_path(@group.id)%>人</p>
+				<p>
+					<%= link_to menbers_public_groups_customer_path(@group.id) do%>
+						<%= @groups.count%>人
+					<% end %>
+				</p>
 				<h2>投稿</h2>
-				<p><%= link_to @places.count, maps_public_groups_customer_path(@group.id)%>箇所</p>
+				<p>
+					<%= link_to maps_public_groups_customer_path(@group.id) do %>
+						<%= @places.count%>箇所
+					<% end %>
+				</p>
 			</div>
 		</div>
 	<% end %>
