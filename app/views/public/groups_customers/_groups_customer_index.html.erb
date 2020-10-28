@@ -20,10 +20,18 @@
 				<td><%= link_to groups_customer.name, public_group_path(groups_customer.id)%></td>
 
 				<!-- グループメンバー -->
-				<td><%= link_to GroupsCustomer.where(group_id: groups_customer.id).count, menbers_public_groups_customer_path(groups_customer.id)%>人</td>
+				<td>
+					<%= link_to menbers_public_groups_customer_path(groups_customer.id) do %>
+						<%= GroupsCustomer.where(group_id: groups_customer.id).count%>人
+					<% end %>
+				</td>
 
 				<!-- グループマップ -->
-				<td><%= link_to Place.where(group_id: groups_customer.id).count, maps_public_groups_customer_path(groups_customer.id)%>箇所</td>
+				<td>
+					<%= link_to maps_public_groups_customer_path(groups_customer.id) do %>
+						<%= Place.where(group_id: groups_customer.id).count %>箇所
+					<% end %>
+				</td>
 
 			<% else %>
 				<td><%= image_tag 'stop.png', :size =>'80x80'%></td>
