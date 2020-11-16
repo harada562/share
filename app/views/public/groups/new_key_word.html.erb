@@ -1,0 +1,10 @@
+<h1>合言葉を入力してください</h1>
+<%= form_with model: @key_word, url: public_group_path(@key_word) do |f|%>
+<div>
+	<%= f.label :合言葉 %><br />
+	<%= f.text_field :key_word%>
+</div>
+<div>
+	<%= f.submit "合言葉決定",  data: { confirm: "合言葉を決定しますか？"} %>
+</div>
+<% end %>

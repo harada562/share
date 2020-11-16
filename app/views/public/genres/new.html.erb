@@ -1,0 +1,6 @@
+<h1>ジャンル一覧・追加</h1>
+<%= form_for(@genre, url: public_genres_path) do |f| %>
+	<h2>ジャンル</h2>
+	<%= f.text_field :name%>
+	<%= f.submit "追加" %>
+<% end %>

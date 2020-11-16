@@ -16,6 +16,7 @@
 			<%= render 'layouts/error_messages', model: @place %>
 					<!-- place_images_imagesに画像ファイルを入れて、place#createに送る -->
 					<div class="place_new_add_image_field">
+						<%= f.label :場所の画像 %><br />
 						<%= f.attachment_field :place_images_images, multiple: true %>
 					</div>
 					<div class="place_new_add__form form-group">

@@ -1,0 +1,12 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>ジャンル編集</h1>
+	<%= form_with model: @genre, url: public_genre_path, local: true do |f|%>
+	<%= render 'layouts/error_messages', model: @genre %>
+	<div>
+		<%= f.label :ジャンル名 %><br />
+		<%= f.text_field :name%>
+	</div>
+		<%= f.submit "ジャンル名変更",class: "btn btn-success" %>
+	<% end %>
+</div>

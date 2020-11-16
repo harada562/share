@@ -1,0 +1,16 @@
+<%= render 'layouts/customer_header' %>
+<div class="col-lg-9">
+	<h1>グループ一覧</h1>
+	<table>
+		<tr>
+			<th>グループ名</th>
+		</tr>
+		<tr>
+			<% @groups.each do |group| %>
+			<td><%= link_to group.name, menbers_public_groups_customer_path(group.id)%></td>
+			<td><%= link_to group.id, maps_public_groups_customer_path(group.id)%></td>
+			<td><%= link_to "削除", public_group_path(group.id), method: :delete %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
